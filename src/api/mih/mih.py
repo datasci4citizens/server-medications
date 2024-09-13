@@ -1,7 +1,7 @@
 from datetime import date, datetime
 from fastapi import APIRouter, HTTPException
 from sqlmodel import Field, SQLModel, Session, select
-from schema.medications.medication_users import MihUser
+from schema.mih.schema_mih import MihUser
 from db.manager import Database
 
 router = APIRouter()
