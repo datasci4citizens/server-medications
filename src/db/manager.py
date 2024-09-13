@@ -1,4 +1,4 @@
-from sqlmodel import create_engine
+from sqlmodel import create_engine, Session
 
 import db.config as config
 from schema.common.users_schema import Users
@@ -26,3 +26,8 @@ class Database:
             Database._db_instance.create_db()
 
         return Database._db_instance.engine
+
+    @staticmethod
+    def get_session():
+        with Session(Database.db_engine()) as session:
+            yield session
