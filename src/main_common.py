@@ -7,6 +7,8 @@ from api.wounds.wounds_patients_api import wounds_patients_router
 from api.wounds.wounds_type_api import wounds_type_router
 from api.wounds.wounds_api import wounds_router
 from api.wounds.wounds_tracking_records_api import wounds_tracking_records_router
+from api.medications.medication_users import medications_user_router
+from api.mih.mih import mih_user_router
 
 Database.db_engine()
 
@@ -18,3 +20,5 @@ app.include_router(wounds_patients_router)
 app.include_router(wounds_type_router)
 app.include_router(wounds_router)
 app.include_router(wounds_tracking_records_router)
+app.include_router(medications_user_router)
+app.include_router(mih_user_router)

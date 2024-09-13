@@ -4,9 +4,9 @@ from sqlmodel import Field, SQLModel, Session, select
 from schema.mih.schema_mih import MihUser
 from db.manager import Database
 
-router = APIRouter()
+mih_user_router = APIRouter()
 
-@router.post("/mih/create_user")
+@ mih_user_router.post("/mih/create_user")
 def create_user(user: MihUser):
     """Create a new user"""
     with Session(Database.db_engine()) as session:
@@ -15,21 +15,21 @@ def create_user(user: MihUser):
         session.refresh(user)
         return user
 
-@router.get("/mih/read_all_users")
+@ mih_user_router.get("/mih/read_all_users")
 def read_all_users():
     """Read all users"""
     with Session(Database.db_engine()) as session:
         users = session.exec(select(MihUser)).all()
         return users
 
-@router.get("/mih/read_one_user")
+@ mih_user_router.get("/mih/read_one_user")
 def read_one_user(user_id):
     """Read one user"""
     with Session(Database.db_engine()) as session:
         user = session.exec(select(MihUser).where(MihUser.id == user_id))
         return user
     
-@router.put("/mih/update_user")
+@ mih_user_router.put("/mih/update_user")
 def update_user(user_id, user: MihUser):
     """Update a user"""
     with Session(Database.db_engine()) as session:
@@ -42,7 +42,7 @@ def update_user(user_id, user: MihUser):
         session.refresh(user)
         return user
     
-@router.delete("/mih/delete_user")
+@ mih_user_router.delete("/mih/delete_user")
 def delete_user(user_id):
     """Delete a user"""
     with Session(Database.db_engine()) as session:
