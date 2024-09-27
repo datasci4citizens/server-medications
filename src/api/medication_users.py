@@ -2,18 +2,19 @@ from datetime import date, datetime
 from fastapi import APIRouter, HTTPException, Depends
 from sqlmodel import Field, SQLModel, Session, select
 from db.manager import Database
-from api.schemas.user_schema import User
+from api.schemas.models import User, UserCreate, UserUpdate, UserPublic
 
 BASE_URL_USERS = "/medications/user"
 user_router = APIRouter()
 
-@user_router.post(BASE_URL_USERS)
-def create_user(user: User):
+@user_router.post(BASE_URL_USERS, response_model=UserPublic)
+def create_user(user: UserCreate):
     with Session(Database.db_engine()) as session:
-        session.add(user)
+        new_user = User.model_validate(user)
+        session.add(new_user)
         session.commit()
-        session.refresh(user)
-    return user
+        session.refresh(new_user)
+    return new_user
 
 @user_router.get(BASE_URL_USERS, response_model=list[User])
 def read_users():
@@ -21,14 +22,14 @@ def read_users():
         users = session.exec(select(User)).all()
     return users
 
-@user_router.get(f"{BASE_URL_USERS}/{{user_id}}", response_model=User)
+@user_router.get(f"{BASE_URL_USERS}/{{user_id}}", response_model=UserPublic)
 def read_user(user_id: int):
     with Session(Database.db_engine()) as session:
         user = session.get(User, user_id)
     return user
 
-@user_router.put(f"{BASE_URL_USERS}/{{user_id}}")
-def update_user(user_id: int, user: User):
+@user_router.put(f"{BASE_URL_USERS}/{{user_id}}", response_model=UserPublic)
+def update_user(user_id: int, user: UserUpdate):
     with Session(Database.db_engine()) as session:
         user_db = session.get(User, user_id)
         if user_db is None:
