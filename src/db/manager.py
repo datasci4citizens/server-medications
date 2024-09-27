@@ -1,8 +1,7 @@
 from sqlmodel import create_engine, Session
 
 import db.config as config
-from api.schemas.user_schema import User
-
+from api.schemas.models import User, Drug, UserDrug, DrugInteraction, Food, FoodInteraction, Disease, UserDisease, Caretaker, TrackingRecord
 
 class Database:
     """Database class to handle database connection and operations"""
@@ -13,6 +12,16 @@ class Database:
     def create_db(self):
         """Create the database and tables that do not exist"""
         User.metadata.create_all(self.engine)
+        Drug.metadata.create_all(self.engine)
+        UserDrug.metadata.create_all(self.engine)
+        DrugInteraction.metadata.create_all(self.engine)
+        Food.metadata.create_all(self.engine)
+        FoodInteraction.metadata.create_all(self.engine)
+        Disease.metadata.create_all(self.engine)
+        UserDisease.metadata.create_all(self.engine)
+        Caretaker.metadata.create_all(self.engine)
+        TrackingRecord.metadata.create_all(self.engine)
+        
 
     # Singleton Database instance attribute
     _db_instance = None
