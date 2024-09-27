@@ -1,7 +1,7 @@
 from sqlmodel import create_engine, Session
 
 import db.config as config
-from schema.common.users_schema import Users
+from api.schemas.user_schema import User
 
 
 class Database:
@@ -12,7 +12,7 @@ class Database:
 
     def create_db(self):
         """Create the database and tables that do not exist"""
-        Users.metadata.create_all(self.engine)
+        User.metadata.create_all(self.engine)
 
     # Singleton Database instance attribute
     _db_instance = None
@@ -26,8 +26,3 @@ class Database:
             Database._db_instance.create_db()
 
         return Database._db_instance.engine
-
-    @staticmethod
-    def get_session():
-        with Session(Database.db_engine()) as session:
-            yield session
