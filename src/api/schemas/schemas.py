@@ -17,13 +17,22 @@ class DrugRead(SQLModel):
     presentations: List[PresentationModel] 
     comercial_names: List[ComercialNameModel]  
 
-
-
 class UserDrugTrackingRead(SQLModel):
     drug_id: int
     created_date: datetime
     took_date: datetime
     is_taken: bool
+
+class CaretakerBase(SQLModel):
+    email: str
+    name: str
+    phone_number: str | None = None
+
+class DiseaseModel(SQLModel):
+    disease_id: int
+    status: str | None = None
+    created_at: datetime
+    updated_at: datetime
 
 class UserRead(SQLModel):
     name: str
@@ -32,20 +41,9 @@ class UserRead(SQLModel):
     phone_number: str | None = None
     emergency_contact_name: str | None = None
     emergency_contact_number: str | None = None
-    caretakers: list["CaretakerBase"]
-    disease_links: list["DiseaseModel"]
+    caretakers: list[CaretakerBase]
+    disease_links: list[DiseaseModel]
     drug_links: list[UserDrugTrackingRead]
-
-class DiseaseModel(SQLModel):
-    disease_id: int
-    status: str | None = None
-    created_at: datetime
-    updated_at: datetime
-
-class CaretakerBase(SQLModel):
-    email: str
-    name: str
-    phone_number: str | None = None
 
 class CaretakerCreate(CaretakerBase):
     pass
