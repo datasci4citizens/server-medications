@@ -12,11 +12,8 @@ class Database:
     def create_db(self):
         """Create the database and tables that do not exist"""
         User.metadata.create_all(self.engine)
-        Drug.metadata.create_all(self.engine)
-        # Disease.metadata.create_all(self.engine)
-        # UserDisease.metadata.create_all(self.engine)
+        ComercialNames.metadata.create_all(self.engine)
         Caretaker.metadata.create_all(self.engine)
-        #TrackingRecords.metadata.create_all(self.engine)
     
     def add_data(self):
         """Add data to the database"""
@@ -53,45 +50,64 @@ class Database:
 
             """ ADD DRUGS """
             drugs = [
-                Drug(
+                ActivePrinciple(
                     code="51-48-9", 
-                    active_ingredients=[ActiveIngredient(name="levotiroxina")], 
-                    presentations=[
-                        Presentations(value="25uG"),
-                        Presentations(value="50uG"),
-                        Presentations(value="75uG"),
-                        Presentations(value="100uG")
-                    ], 
+                    active_ingredients="levotiroxina", 
                     comercial_names=[
-                        ComercialNames(comercial_name="Synthroid"),
-                        ComercialNames(comercial_name="Euthyrox"),
-                        ComercialNames(comercial_name="Puran T4")
-                    ]
-                ),
-                Drug(
+                        ComercialNames(comercial_name="Synthroid",
+                                       presentations=[
+                                            Presentations(value="25uG"),
+                                            Presentations(value="50uG"),
+                                            Presentations(value="75uG"),
+                                            Presentations(value="100uG")
+                                            ]),
+                        ComercialNames(comercial_name="Euthyrox",
+                                       presentations=[
+                                            Presentations(value="25uG"),
+                                            Presentations(value="50uG"),
+                                            Presentations(value="75uG"),
+                                            Presentations(value="100uG")
+                                            ]),
+                        ComercialNames(comercial_name="Puran T4",
+                                       presentations=[
+                                            Presentations(value="25uG"),
+                                            Presentations(value="50uG"),
+                                            Presentations(value="75uG"),
+                                            Presentations(value="100uG")
+                                            ])]),
+                ActivePrinciple(
                     code="73590-58-6", 
-                    active_ingredients=[ActiveIngredient(name="omeprazol")], 
-                    presentations=[Presentations(value="20mg")], 
+                    active_ingredients="omeprazol", 
                     comercial_names=[
-                        ComercialNames(comercial_name="Losec"),
-                        ComercialNames(comercial_name="Omeprazol EMS")
+                        ComercialNames(comercial_name="Losec", 
+                                       presentations=[Presentations(value="20mg")]),
+                        ComercialNames(comercial_name="Omeprazol EMS", 
+                                       presentations=[Presentations(value="20mg")])
                     ]
                 ),
-                Drug(
+                ActivePrinciple(
                     code="79902-63-9", 
-                    active_ingredients=[ActiveIngredient(name="sinvastatina")], 
-                    presentations=[
-                        Presentations(value="10mg"),
-                        Presentations(value="20mg"),
-                        Presentations(value="40mg")
-                    ], 
+                    active_ingredients="sinvastatina", 
                     comercial_names=[
-                        ComercialNames(comercial_name="Zocor"),
-                        ComercialNames(comercial_name="Sinvasterol"),
-                        ComercialNames(comercial_name="Sinvix")
-                    ]
-                )
-            ]
+                        ComercialNames(comercial_name="Zocor",
+                            presentations=[
+                                Presentations(value="10mg"),
+                                Presentations(value="20mg"),
+                                Presentations(value="40mg")
+                                ]),
+                        ComercialNames(comercial_name="Sinvasterol",
+                            presentations=[
+                                Presentations(value="10mg"),
+                                Presentations(value="20mg"),
+                                Presentations(value="40mg")
+                                ]),
+                        ComercialNames(comercial_name="Sinvix",
+                            presentations=[
+                                Presentations(value="10mg"),
+                                Presentations(value="20mg"),
+                                Presentations(value="40mg")
+                                ])])]
+            
             session.add_all(drugs)
             session.commit()
             for drug in drugs:
@@ -159,25 +175,25 @@ class Database:
             session.add_all(user_diseases)
             session.commit()
 
-            """ TRACK DRUG USAGE """
-            tracking_records = [
-                UserDrugTracking(
-                    user_id=users[0].id, 
-                    drug_id=drugs[0].id, 
-                    created_date="2021-01-05", 
-                    took_date="2021-01-05", 
-                    is_taken=True
-                ),
-                UserDrugTracking(
-                    user_id=users[1].id, 
-                    drug_id=drugs[1].id, 
-                    created_date="2021-01-06", 
-                    took_date="2021-01-06", 
-                    is_taken=False
-                )
-            ]
-            session.add_all(tracking_records)
-            session.commit()
+            # """ TRACK DRUG USAGE """
+            # tracking_records = [
+            #     UserDrugTracking(
+            #         user_id=users[0].id, 
+            #         drug_id=drugs[0].id, 
+            #         created_date="2021-01-05", 
+            #         took_date="2021-01-05", 
+            #         is_taken=True
+            #     ),
+            #     UserDrugTracking(
+            #         user_id=users[1].id, 
+            #         drug_id=drugs[1].id, 
+            #         created_date="2021-01-06", 
+            #         took_date="2021-01-06", 
+            #         is_taken=False
+            #     )
+            # ]
+            # session.add_all(tracking_records)
+            # session.commit()
 
     # Singleton Database instance attribute
     _db_instance = None
