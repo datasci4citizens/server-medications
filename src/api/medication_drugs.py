@@ -2,8 +2,8 @@ from fastapi import APIRouter, HTTPException
 from sqlmodel import Session, select
 from sqlalchemy.orm import selectinload
 from db.manager import Database
-from api.schemas.models import Drug, User, UserDrugTracking
-from api.schemas.schemas import DrugRead
+from api.schemas.models import *
+from api.schemas.schemas import *
 from typing import List
 from sqlalchemy.orm import joinedload
 
@@ -18,14 +18,14 @@ def get_user_drugs(user_id: int):
             raise HTTPException(status_code=404, detail="User not found")
 
         query = (
-            select(Drug)
+            select(ComercialNames)
             .options(
-                selectinload(Drug.active_ingredients),
-                selectinload(Drug.presentations),
-                selectinload(Drug.comercial_names)
+                selectinload(ComercialNames.active_principles),
+                selectinload(ComercialNames.presentations),
+                selectinload(ComercialNames.comercial_names)
             )
-            .join(UserDrugTracking)
-            .where(UserDrugTracking.user_id == user_id)
+            .join(DrugUse)
+            .where(DrugUse.user_id == user_id)
         )
 
         result = session.exec(query)
@@ -40,10 +40,10 @@ def get_user_drugs(user_id: int):
 @drugs_router.get("/drugs", response_model=list[DrugRead])
 def get_all_drugs():
     with Session(Database.db_engine()) as session:
-        drugs = session.exec(select(Drug)
-                             .options(selectinload(Drug.active_ingredients))
-                             .options(selectinload(Drug.comercial_names))
-                             .options(selectinload(Drug.presentations))
+        drugs = session.exec(select(ComercialNames)
+                             .options(selectinload(ComercialNames.active_principles))
+                             .options(selectinload(ComercialNames.comercial_names))
+                             .options(selectinload(ComercialNames.presentations))
                              ).all()
     return drugs
 
@@ -51,9 +51,9 @@ def get_all_drugs():
 @drugs_router.get("/drugs/{{drug_id}}", response_model=DrugRead)
 def get_one_drug(drug_id: int):
     with Session(Database.db_engine()) as session:
-        drug = session.get(Drug, drug_id, options=[selectinload(Drug.active_ingredients),
-                                                    selectinload(Drug.comercial_names),
-                                                    selectinload(Drug.presentations)])
+        drug = session.get(ComercialNames, drug_id, options=[selectinload(ComercialNames.active_principles),
+                                                    selectinload(ComercialNames.comercial_names),
+                                                    selectinload(ComercialNames.presentations)])
         if not drug:
             raise HTTPException(status_code=404, detail="Drug not found")
         return drug
