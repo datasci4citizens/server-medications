@@ -52,61 +52,63 @@ class Database:
             drugs = [
                 ActivePrinciple(
                     code="51-48-9", 
-                    active_ingredients="levotiroxina", 
+                    active_ingredient="levotiroxina", 
                     comercial_names=[
-                        ComercialNames(comercial_name="Synthroid",
-                                       presentations=[
-                                            Presentations(value="25uG"),
-                                            Presentations(value="50uG"),
-                                            Presentations(value="75uG"),
-                                            Presentations(value="100uG")
-                                            ]),
-                        ComercialNames(comercial_name="Euthyrox",
-                                       presentations=[
-                                            Presentations(value="25uG"),
-                                            Presentations(value="50uG"),
-                                            Presentations(value="75uG"),
-                                            Presentations(value="100uG")
-                                            ]),
-                        ComercialNames(comercial_name="Puran T4",
-                                       presentations=[
-                                            Presentations(value="25uG"),
-                                            Presentations(value="50uG"),
-                                            Presentations(value="75uG"),
-                                            Presentations(value="100uG")
-                                            ])]),
+                        ComercialNames(comercial_name="Synthroid", drug_uses=[
+                            DrugUse(presentation=Presentations(value="25uG")),
+                            DrugUse(presentation=Presentations(value="50uG")),
+                            DrugUse(presentation=Presentations(value="75uG")),
+                            DrugUse(presentation=Presentations(value="100uG"))
+                        ]),
+                        ComercialNames(comercial_name="Euthyrox", drug_uses=[
+                            DrugUse(presentation=Presentations(value="25uG")),
+                            DrugUse(presentation=Presentations(value="50uG")),
+                            DrugUse(presentation=Presentations(value="75uG")),
+                            DrugUse(presentation=Presentations(value="100uG"))
+                        ]),
+                        ComercialNames(comercial_name="Puran T4", drug_uses=[
+                            DrugUse(presentation=Presentations(value="25uG")),
+                            DrugUse(presentation=Presentations(value="50uG")),
+                            DrugUse(presentation=Presentations(value="75uG")),
+                            DrugUse(presentation=Presentations(value="100uG"))
+                        ])
+                    ]
+                ),
                 ActivePrinciple(
                     code="73590-58-6", 
-                    active_ingredients="omeprazol", 
+                    active_ingredient="omeprazol", 
                     comercial_names=[
-                        ComercialNames(comercial_name="Losec", 
-                                       presentations=[Presentations(value="20mg")]),
-                        ComercialNames(comercial_name="Omeprazol EMS", 
-                                       presentations=[Presentations(value="20mg")])
+                        ComercialNames(comercial_name="Losec", drug_uses=[
+                            DrugUse(presentation=Presentations(value="20mg"))
+                        ]),
+                        ComercialNames(comercial_name="Omeprazol EMS", drug_uses=[
+                            DrugUse(presentation=Presentations(value="20mg"))
+                        ])
                     ]
                 ),
                 ActivePrinciple(
                     code="79902-63-9", 
-                    active_ingredients="sinvastatina", 
+                    active_ingredient="sinvastatina", 
                     comercial_names=[
-                        ComercialNames(comercial_name="Zocor",
-                            presentations=[
-                                Presentations(value="10mg"),
-                                Presentations(value="20mg"),
-                                Presentations(value="40mg")
-                                ]),
-                        ComercialNames(comercial_name="Sinvasterol",
-                            presentations=[
-                                Presentations(value="10mg"),
-                                Presentations(value="20mg"),
-                                Presentations(value="40mg")
-                                ]),
-                        ComercialNames(comercial_name="Sinvix",
-                            presentations=[
-                                Presentations(value="10mg"),
-                                Presentations(value="20mg"),
-                                Presentations(value="40mg")
-                                ])])]
+                        ComercialNames(comercial_name="Zocor", drug_uses=[
+                            DrugUse(presentation=Presentations(value="10mg")),
+                            DrugUse(presentation=Presentations(value="20mg")),
+                            DrugUse(presentation=Presentations(value="40mg"))
+                        ]),
+                        ComercialNames(comercial_name="Sinvasterol", drug_uses=[
+                            DrugUse(presentation=Presentations(value="10mg")),
+                            DrugUse(presentation=Presentations(value="20mg")),
+                            DrugUse(presentation=Presentations(value="40mg"))
+                        ]),
+                        ComercialNames(comercial_name="Sinvix", drug_uses=[
+                            DrugUse(presentation=Presentations(value="10mg")),
+                            DrugUse(presentation=Presentations(value="20mg")),
+                            DrugUse(presentation=Presentations(value="40mg"))
+                        ])
+                    ]
+                )
+            ]
+
             
             session.add_all(drugs)
             session.commit()
@@ -205,6 +207,6 @@ class Database:
         if Database._db_instance is None:
             Database._db_instance = Database()
             Database._db_instance.create_db()
-            Database._db_instance.add_data()
+            #Database._db_instance.add_data()
 
         return Database._db_instance.engine
