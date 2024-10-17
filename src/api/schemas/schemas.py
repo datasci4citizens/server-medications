@@ -1,21 +1,27 @@
 from datetime import date, datetime
 from sqlmodel import SQLModel
-from typing import List
+from typing import List, Optional
 
-class ActiveIngredientModel(SQLModel):
-    name: str
+class ActivePrincipleModel(SQLModel):
+    code: str
+    active_ingredient: str
 
 class PresentationModel(SQLModel):
     value: str
 
 class ComercialNameModel(SQLModel):
     comercial_name: str
+    active_principles: List[ActivePrincipleModel]
+    presentations: List[PresentationModel]
 
 class DrugRead(SQLModel):
-    code: str
-    active_ingredients: List[ActiveIngredientModel] 
-    presentations: List[PresentationModel] 
-    comercial_names: List[ComercialNameModel]  
+    # start_date: Optional[date]
+    # end_date: Optional[date]
+    # start_time: Optional[str]
+    # frequency: Optional[str]
+    # quantity: Optional[str]
+    comercial_names: List[ComercialNameModel]
+
 
 class UserDrugTrackingRead(SQLModel):
     drug_id: int
