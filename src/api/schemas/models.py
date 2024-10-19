@@ -20,18 +20,33 @@ class DrugUse(SQLModel, table=True):
     comercial_name: "ComercialNames" = Relationship(back_populates="drug_uses")
     presentation: "Presentations" = Relationship(back_populates="drug_uses")
 
+class ComercialNamesPresentations(SQLModel, table=True):
+    comercial_name_id: int = Field(foreign_key="comercialnames.id", primary_key=True)
+    presentation_id: int = Field(foreign_key="presentations.id", primary_key=True)
 
 class Presentations(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     value: str
 
-    # Relationship to DrugUse
+    comercial_names: List["ComercialNames"] = Relationship(
+        back_populates="presentations", 
+        link_model=ComercialNamesPresentations
+        )
     drug_uses: List["DrugUse"] = Relationship(back_populates="presentation")
-
 
 class ComercialNamesActivePrinciple(SQLModel, table=True):
     active_principle_id: int = Field(foreign_key="activeprinciple.id", primary_key=True)
     comercial_name_id: int = Field(foreign_key="comercialnames.id", primary_key=True)
+
+class ActivePrinciple(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    code: str
+    active_ingredient: str
+
+    comercial_names: List["ComercialNames"] = Relationship(
+        back_populates="active_principles",
+        link_model=ComercialNamesActivePrinciple
+    )
 
 class ComercialNames(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
@@ -44,16 +59,10 @@ class ComercialNames(SQLModel, table=True):
     drug_uses: List["DrugUse"] = Relationship(
         back_populates="comercial_name"
         )
-
-class ActivePrinciple(SQLModel, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
-    code: str
-    active_ingredient: str
-
-    comercial_names: List["ComercialNames"] = Relationship(
-        back_populates="active_principles",
-        link_model=ComercialNamesActivePrinciple
-    )
+    presentations: List["Presentations"] = Relationship(
+        back_populates="comercial_names",
+        link_model=ComercialNamesPresentations
+        )
 
 """ USER TABLES """
 class UserCaretaker(SQLModel, table=True):
@@ -62,11 +71,7 @@ class UserCaretaker(SQLModel, table=True):
 
 class Caretaker(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
-    email: str
     name: str
-    phone_number: Optional[str] = None
-    created_at: datetime = Field(default_factory=func.now)
-    updated_at: datetime = Field(default_factory=func.now)
 
     users: List["User"] = Relationship(
         back_populates="caretakers", link_model=UserCaretaker
@@ -75,8 +80,6 @@ class Caretaker(SQLModel, table=True):
 class UserDisease(SQLModel, table=True):
     user_id: int = Field(foreign_key="user.id", primary_key=True)
     disease_id: int = Field(foreign_key="disease.id", primary_key=True)
-    created_at: datetime = Field(default_factory=func.now)
-    updated_at: datetime = Field(default_factory=func.now)
     status: Optional[str] = None
 
     user: "User" = Relationship(back_populates="disease_links")
@@ -91,14 +94,13 @@ class Disease(SQLModel, table=True):
 class User(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     name: str
-    email: str
+    email: Optional[str]
     birth_date: Optional[date] = None
     phone_number: Optional[str] = None
     emergency_contact_name: Optional[str] = None
     emergency_contact_number: Optional[str] = None
     accept_tcle: bool
-    created_at: datetime = Field(default_factory=func.now)
-    updated_at: datetime = Field(default_factory=func.now)
+    scholarship: Optional[str] = None
 
     caretakers: List[Caretaker] = Relationship(
         back_populates="users", link_model=UserCaretaker
