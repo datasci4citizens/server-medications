@@ -24,7 +24,6 @@ def read_users():
             select(User)
             .options(selectinload(User.caretakers))
             .options(selectinload(User.disease_links))
-            .options(selectinload(User.drug_links)) 
         ).all()
     return users
 
@@ -35,8 +34,7 @@ def read_user(user_id: int):
             User, user_id,
             options=[
                 selectinload(User.caretakers),
-                selectinload(User.disease_links),
-                selectinload(User.drug_links) 
+                selectinload(User.disease_links)
             ]
         )
     return user

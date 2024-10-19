@@ -9,147 +9,47 @@ from sqlalchemy.orm import joinedload
 
 drugs_router = APIRouter()
 
-@drugs_router.get("/user/{user_id}/drugs", response_model=List[DrugRead])
+@drugs_router.get("/users/{user_id}/drugs", response_model=List[DrugUseRead])
 def get_user_drugs(user_id: int):
+    # Query the DrugUse table to get all drug uses for the given user
     with Session(Database.db_engine()) as session:
-        # Check if the user exists
-        user = session.get(User, user_id)
-        if not user:
-            raise HTTPException(status_code=404, detail="User not found")
-
-        # Query to get the user's drug use information
-        query = (
+        user_drugs = session.exec(
             select(DrugUse)
-            .options(
-                selectinload(DrugUse.comercial_name)
-                .selectinload(ComercialNames.active_principles),
-                selectinload(DrugUse.comercial_name)
-                .selectinload(ComercialNames.presentations)
-            )
             .where(DrugUse.user_id == user_id)
-        )
-
-        result = session.exec(query)
-        drug_uses = result.all()
-
-        if not drug_uses:
-            return []
-
-        # Format the result for response
-        response = []
-        for drug_use in drug_uses:
-            drug_data = DrugRead(
-                start_date=drug_use.start_date,
-                end_date=drug_use.end_date,
-                start_time=drug_use.start_time,
-                frequency=drug_use.frequency,
-                quantity=drug_use.quantity,
-                comercial_names=[
-                    ComercialNameModel(
-                        comercial_name=drug_use.comercial_name.comercial_name,
-                        active_principles=[
-                            ActivePrincipleModel(
-                                code=ap.code,
-                                active_ingredient=ap.active_ingredient
-                            ) for ap in drug_use.comercial_name.active_principles
-                        ],
-                        presentations=[
-                            PresentationModel(value=pres.value)
-                            for pres in drug_use.comercial_name.presentations
-                        ]
-                    )
-                ]
+            .options(
+                selectinload(DrugUse.comercial_name).selectinload(ComercialNames.presentations),
+                selectinload(DrugUse.comercial_name).selectinload(ComercialNames.active_principles),  # Load active principles
+                selectinload(DrugUse.presentation)  # Load the specific presentation
             )
-            response.append(drug_data)
+        ).all()
 
-        return response
+        if not user_drugs:
+            raise HTTPException(status_code=404, detail="No drugs found for this user")
 
-# Get all drugs
-@drugs_router.get("/drugs", response_model=List[DrugRead])
+        return user_drugs
+
+# Route to fetch all drugs
+@drugs_router.get("/drugs/", response_model=List[DrugReadWithDetails])
 def get_all_drugs():
     with Session(Database.db_engine()) as session:
-        # Query to get all drugs and their related data through DrugUse
-        query = (
-            select(DrugUse)
-            .options(
-                selectinload(DrugUse.comercial_name)
-                .selectinload(ComercialNames.active_principles),
-                selectinload(DrugUse.presentation)
-            )
-        )
-        drug_uses = session.exec(query).all()
+        drugs = session.exec(select(ActivePrinciple).options(
+            selectinload(ActivePrinciple.comercial_names).
+            selectinload(ComercialNames.presentations))).all()
+        return drugs
 
-        if not drug_uses:
-            return []
-
-        # Format the result for response
-        response = []
-        for drug_use in drug_uses:
-            drug_data = DrugRead(
-                start_date=drug_use.start_date,
-                end_date=drug_use.end_date,
-                start_time=drug_use.start_time,
-                frequency=drug_use.frequency,
-                quantity=drug_use.quantity,
-                comercial_names=[
-                    ComercialNameModel(
-                        comercial_name=drug_use.comercial_name.comercial_name,
-                        active_principles=[
-                            ActivePrincipleModel(
-                                code=ap.code,
-                                active_ingredient=ap.active_ingredient
-                            ) for ap in drug_use.comercial_name.active_principles
-                        ],
-                        presentations=[
-                            PresentationModel(value=drug_use.presentation.value)
-                        ]
-                    )
-                ]
-            )
-            response.append(drug_data)
-
-        return response
-
-
-# Get one drug
-@drugs_router.get("/drugs/{drug_id}", response_model=DrugRead)
+# Route to fetch a specific drug by id
+@drugs_router.get("/drugs/{drug_id}", response_model=DrugReadWithDetails)
 def get_one_drug(drug_id: int):
     with Session(Database.db_engine()) as session:
-        # Query to get the drug by its ID via DrugUse
-        drug_use = session.get(
-            DrugUse,
-            drug_id,
-            options=[
-                selectinload(DrugUse.comercial_name)
-                .selectinload(ComercialNames.active_principles),
-                selectinload(DrugUse.presentation)
-            ]
-        )
+        drug = session.exec(
+            select(ActivePrinciple)
+            .where(ActivePrinciple.id == drug_id)
+            .options(
+                selectinload(ActivePrinciple.comercial_names).selectinload(ComercialNames.presentations)
+            )
+        ).first()
 
-        if not drug_use:
+        if not drug:
             raise HTTPException(status_code=404, detail="Drug not found")
-
-        # Format the result for response
-        drug_data = DrugRead(
-            start_date=drug_use.start_date,
-            end_date=drug_use.end_date,
-            start_time=drug_use.start_time,
-            frequency=drug_use.frequency,
-            quantity=drug_use.quantity,
-            comercial_names=[
-                ComercialNameModel(
-                    comercial_name=drug_use.comercial_name.comercial_name,
-                    active_principles=[
-                        ActivePrincipleModel(
-                            code=ap.code,
-                            active_ingredient=ap.active_ingredient
-                        ) for ap in drug_use.comercial_name.active_principles
-                    ],
-                    presentations=[
-                        PresentationModel(value=drug_use.presentation.value)
-                    ]
-                )
-            ]
-        )
-
-        return drug_data
+        
+        return drug

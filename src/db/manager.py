@@ -27,9 +27,7 @@ class Database:
                     phone_number="123456789", 
                     emergency_contact_name="Jane Doe", 
                     emergency_contact_number="987654321", 
-                    accept_tcle=True,
-                    created_at="2021-01-01",
-                    updated_at="2021-01-01"
+                    accept_tcle=True
                 ),
                 User(
                     name="Jane Doe", 
@@ -38,9 +36,7 @@ class Database:
                     phone_number="123456789",
                     emergency_contact_name="John Doe",
                     emergency_contact_number="987654321",
-                    accept_tcle=True,
-                    created_at="2021-01-01",
-                    updated_at="2021-01-01"
+                    accept_tcle=True
                 )
             ]
             session.add_all(users)
@@ -54,62 +50,85 @@ class Database:
                     code="51-48-9", 
                     active_ingredient="levotiroxina", 
                     comercial_names=[
-                        ComercialNames(comercial_name="Synthroid", drug_uses=[
-                            DrugUse(presentation=Presentations(value="25uG")),
-                            DrugUse(presentation=Presentations(value="50uG")),
-                            DrugUse(presentation=Presentations(value="75uG")),
-                            DrugUse(presentation=Presentations(value="100uG"))
-                        ]),
-                        ComercialNames(comercial_name="Euthyrox", drug_uses=[
-                            DrugUse(presentation=Presentations(value="25uG")),
-                            DrugUse(presentation=Presentations(value="50uG")),
-                            DrugUse(presentation=Presentations(value="75uG")),
-                            DrugUse(presentation=Presentations(value="100uG"))
-                        ]),
-                        ComercialNames(comercial_name="Puran T4", drug_uses=[
-                            DrugUse(presentation=Presentations(value="25uG")),
-                            DrugUse(presentation=Presentations(value="50uG")),
-                            DrugUse(presentation=Presentations(value="75uG")),
-                            DrugUse(presentation=Presentations(value="100uG"))
-                        ])
+                        ComercialNames(
+                            comercial_name="Synthroid", 
+                            presentations=[
+                                Presentations(value="25uG"),
+                                Presentations(value="50uG"),
+                                Presentations(value="75uG"),
+                                Presentations(value="100uG")
+                            ]
+                        ),
+                        ComercialNames(
+                            comercial_name="Euthyrox", 
+                            presentations=[
+                                Presentations(value="25uG"),
+                                Presentations(value="50uG"),
+                                Presentations(value="75uG"),
+                                Presentations(value="100uG")
+                            ]
+                        ),
+                        ComercialNames(
+                            comercial_name="Puran T4", 
+                            presentations=[
+                                Presentations(value="25uG"),
+                                Presentations(value="50uG"),
+                                Presentations(value="75uG"),
+                                Presentations(value="100uG")
+                            ]
+                        )
                     ]
                 ),
                 ActivePrinciple(
                     code="73590-58-6", 
                     active_ingredient="omeprazol", 
                     comercial_names=[
-                        ComercialNames(comercial_name="Losec", drug_uses=[
-                            DrugUse(presentation=Presentations(value="20mg"))
-                        ]),
-                        ComercialNames(comercial_name="Omeprazol EMS", drug_uses=[
-                            DrugUse(presentation=Presentations(value="20mg"))
-                        ])
+                        ComercialNames(
+                            comercial_name="Losec", 
+                            presentations=[
+                                Presentations(value="20mg")
+                            ]
+                        ),
+                        ComercialNames(
+                            comercial_name="Omeprazol EMS", 
+                            presentations=[
+                                Presentations(value="20mg")
+                            ]
+                        )
                     ]
                 ),
                 ActivePrinciple(
                     code="79902-63-9", 
                     active_ingredient="sinvastatina", 
                     comercial_names=[
-                        ComercialNames(comercial_name="Zocor", drug_uses=[
-                            DrugUse(presentation=Presentations(value="10mg")),
-                            DrugUse(presentation=Presentations(value="20mg")),
-                            DrugUse(presentation=Presentations(value="40mg"))
-                        ]),
-                        ComercialNames(comercial_name="Sinvasterol", drug_uses=[
-                            DrugUse(presentation=Presentations(value="10mg")),
-                            DrugUse(presentation=Presentations(value="20mg")),
-                            DrugUse(presentation=Presentations(value="40mg"))
-                        ]),
-                        ComercialNames(comercial_name="Sinvix", drug_uses=[
-                            DrugUse(presentation=Presentations(value="10mg")),
-                            DrugUse(presentation=Presentations(value="20mg")),
-                            DrugUse(presentation=Presentations(value="40mg"))
-                        ])
+                        ComercialNames(
+                            comercial_name="Zocor", 
+                            presentations=[
+                                Presentations(value="10mg"),
+                                Presentations(value="20mg"),
+                                Presentations(value="40mg")
+                            ]
+                        ),
+                        ComercialNames(
+                            comercial_name="Sinvasterol", 
+                            presentations=[
+                                Presentations(value="10mg"),
+                                Presentations(value="20mg"),
+                                Presentations(value="40mg")
+                            ]
+                        ),
+                        ComercialNames(
+                            comercial_name="Sinvix", 
+                            presentations=[
+                                Presentations(value="10mg"),
+                                Presentations(value="20mg"),
+                                Presentations(value="40mg")
+                            ]
+                        )
                     ]
                 )
             ]
 
-            
             session.add_all(drugs)
             session.commit()
             for drug in drugs:
@@ -118,18 +137,10 @@ class Database:
             """ ADD CARETAKERS """
             caretakers = [
                 Caretaker(
-                    name="Alice Care", 
-                    email="alice@caretaker.com", 
-                    phone_number="123123123", 
-                    created_at="2021-01-01", 
-                    updated_at="2021-01-01"
+                    name="Alice Care"
                 ),
                 Caretaker(
-                    name="Bob Care", 
-                    email="bob@caretaker.com", 
-                    phone_number="456456456", 
-                    created_at="2021-01-01", 
-                    updated_at="2021-01-01"
+                    name="Bob Care"
                 )
             ]
             session.add_all(caretakers)
@@ -162,40 +173,59 @@ class Database:
                 UserDisease(
                     user_id=users[0].id, 
                     disease_id=diseases[0].id, 
-                    status="Chronic", 
-                    created_at="2021-01-01", 
-                    updated_at="2021-01-01"
+                    status="Chronic"
                 ),
                 UserDisease(
                     user_id=users[1].id, 
                     disease_id=diseases[1].id, 
-                    status="Chronic", 
-                    created_at="2021-01-01", 
-                    updated_at="2021-01-01"
+                    status="Chronic"
                 )
             ]
             session.add_all(user_diseases)
             session.commit()
 
-            # """ TRACK DRUG USAGE """
-            # tracking_records = [
-            #     UserDrugTracking(
-            #         user_id=users[0].id, 
-            #         drug_id=drugs[0].id, 
-            #         created_date="2021-01-05", 
-            #         took_date="2021-01-05", 
-            #         is_taken=True
-            #     ),
-            #     UserDrugTracking(
-            #         user_id=users[1].id, 
-            #         drug_id=drugs[1].id, 
-            #         created_date="2021-01-06", 
-            #         took_date="2021-01-06", 
-            #         is_taken=False
-            #     )
-            # ]
-            # session.add_all(tracking_records)
-            # session.commit()
+            # Link John Doe to a drug
+            drug_use_john = [
+                DrugUse(
+                    user_id=1, 
+                    comercial_name_id=1,  
+                    presentation_id=1,   
+                    start_date="2024-10-01",
+                    frequency="Once daily",
+                    quantity="1 tablet"
+                ),
+                DrugUse(
+                    user_id=1,  
+                    comercial_name_id=2,  
+                    presentation_id=2,   
+                    start_date="2024-10-01",
+                    frequency="Once daily",
+                    quantity="1 tablet"
+                )
+            ]
+
+            drug_use_jane = [
+                DrugUse(
+                    user_id=2,  
+                    comercial_name_id=3,  
+                    presentation_id=3, 
+                    start_date="2024-10-01",
+                    frequency="Once daily",
+                    quantity="1 tablet"
+                ),
+                DrugUse(
+                    user_id=2,  
+                    comercial_name_id=4,  
+                    presentation_id=4, 
+                    start_date="2024-10-01",
+                    frequency="Once daily",
+                    quantity="1 tablet"
+                )
+            ]
+
+            session.add_all(drug_use_john)
+            session.add_all(drug_use_jane)
+            session.commit()
 
     # Singleton Database instance attribute
     _db_instance = None
@@ -207,6 +237,6 @@ class Database:
         if Database._db_instance is None:
             Database._db_instance = Database()
             Database._db_instance.create_db()
-            #Database._db_instance.add_data()
+            Database._db_instance.add_data()
 
         return Database._db_instance.engine
