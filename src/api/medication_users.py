@@ -1,8 +1,9 @@
-from datetime import date, datetime
-from fastapi import APIRouter, HTTPException, Depends
-from sqlmodel import Field, SQLModel, Session, select
+from fastapi import APIRouter, HTTPException
+from sqlmodel import Session, select
 from db.manager import Database
-from api.schemas.models import User, UserCreate, UserUpdate, UserPublic
+from api.schemas.models import User
+from api.schemas.schemas import UserCreate, UserUpdate, UserPublic, UserRead
+from sqlalchemy.orm import selectinload
 
 BASE_URL_USERS = "/medications/user"
 user_router = APIRouter()
@@ -16,16 +17,26 @@ def create_user(user: UserCreate):
         session.refresh(new_user)
     return new_user
 
-@user_router.get(BASE_URL_USERS, response_model=list[User])
+@user_router.get(BASE_URL_USERS, response_model=list[UserRead])
 def read_users():
     with Session(Database.db_engine()) as session:
-        users = session.exec(select(User)).all()
+        users = session.exec(
+            select(User)
+            .options(selectinload(User.caretakers))
+            .options(selectinload(User.disease_links))
+        ).all()
     return users
 
-@user_router.get(f"{BASE_URL_USERS}/{{user_id}}", response_model=UserPublic)
+@user_router.get(f"{BASE_URL_USERS}/{{user_id}}", response_model=UserRead)
 def read_user(user_id: int):
     with Session(Database.db_engine()) as session:
-        user = session.get(User, user_id)
+        user = session.get(
+            User, user_id,
+            options=[
+                selectinload(User.caretakers),
+                selectinload(User.disease_links)
+            ]
+        )
     return user
 
 @user_router.put(f"{BASE_URL_USERS}/{{user_id}}", response_model=UserPublic)
