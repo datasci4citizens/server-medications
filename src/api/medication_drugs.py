@@ -29,12 +29,15 @@ def get_user_drugs(user_id: int):
         return user_drugs
 
 # Route to fetch all drugs
-@drugs_router.get("/drugs/", response_model=List[DrugReadWithDetails])
+@drugs_router.get("/drugs/", response_model=List[ComercialNameRead])
 def get_all_drugs():
     with Session(Database.db_engine()) as session:
-        drugs = session.exec(select(ActivePrinciple).options(
-            selectinload(ActivePrinciple.comercial_names).
-            selectinload(ComercialNames.presentations))).all()
+        drugs = session.exec(
+            select(ComercialNames).options(
+                selectinload(ComercialNames.active_principles),
+                selectinload(ComercialNames.presentations)
+            )
+                ).all()
         return drugs
 
 # Route to fetch a specific drug by id
@@ -45,7 +48,7 @@ def get_one_drug(drug_id: int):
             select(ActivePrinciple)
             .where(ActivePrinciple.id == drug_id)
             .options(
-                selectinload(ActivePrinciple.comercial_names).selectinload(ComercialNames.presentations)
+                selectinload(ActivePrinciple.comercial_names)#.selectinload(ComercialNames.presentations)
             )
         ).first()
 
