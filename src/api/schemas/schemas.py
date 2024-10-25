@@ -22,6 +22,7 @@ class ComercialNameRead(SQLModel):
     id: int
     comercial_name: str
     active_principles: List[ActivePrincipleRead]
+    presentations: List[PresentationRead]
 
 # Schema for reading the active principles (all drugs)
 class DrugRead(SQLModel):
