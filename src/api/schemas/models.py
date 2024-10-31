@@ -9,13 +9,11 @@ class DrugUse(SQLModel, table=True):
     user_id: int = Field(foreign_key="user.id")
     comercial_name_id: int = Field(foreign_key="comercialnames.id")
     presentation_id: int = Field(foreign_key="presentations.id")
-    start_date: Optional[date] = None
-    end_date: Optional[date] = None
-    start_time: Optional[str] = None
-    frequency: Optional[str] = None
-    quantity: Optional[str] = None
+    start_date: Optional[str] = None
+    end_date: Optional[str] = None
+    observation: Optional[str] = None
+    quantity: Optional[int] = None
 
-    # Relationships
     user: "User" = Relationship(back_populates="drug_uses")
     comercial_name: "ComercialNames" = Relationship(back_populates="drug_uses")
     presentation: "Presentations" = Relationship(back_populates="drug_uses")
@@ -63,6 +61,19 @@ class ComercialNames(SQLModel, table=True):
         back_populates="comercial_names",
         link_model=ComercialNamesPresentations
         )
+    
+class Schedule(SQLModel, table=True):   
+    """
+    This table is used to store the schedule of the user's medication.
+    type is either "D" for daily or "W" for weekly.
+    value is when the medication should be taken.
+    example: if type is "D" and value is 1, the medication should be taken once every day at 1.
+             if type is "W" and value is 4, the medication should be taken once every wednesday.	
+    """
+    id: Optional[int] = Field(default=None, primary_key=True)
+    drug_use_id: int = Field(foreign_key="druguse.id")
+    type: Optional[str] = None
+    value: Optional[int] = None
 
 """ USER TABLES """
 class UserCaretaker(SQLModel, table=True):
@@ -72,6 +83,7 @@ class UserCaretaker(SQLModel, table=True):
 class Caretaker(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     name: str
+    email: Optional[str] = None
 
     users: List["User"] = Relationship(
         back_populates="caretakers", link_model=UserCaretaker
@@ -101,6 +113,8 @@ class User(SQLModel, table=True):
     emergency_contact_number: Optional[str] = None
     accept_tcle: bool
     scholarship: Optional[str] = None
+    gender: Optional[str] = None
+    sex: Optional[str] = None
 
     caretakers: List[Caretaker] = Relationship(
         back_populates="users", link_model=UserCaretaker
