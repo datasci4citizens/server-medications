@@ -13,10 +13,12 @@ class DrugUse(SQLModel, table=True):
     end_date: Optional[str] = None
     observation: Optional[str] = None
     quantity: Optional[int] = None
+    status: Optional[str] = "Active"
 
     user: "User" = Relationship(back_populates="drug_uses")
     comercial_name: "ComercialNames" = Relationship(back_populates="drug_uses")
     presentation: "Presentations" = Relationship(back_populates="drug_uses")
+    schedules: List["Schedule"] = Relationship(back_populates="drug_use")
 
 class ComercialNamesPresentations(SQLModel, table=True):
     comercial_name_id: int = Field(foreign_key="comercialnames.id", primary_key=True)
@@ -74,6 +76,8 @@ class Schedule(SQLModel, table=True):
     drug_use_id: int = Field(foreign_key="druguse.id")
     type: Optional[str] = None
     value: Optional[int] = None
+
+    drug_use: Optional["DrugUse"] = Relationship(back_populates="schedules")
 
 """ USER TABLES """
 class UserCaretaker(SQLModel, table=True):

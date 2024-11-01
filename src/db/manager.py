@@ -198,14 +198,16 @@ class Database:
                     comercial_name_id=1,  
                     presentation_id=1,   
                     start_date="2024-10-01",
-                    quantity="1"
+                    quantity="1",
+                    status="Active"
                 ),
                 DrugUse(
                     user_id=1,  
                     comercial_name_id=2,  
                     presentation_id=2,   
                     start_date="2024-10-01",
-                    quantity="1"
+                    quantity="1",
+                    status="Active"
                 )
             ]
 
@@ -215,14 +217,16 @@ class Database:
                     comercial_name_id=3,  
                     presentation_id=3, 
                     start_date="2024-10-01",
-                    quantity="1"
+                    quantity="1",
+                    status="Active"
                 ),
                 DrugUse(
                     user_id=2,  
                     comercial_name_id=4,  
                     presentation_id=4, 
                     start_date="2024-10-01",
-                    quantity="1"
+                    quantity="1",
+                    status="Active"
                 )
             ]
 
@@ -251,6 +255,6 @@ class Database:
         if Database._db_instance is None:
             Database._db_instance = Database()
             Database._db_instance.create_db()
-            Database._db_instance.add_data()
+            #Database._db_instance.add_data()
 
         return Database._db_instance.engine

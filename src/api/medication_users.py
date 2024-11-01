@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from sqlmodel import Session, select
 from db.manager import Database
-from api.schemas.models import User
+from api.schemas.models import User, UserDisease
 from api.schemas.schemas import *
 from sqlalchemy.orm import selectinload
 

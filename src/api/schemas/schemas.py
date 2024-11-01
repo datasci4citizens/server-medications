@@ -43,6 +43,7 @@ class DrugUseRead(SQLModel):
     quantity: Optional[int]
     comercial_name: ComercialNameRead
     presentation: PresentationRead 
+    status: Optional[str] 
 
 class CaretakerBase(SQLModel):
     name: str
@@ -113,3 +114,71 @@ class DrugUseCreate(SQLModel):
     end_date: str
     observation: str
     quantity: int
+    status: Optional[str] 
+
+class ComercialNameReadWithoutActivePrinciples(SQLModel):
+    id: int
+    comercial_name: str
+
+class DrugUseScheduleRead(SQLModel):
+    id: int
+    start_date: Optional[str] = None
+    end_date: Optional[str] = None
+    observation: Optional[str] = None
+    quantity: int
+    comercial_name: ComercialNameReadWithoutActivePrinciples
+    presentation: PresentationRead
+    status: Optional[str] 
+
+class ScheduleRead(SQLModel):
+    id: int
+    drug_use: Optional[DrugUseScheduleRead] = None
+    type: Optional[str] = None
+    value: Optional[int] = None
+
+class ScheduleCreate(SQLModel):
+    drug_use_id: int
+    type: Optional[str] = None
+    value: Optional[int] = None
+
+class ScheduleUpdate(SQLModel):
+    type: str | None = None
+    value: int | None = None
+
+class UserDiseaseModel(SQLModel):
+    disease_id: int
+    status: str | None = None
+
+class DiseaseCreate(SQLModel):
+    name: str
+    description: Optional[str] = None
+
+class DiseaseUpdate(SQLModel):
+    name: Optional[str] = None
+    description: Optional[str] = None
+
+class DiseaseRead(SQLModel):
+    id: int
+    name: str
+    description: Optional[str] = None
+
+class DiseasePublic(DiseaseRead):
+    pass
+
+class ScheduleInfo(SQLModel):
+    id: int
+    type: str
+    value: int
+
+class UserScheduleResponse(SQLModel):
+    drug_use: DrugUseScheduleRead  # Reference to your existing `DrugUseRead` model
+    schedules: List[ScheduleInfo]  # List of schedules associated with this `drug_use`
+
+class ScheduleItemRead(SQLModel):
+    id: int
+    type: str
+    value: float | int | str
+
+class GroupedScheduleResponse(SQLModel):
+    drug_use: DrugUseScheduleRead
+    schedules: List[ScheduleItemRead]
