@@ -17,7 +17,7 @@ def get_user_drugs(user_id: int):
         user_drugs = session.exec(
             select(DrugUse)
             .where(DrugUse.user_id == user_id)
-            .where(DrugUse.status == "Active")
+            .where(DrugUse.status == "active")
             .options(
                 selectinload(DrugUse.comercial_name).selectinload(ComercialNames.presentations),
                 selectinload(DrugUse.comercial_name).selectinload(ComercialNames.active_principles),

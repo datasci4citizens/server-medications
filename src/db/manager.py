@@ -180,12 +180,12 @@ class Database:
                 UserDisease(
                     user_id=users[0].id, 
                     disease_id=diseases[0].id, 
-                    status="Chronic"
+                    status="chronic"
                 ),
                 UserDisease(
                     user_id=users[1].id, 
                     disease_id=diseases[1].id, 
-                    status="Chronic"
+                    status="chronic"
                 )
             ]
             session.add_all(user_diseases)
@@ -199,7 +199,7 @@ class Database:
                     presentation_id=1,   
                     start_date="2024-10-01",
                     quantity="1",
-                    status="Active"
+                    status="active"
                 ),
                 DrugUse(
                     user_id=1,  
@@ -207,7 +207,7 @@ class Database:
                     presentation_id=2,   
                     start_date="2024-10-01",
                     quantity="1",
-                    status="Active"
+                    status="active"
                 )
             ]
 
@@ -218,7 +218,7 @@ class Database:
                     presentation_id=3, 
                     start_date="2024-10-01",
                     quantity="1",
-                    status="Active"
+                    status="active"
                 ),
                 DrugUse(
                     user_id=2,  
@@ -226,7 +226,7 @@ class Database:
                     presentation_id=4, 
                     start_date="2024-10-01",
                     quantity="1",
-                    status="Active"
+                    status="active"
                 )
             ]
 
@@ -255,6 +255,6 @@ class Database:
         if Database._db_instance is None:
             Database._db_instance = Database()
             Database._db_instance.create_db()
-            #Database._db_instance.add_data()
+            Database._db_instance.add_data()
 
         return Database._db_instance.engine
