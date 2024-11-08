@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   db:
     image: postgres
@@ -11,7 +9,14 @@ services:
     environment:
       POSTGRES_PASSWORD: postgres
     ports:
-      - "5431:5432"
+      - "5432:5432"
+
+  server:
+    image: wounds-server:v0.1
+    ports:
+      - "8000:8000"
+    environment:
+      POSTGRES_URL: postgresql://postgres:postgres@db:5432/postgres
 
 volumes:
   postgres-data:

@@ -1,0 +1,26 @@
+services:
+  db:
+    image: postgres
+    volumes:
+      - medications-data:/var/lib/postgresql/data
+      - medications-impexp:/home
+    restart: on-failure:5
+    shm_size: 128mb
+    environment:
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+
+volumes:
+  medications-data:
+    driver: "local"
+    driver_opts:
+      type: "none"
+      device: "/home/user/data/pgsql/medications-db"
+      o: "bind" 
+  medications-impexp:
+    driver: "local"
+    driver_opts:
+      type: "none"
+      device: "/home/user/data/pgsql/medications-impexp"
+      o: "bind" 

@@ -12,5 +12,5 @@ This project embraces the server implementation for all applications.
 ## Running the Main Server Application
 
 ~~~
-fastapi dev main_common.py
+fastapi dev main.py
 ~~~
