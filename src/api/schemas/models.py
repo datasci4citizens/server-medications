@@ -26,7 +26,8 @@ class ComercialNamesPresentations(SQLModel, table=True):
 
 class Presentations(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
-    value: str
+    concentration: str
+    pharmaceutical_form: str
 
     comercial_names: List["ComercialNames"] = Relationship(
         back_populates="presentations", 
