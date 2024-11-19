@@ -1,8 +1,8 @@
 from fastapi import APIRouter, HTTPException
 from sqlmodel import Session, select
 from db.manager import Database
-from api.schemas.models import Disease, User, UserDisease
-from api.schemas.schemas import DiseaseCreate, DiseaseUpdate, DiseaseRead, DiseasePublic, UserDiseaseModel, DiseaseModel
+from db.models import Disease, User, UserDisease
+from api.schemas import DiseaseCreate, DiseaseUpdate, DiseaseRead, DiseasePublic, UserDiseaseModel, DiseaseModel
 
 BASE_URL_DISEASES = "/diseases"
 disease_router = APIRouter()

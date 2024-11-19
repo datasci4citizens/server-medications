@@ -1,7 +1,7 @@
 from sqlmodel import create_engine, Session
 
 import db.config as config
-from api.schemas.models import *
+from db.models import *
 
 class Database:
     """Database class to handle database connection and operations"""
@@ -16,7 +16,7 @@ class Database:
         Caretaker.metadata.create_all(self.engine)
     
     def add_data(self):
-        """Add data to the database"""
+        """Add test data to the database"""
         with Session(self.engine) as session:
             """ ADD USERS """
             users = [
@@ -258,3 +258,8 @@ class Database:
             Database._db_instance.add_data()
 
         return Database._db_instance.engine
+    
+    @staticmethod
+    def get_session():
+        with Session(Database.db_engine()) as session:
+            yield session

@@ -1,8 +1,8 @@
 from fastapi import APIRouter, HTTPException
 from sqlmodel import Session, select
 from db.manager import Database
-from api.schemas.models import Caretaker, User, UserCaretaker
-from api.schemas.schemas import *
+from db.models import Caretaker, User, UserCaretaker
+from api.schemas import *
 from sqlalchemy.orm import selectinload
 
 BASE_URL_CARETAKERS = "/caretaker"

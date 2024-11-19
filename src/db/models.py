@@ -67,10 +67,8 @@ class ComercialNames(SQLModel, table=True):
 class Schedule(SQLModel, table=True):   
     """
     This table is used to store the schedule of the user's medication.
-    type is either "D" for daily or "W" for weekly.
-    value is when the medication should be taken.
-    example: if type is "D" and value is 1, the medication should be taken once every day at 1.
-             if type is "W" and value is 4, the medication should be taken once every wednesday.	
+    type is either "D" for Day or "H" for Hour.
+    value is when the medication should be taken.	
     """
     id: Optional[int] = Field(default=None, primary_key=True)
     drug_use_id: int = Field(foreign_key="druguse.id")

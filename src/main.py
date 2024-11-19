@@ -1,11 +1,11 @@
 from fastapi import FastAPI
 
 from db.manager import Database
-from api.medication_users import user_router
-from api.medication_drugs import drugs_router
-from api.medication_caretakers import caretaker_router
-from api.medication_schedule import schedule_router
-from api.medication_diseases import disease_router
+from api.routers.medication_users import user_router
+from api.routers.medication_drugs import drugs_router
+from api.routers.medication_caretakers import caretaker_router
+from api.routers.medication_schedule import schedule_router
+from api.routers.medication_diseases import disease_router
 
 Database.db_engine()
 

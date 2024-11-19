@@ -2,8 +2,8 @@ from fastapi import APIRouter, HTTPException
 from sqlmodel import Session, select
 from sqlalchemy.orm import selectinload
 from db.manager import Database
-from api.schemas.models import *
-from api.schemas.schemas import *
+from db.models import *
+from api.schemas import *
 from collections import defaultdict
 
 schedule_router = APIRouter()
