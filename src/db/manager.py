@@ -255,7 +255,7 @@ class Database:
         if Database._db_instance is None:
             Database._db_instance = Database()
             Database._db_instance.create_db()
-            Database._db_instance.add_data()
+            #Database._db_instance.add_data()
 
         return Database._db_instance.engine
     
