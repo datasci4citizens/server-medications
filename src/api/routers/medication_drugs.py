@@ -1,12 +1,13 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from sqlmodel import Session, select
 from sqlalchemy.orm import selectinload
 from db.manager import Database
 from db.models import *
 from api.schemas import *
 from typing import List
+from auth.auth_service import AuthService
 
-drugs_router = APIRouter()
+drugs_router = APIRouter(dependencies=[Depends(AuthService.get_current_user)])
 
 BASE_URL_DRUGS = "/drugs"
 
