@@ -1,7 +1,7 @@
 from sqlmodel import create_engine, Session
 
 import db.config as config
-from api.schemas.models import *
+from db.models import *
 
 class Database:
     """Database class to handle database connection and operations"""
@@ -16,7 +16,7 @@ class Database:
         Caretaker.metadata.create_all(self.engine)
     
     def add_data(self):
-        """Add data to the database"""
+        """Add test data to the database"""
         with Session(self.engine) as session:
             """ ADD USERS """
             users = [
@@ -27,6 +27,8 @@ class Database:
                     phone_number="123456789", 
                     emergency_contact_name="Jane Doe", 
                     emergency_contact_number="987654321", 
+                    gender = "M",
+                    sex = "M",
                     accept_tcle=True
                 ),
                 User(
@@ -36,6 +38,8 @@ class Database:
                     phone_number="123456789",
                     emergency_contact_name="John Doe",
                     emergency_contact_number="987654321",
+                    gender = "F",
+                    sex = "F",
                     accept_tcle=True
                 )
             ]
@@ -131,16 +135,19 @@ class Database:
 
             session.add_all(drugs)
             session.commit()
+
             for drug in drugs:
                 session.refresh(drug)
 
             """ ADD CARETAKERS """
             caretakers = [
                 Caretaker(
-                    name="Alice Care"
+                    name="Alice Care",
+                    email = "alice@care.com"
                 ),
                 Caretaker(
-                    name="Bob Care"
+                    name="Bob Care",
+                    email = "bob@care.com"
                 )
             ]
             session.add_all(caretakers)
@@ -173,34 +180,34 @@ class Database:
                 UserDisease(
                     user_id=users[0].id, 
                     disease_id=diseases[0].id, 
-                    status="Chronic"
+                    status="chronic"
                 ),
                 UserDisease(
                     user_id=users[1].id, 
                     disease_id=diseases[1].id, 
-                    status="Chronic"
+                    status="chronic"
                 )
             ]
             session.add_all(user_diseases)
             session.commit()
 
-            # Link John Doe to a drug
+            # Link Users and Drugs
             drug_use_john = [
                 DrugUse(
                     user_id=1, 
                     comercial_name_id=1,  
                     presentation_id=1,   
                     start_date="2024-10-01",
-                    frequency="Once daily",
-                    quantity="1 tablet"
+                    quantity="1",
+                    status="active"
                 ),
                 DrugUse(
                     user_id=1,  
                     comercial_name_id=2,  
                     presentation_id=2,   
                     start_date="2024-10-01",
-                    frequency="Once daily",
-                    quantity="1 tablet"
+                    quantity="1",
+                    status="active"
                 )
             ]
 
@@ -210,21 +217,32 @@ class Database:
                     comercial_name_id=3,  
                     presentation_id=3, 
                     start_date="2024-10-01",
-                    frequency="Once daily",
-                    quantity="1 tablet"
+                    quantity="1",
+                    status="active"
                 ),
                 DrugUse(
                     user_id=2,  
                     comercial_name_id=4,  
                     presentation_id=4, 
                     start_date="2024-10-01",
-                    frequency="Once daily",
-                    quantity="1 tablet"
+                    quantity="1",
+                    status="active"
                 )
             ]
 
             session.add_all(drug_use_john)
             session.add_all(drug_use_jane)
+            session.commit()
+
+            # Link DrugUse and Schedules
+            schedules = [
+                Schedule(drug_use_id=drug_use_john[0].id, type="W", value=1),
+                Schedule(drug_use_id=drug_use_john[1].id, type="D", value=1),
+                Schedule(drug_use_id=drug_use_jane[0].id, type="W", value=4),
+                Schedule(drug_use_id=drug_use_jane[1].id, type="D", value=4)
+            ]
+
+            session.add_all(schedules)
             session.commit()
 
     # Singleton Database instance attribute
@@ -237,6 +255,11 @@ class Database:
         if Database._db_instance is None:
             Database._db_instance = Database()
             Database._db_instance.create_db()
-            Database._db_instance.add_data()
+            #Database._db_instance.add_data()
 
         return Database._db_instance.engine
+    
+    @staticmethod
+    def get_session():
+        with Session(Database.db_engine()) as session:
+            yield session
