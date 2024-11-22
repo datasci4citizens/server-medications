@@ -11,6 +11,7 @@ class PresentationRead(SQLModel):
 class ComercialNameReadWithPresentations(SQLModel):
     id: int
     comercial_name: str
+    active_principles: List["ActivePrincipleRead"]
     presentations: List[PresentationRead]
 
 class ActivePrincipleRead(SQLModel):
@@ -22,7 +23,6 @@ class ComercialNameRead(SQLModel):
     id: int
     comercial_name: str
     active_principles: List[ActivePrincipleRead]
-    presentations: List[PresentationRead]
 
 # Schema for reading the active principles (all drugs)
 class DrugRead(SQLModel):
@@ -37,17 +37,17 @@ class DrugReadWithDetails(DrugRead):
 # Schema for reading the drug use details
 class DrugUseRead(SQLModel):
     id: int
-    start_date: Optional[date]
-    end_date: Optional[date]
-    start_time: Optional[str]
-    frequency: Optional[str]
-    quantity: Optional[str]
+    start_date: Optional[str]
+    end_date: Optional[str]
+    observation: Optional[str]
+    quantity: Optional[int]
     comercial_name: ComercialNameRead
     presentation: PresentationRead 
-
+    status: Optional[str] 
 
 class CaretakerBase(SQLModel):
     name: str
+    email: str
 
 class DiseaseModel(SQLModel):
     disease_id: int
@@ -63,15 +63,19 @@ class UserRead(SQLModel):
     scholarship: str | None = None
     caretakers: list[CaretakerBase]
     disease_links: list[DiseaseModel]
+    gender: str | None
+    sex: str | None = None
 
 class CaretakerCreate(CaretakerBase):
     pass
 
 class CaretakerPublic(CaretakerBase):
-    caretaker_id: int
+    id: int
+    
 
 class CaretakerUpdate(SQLModel):
     name: str | None = None
+    email: str | None = None
 
 class UserBase(SQLModel):
     name: str
@@ -82,6 +86,8 @@ class UserBase(SQLModel):
     emergency_contact_number: str | None = None
     scholarship: str | None = None
     accept_tcle: bool
+    gender: str | None
+    sex: str | None = None
 
 class UserCreate(UserBase):
     pass
@@ -95,6 +101,84 @@ class UserUpdate(SQLModel):
     emergency_contact_number: str | None = None
     scholarship: str | None = None
     accept_tcle: bool | None = None
+    gender: str | None
+    sex: str | None = None
 
 class UserPublic(UserBase):
     id: int
+
+class DrugUseCreate(SQLModel):
+    comercial_name_id: int
+    presentation_id: int
+    start_date: str
+    end_date: str
+    observation: str
+    quantity: int
+    status: Optional[str] 
+
+class ComercialNameReadWithoutActivePrinciples(SQLModel):
+    id: int
+    comercial_name: str
+
+class DrugUseScheduleRead(SQLModel):
+    id: int
+    start_date: Optional[str] = None
+    end_date: Optional[str] = None
+    observation: Optional[str] = None
+    quantity: int
+    comercial_name: ComercialNameReadWithoutActivePrinciples
+    presentation: PresentationRead
+    status: Optional[str] 
+
+class ScheduleRead(SQLModel):
+    id: int
+    drug_use: Optional[DrugUseScheduleRead] = None
+    type: Optional[str] = None
+    value: Optional[int] = None
+
+class ScheduleCreate(SQLModel):
+    drug_use_id: int
+    type: Optional[str] = None
+    value: Optional[int] = None
+
+class ScheduleUpdate(SQLModel):
+    type: str | None = None
+    value: int | None = None
+
+class UserDiseaseModel(SQLModel):
+    disease_id: int
+    status: str | None = None
+
+class DiseaseCreate(SQLModel):
+    name: str
+    description: Optional[str] = None
+
+class DiseaseUpdate(SQLModel):
+    name: Optional[str] = None
+    description: Optional[str] = None
+
+class DiseaseRead(SQLModel):
+    id: int
+    name: str
+    description: Optional[str] = None
+
+class DiseasePublic(DiseaseRead):
+    pass
+
+class ScheduleInfo(SQLModel):
+    id: int
+    type: str
+    value: int
+
+class UserScheduleResponse(SQLModel):
+    drug_use: DrugUseScheduleRead  # Reference to your existing `DrugUseRead` model
+    schedules: List[ScheduleInfo]  # List of schedules associated with this `drug_use`
+
+class ScheduleItemRead(SQLModel):
+    id: int
+    type: str
+    value: float | int | str
+
+class GroupedScheduleResponse(SQLModel):
+    drug_use: DrugUseScheduleRead
+    schedules: List[ScheduleItemRead]
