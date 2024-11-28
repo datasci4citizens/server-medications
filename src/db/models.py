@@ -78,19 +78,6 @@ class Schedule(SQLModel, table=True):
     drug_use: Optional["DrugUse"] = Relationship(back_populates="schedules")
 
 """ USER TABLES """
-class UserCaretaker(SQLModel, table=True):
-    user_id: int = Field(foreign_key="user.id", primary_key=True)
-    caretaker_id: int = Field(foreign_key="caretaker.id", primary_key=True)
-
-class Caretaker(SQLModel, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
-    name: str
-    email: Optional[str] = None
-
-    users: List["User"] = Relationship(
-        back_populates="caretakers", link_model=UserCaretaker
-        )
-
 class UserDisease(SQLModel, table=True):
     user_id: int = Field(foreign_key="user.id", primary_key=True)
     disease_id: int = Field(foreign_key="disease.id", primary_key=True)
@@ -105,21 +92,39 @@ class Disease(SQLModel, table=True):
     description: Optional[str] = None
     user_links: List[UserDisease] = Relationship(back_populates="disease")
 
+class UserCaretaker(SQLModel, table=True):
+    user_id: int = Field(default=None, foreign_key="user.id", primary_key=True)
+    caretaker_id: int = Field(default=None, foreign_key="user.id", primary_key=True)
+
 class User(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
-    name: str
-    email: Optional[str]
+    name: Optional[str] = None
+    email: Optional[str] = None
     birth_date: Optional[date] = None
     phone_number: Optional[str] = None
     emergency_contact_name: Optional[str] = None
     emergency_contact_number: Optional[str] = None
-    accept_tcle: bool
+    accept_tcle: Optional[bool] = None
     scholarship: Optional[str] = None
     gender: Optional[str] = None
     sex: Optional[str] = None
+    is_caretaker: Optional[bool] = None
 
-    caretakers: List[Caretaker] = Relationship(
-        back_populates="users", link_model=UserCaretaker
-        )
-    disease_links: List[UserDisease] = Relationship(back_populates="user")
+    caretakers: List["User"] = Relationship(
+        back_populates="users_cared_for",
+        link_model=UserCaretaker,
+        sa_relationship_kwargs=dict(
+            primaryjoin="User.id==UserCaretaker.caretaker_id",
+            secondaryjoin="User.id==UserCaretaker.user_id",
+        ),
+    )
+    users_cared_for: List["User"] = Relationship(
+        back_populates="caretakers",
+        link_model=UserCaretaker,
+        sa_relationship_kwargs=dict(
+            primaryjoin="User.id==UserCaretaker.user_id",
+            secondaryjoin="User.id==UserCaretaker.caretaker_id",
+        ),
+    )
+    disease_links: List["UserDisease"] = Relationship(back_populates="user")
     drug_uses: List["DrugUse"] = Relationship(back_populates="user")

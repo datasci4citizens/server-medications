@@ -1,7 +1,7 @@
 # Data Science for Citizens
 # Server Application Software
 
-This project embraces the server implementation for all applications.
+This project embraces the server implementation for the medications app.
 
 ## Directory Structure
 
@@ -10,6 +10,8 @@ This project embraces the server implementation for all applications.
 * `src` - server source code in Python.
 
 ## Running the Main Server Application
+
+rename the .env_model.py to just .env and replace the placeholders with the actual information before running
 
 ~~~
 fastapi dev main_common.py
