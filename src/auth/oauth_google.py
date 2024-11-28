@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from auth.auth_service import AuthService
 from db.manager import Database
-from db.models import Caretaker
+from db.models import User
 from sqlmodel import Session, select
 import requests as rq
 from google_auth_oauthlib.flow import Flow
@@ -13,24 +13,31 @@ login_router = APIRouter()
 # Add this line to disable HTTPS checking during development
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
-# This variable specifies the name of a file that contains the OAuth 2.0 information for this application
-CLIENT_SECRETS_FILE = os.path.join(os.path.dirname(__file__), "client_secret.json")
-
-# These OAuth 2.0 scopes allow access to the user's Google account OpenID, Email, and Profile.
 SCOPES = [
     "openid",
     "https://www.googleapis.com/auth/userinfo.email",
     "https://www.googleapis.com/auth/userinfo.profile",
 ]
 
-
 @login_router.get('/auth/login/google')
 async def call_google_signin(request: Request):
-    flow = Flow.from_client_secrets_file(
-        CLIENT_SECRETS_FILE, 
+    CLIENT_CONFIG = {
+        "web":{
+            "client_id":os.getenv("CLIENT_ID"),
+            "project_id":"medications",
+            "auth_uri":"https://accounts.google.com/o/oauth2/auth",
+            "token_uri":"https://oauth2.googleapis.com/token",
+            "auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs",
+            "client_secret":os.getenv("CLIENT_SECRET"),
+            "redirect_uris":os.getenv("REDIRECT_URIS")
+        }
+    }
+    print(CLIENT_CONFIG)
+    flow = Flow.from_client_config( 
+        CLIENT_CONFIG, 
         scopes=SCOPES
     )
-    flow.redirect_uri = 'http://localhost:8000/auth/login/google/callback'
+    flow.redirect_uri = f"{os.getenv("SERVER_URL")}/auth/login/google/callback"
     auth_url, state = flow.authorization_url(
         access_type='offline',
         include_granted_scopes='true'
@@ -40,13 +47,24 @@ async def call_google_signin(request: Request):
 
 @login_router.get('/auth/login/google/callback')
 async def callback_uri(request: Request, session: Session = Depends(Database.get_session)):
+    CLIENT_CONFIG = {
+        "web":{
+            "client_id":os.getenv("CLIENT_ID"),
+            "project_id":"medications",
+            "auth_uri":"https://accounts.google.com/o/oauth2/auth",
+            "token_uri":"https://oauth2.googleapis.com/token",
+            "auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs",
+            "client_secret":os.getenv("CLIENT_SECRET"),
+            "redirect_uris":os.getenv("REDIRECT_URIS")
+        }
+    }
     state = request.session.get('state')
-    flow = Flow.from_client_secrets_file(
-        CLIENT_SECRETS_FILE, 
+    flow = Flow.from_client_config(
+        CLIENT_CONFIG, 
         scopes=SCOPES, 
         state=state
     )
-    flow.redirect_uri = 'http://localhost:8000/auth/login/google/callback'
+    flow.redirect_uri = f"{os.getenv("SERVER_URL")}/auth/login/google/callback"
     authorization_response = str(request.url)
     flow.fetch_token(authorization_response=authorization_response)
     credentials = flow.credentials
@@ -59,26 +77,22 @@ async def callback_uri(request: Request, session: Session = Depends(Database.get
     except ValueError:
         raise HTTPException(status_code=401, detail="token inválido")
     
-    statement = select(Caretaker).where(Caretaker.email == user_info['email'])
-    caretaker = session.exec(statement).first()
-    if caretaker is None:
-        caretaker = Caretaker(email=user_info['email'], name=user_info["name"])
-        session.add(caretaker)
+    statement = select(User).where(User.email == user_info['email'])
+    user = session.exec(statement).first()
+    if user is None:
+        user = User(email=user_info['email'], name=user_info["name"])
+        session.add(user)
         session.commit()
-        session.refresh(caretaker)
+        session.refresh(user)
 
     # adds the information we need from the user to the cookies
     request.session['id'] = user_info['sub'] 
     request.session['email'] = user_info['email']
-    required_fields = [caretaker.email, caretaker.name]
 
-    if all(field is None for field in required_fields):
-        return RedirectResponse(os.getenv("LOGIN_CALLBACK_URL", 'http://localhost:8000/caretaker/'))
-    else:
-        return RedirectResponse(os.getenv("LOGIN_CALLBACK_URL", 'http://localhost:8000/docs'))
+    return RedirectResponse(os.getenv("LOGIN_CALLBACK_URL"))
 
 # endpoint 'protegido' para buscar o usario ativo atualmente usando o token dos cookies
-@login_router.get("/current_caretaker/me")
+@login_router.get("/current_user/me")
 async def me(request: Request, current_user = Depends(AuthService.get_current_user)):
     return request.session
 

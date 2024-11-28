@@ -1,9 +1,8 @@
 import os 
-from fastapi import Depends, FastAPI, HTTPException, status
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
-
 from db.manager import Database
 from auth.oauth_google import login_router
 from api.routers.medication_users import user_router
@@ -11,10 +10,14 @@ from api.routers.medication_drugs import drugs_router
 from api.routers.medication_caretakers import caretaker_router
 from api.routers.medication_schedule import schedule_router
 from api.routers.medication_diseases import disease_router
+from dotenv import load_dotenv
+
+load_dotenv()
 
 Database.db_engine()
 
 app = FastAPI()
+print(os.getenv("CLIENT_ID"))   
 
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30

@@ -49,6 +49,14 @@ def update_user(user_id: int, user: UserUpdate):
         user_db.name = user.name
         user_db.email = user.email
         user_db.birth_date = user.birth_date
+        user_db.phone_number = user.phone_number
+        user_db.emergency_contact_name = user.emergency_contact_name
+        user_db.emergency_contact_number = user.emergency_contact_number
+        user_db.scholarship = user.scholarship
+        user_db.accept_tcle = user.accept_tcle
+        user_db.gender = user.gender
+        user_db.sex = user.sex
+        user_db.is_caretaker = user.is_caretaker
         session.add(user_db)
         session.commit()
         session.refresh(user_db)
