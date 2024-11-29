@@ -54,6 +54,7 @@ class DiseaseModel(SQLModel):
     status: str | None = None
 
 class UserRead(SQLModel):
+    id: int
     name: str
     email: str | None = None
     birth_date: date | None = None
@@ -79,7 +80,7 @@ class CaretakerUpdate(SQLModel):
 
 class UserBase(SQLModel):
     name: str
-    email: str
+    email: str 
     birth_date: date | None = None
     phone_number: str | None = None
     emergency_contact_name: str | None = None
@@ -88,6 +89,7 @@ class UserBase(SQLModel):
     accept_tcle: bool
     gender: str | None
     sex: str | None = None
+    is_caretaker: bool | None = None    
 
 class UserCreate(UserBase):
     pass
@@ -103,6 +105,7 @@ class UserUpdate(SQLModel):
     accept_tcle: bool | None = None
     gender: str | None
     sex: str | None = None
+    is_caretaker: bool | None = None
 
 class UserPublic(UserBase):
     id: int
