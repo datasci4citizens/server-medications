@@ -1,12 +1,13 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from sqlmodel import Session, select
 from sqlalchemy.orm import selectinload
 from db.manager import Database
-from api.schemas.models import *
-from api.schemas.schemas import *
+from db.models import *
+from api.schemas import *
 from typing import List
+from auth.auth_service import AuthService
 
-drugs_router = APIRouter()
+drugs_router = APIRouter(dependencies=[Depends(AuthService.get_current_user)])
 
 BASE_URL_DRUGS = "/drugs"
 
@@ -115,13 +116,13 @@ def deactivate_user_drug(user_id: int, drug_id: int):
             select(DrugUse)
             .where(DrugUse.id == drug_id)
             .where(DrugUse.user_id == user_id)
-            .where(DrugUse.status == "Active")
+            .where(DrugUse.status == "active")
         ).first()
 
         if not drug:
             raise HTTPException(status_code=404, detail="Drug not found")
 
-        drug.status = "Inactive"
+        drug.status = "inactive"
         drug.end_date = datetime.now().strftime("%Y-%m-%d")
 
         session.add(drug)

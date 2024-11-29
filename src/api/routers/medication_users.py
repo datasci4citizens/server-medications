@@ -1,12 +1,13 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from sqlmodel import Session, select
 from db.manager import Database
-from api.schemas.models import User, UserDisease
-from api.schemas.schemas import *
+from db.models import User, UserDisease
+from api.schemas import *
 from sqlalchemy.orm import selectinload
+from auth.auth_service import AuthService
 
 BASE_URL_USERS = "/user"
-user_router = APIRouter()
+user_router = APIRouter(dependencies=[Depends(AuthService.get_current_user)])
 
 @user_router.post(BASE_URL_USERS, response_model=UserPublic)
 def create_user(user: UserCreate):

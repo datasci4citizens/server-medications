@@ -1,12 +1,13 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from sqlmodel import Session, select
 from db.manager import Database
-from api.schemas.models import Caretaker, User, UserCaretaker
-from api.schemas.schemas import *
+from db.models import Caretaker, User, UserCaretaker
+from api.schemas import *
 from sqlalchemy.orm import selectinload
+from auth.auth_service import AuthService
 
 BASE_URL_CARETAKERS = "/caretaker"
-caretaker_router = APIRouter()
+caretaker_router = APIRouter(dependencies=[Depends(AuthService.get_current_user)])
 
 @caretaker_router.post(BASE_URL_CARETAKERS, response_model=CaretakerPublic)
 def create_caretaker(caretaker: CaretakerCreate):

@@ -1,12 +1,13 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from sqlmodel import Session, select
 from sqlalchemy.orm import selectinload
 from db.manager import Database
-from api.schemas.models import *
-from api.schemas.schemas import *
+from db.models import *
+from api.schemas import *
 from collections import defaultdict
+from auth.auth_service import AuthService
 
-schedule_router = APIRouter()
+schedule_router = APIRouter(dependencies=[Depends(AuthService.get_current_user)])
 BASE_URL_SCHEDULE = "/schedule"
 
 #route to return the schedule of a user

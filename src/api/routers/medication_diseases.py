@@ -1,11 +1,12 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from sqlmodel import Session, select
 from db.manager import Database
-from api.schemas.models import Disease, User, UserDisease
-from api.schemas.schemas import DiseaseCreate, DiseaseUpdate, DiseaseRead, DiseasePublic, UserDiseaseModel, DiseaseModel
+from db.models import Disease, User, UserDisease
+from api.schemas import DiseaseCreate, DiseaseUpdate, DiseaseRead, DiseasePublic, UserDiseaseModel, DiseaseModel
+from auth.auth_service import AuthService
 
 BASE_URL_DISEASES = "/diseases"
-disease_router = APIRouter()
+disease_router = APIRouter(dependencies=[Depends(AuthService.get_current_user)])
 
 @disease_router.post(BASE_URL_DISEASES, response_model=DiseasePublic)
 def create_disease(disease: DiseaseCreate):
