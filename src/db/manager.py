@@ -1,4 +1,4 @@
-from sqlmodel import create_engine, Session
+from sqlmodel import create_engine, Session, select
 
 import db.config as config
 from db.models import *
@@ -13,7 +13,6 @@ class Database:
         """Create the database and tables that do not exist"""
         User.metadata.create_all(self.engine)
         ComercialNames.metadata.create_all(self.engine)
-        Caretaker.metadata.create_all(self.engine)
     
     def add_data(self):
         """Add test data to the database"""
@@ -47,6 +46,14 @@ class Database:
             session.commit()
             session.refresh(users[0])
             session.refresh(users[1])
+
+            """ ADD USER CARETAKER LINK """
+            user_jane = session.exec(select(User).where(User.name == "Jane Doe")).first()
+            user_john = session.exec(select(User).where(User.name == "John Doe")).first()
+
+            user_caretaker_link = UserCaretaker(user_id=user_john.id, caretaker_id=user_jane.id)
+            session.add(user_caretaker_link)
+            session.commit()
 
             """ ADD DRUGS """
             drugs = [
@@ -138,30 +145,6 @@ class Database:
 
             for drug in drugs:
                 session.refresh(drug)
-
-            """ ADD CARETAKERS """
-            caretakers = [
-                Caretaker(
-                    name="Alice Care",
-                    email = "alice@care.com"
-                ),
-                Caretaker(
-                    name="Bob Care",
-                    email = "bob@care.com"
-                )
-            ]
-            session.add_all(caretakers)
-            session.commit()
-            session.refresh(caretakers[0])
-            session.refresh(caretakers[1])
-
-            """ LINK USERS AND CARETAKERS """
-            user_caretakers = [
-                UserCaretaker(user_id=users[0].id, caretaker_id=caretakers[0].id),
-                UserCaretaker(user_id=users[1].id, caretaker_id=caretakers[1].id)
-            ]
-            session.add_all(user_caretakers)
-            session.commit()
 
             """ ADD DISEASES """
             diseases = [
