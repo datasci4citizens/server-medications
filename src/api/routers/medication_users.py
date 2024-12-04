@@ -18,7 +18,7 @@ def create_user(user: UserCreate):
         session.refresh(new_user)
     return new_user
 
-@user_router.get(BASE_URL_USERS, response_model=list[UserRead])
+@user_router.get(f"{BASE_URL_USERS}/all", response_model=list[UserRead])
 def read_users():
     with Session(Database.db_engine()) as session:
         users = session.exec(
@@ -28,9 +28,10 @@ def read_users():
         ).all()
     return users
 
-@user_router.get(f"{BASE_URL_USERS}/{{user_id}}", response_model=UserRead)
-def read_user(user_id: int):
+@user_router.get(f"{BASE_URL_USERS}", response_model=UserRead)
+def read_user(request: Request):
     with Session(Database.db_engine()) as session:
+        user_id = request.session.get("id")
         user = session.get(
             User, user_id,
             options=[
@@ -66,9 +67,10 @@ def update_user(request: Request, user: UserUpdate):
         session.refresh(user_db)
     return user_db
 
-@user_router.delete(f"{BASE_URL_USERS}/{{user_id}}")
-def delete_user(user_id: int):
+@user_router.delete(f"{BASE_URL_USERS}")
+def delete_user(request: Request):
     with Session(Database.db_engine()) as session:
+        user_id = request.session.get("id")
         user = session.get(User, user_id)
         if user is None:
             raise HTTPException(status_code=404, detail="User not found")

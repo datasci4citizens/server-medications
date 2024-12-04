@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException, Depends, Request
 from sqlmodel import Session, select
 from sqlalchemy.orm import selectinload
 from db.manager import Database
@@ -11,10 +11,11 @@ drugs_router = APIRouter(dependencies=[Depends(AuthService.get_current_user)])
 
 BASE_URL_DRUGS = "/drugs"
 
-@drugs_router.get(f"{BASE_URL_DRUGS}/{{user_id}}/", response_model=List[DrugUseRead])
-def get_user_drugs(user_id: int):
+@drugs_router.get(f"{BASE_URL_DRUGS}", response_model=List[DrugUseRead])
+def get_user_drugs(request: Request):
     # Query the DrugUse table to get all drug uses for the given user
     with Session(Database.db_engine()) as session:
+        user_id = request.session.get("id")
         user_drugs = session.exec(
             select(DrugUse)
             .where(DrugUse.user_id == user_id)
@@ -32,7 +33,7 @@ def get_user_drugs(user_id: int):
         return user_drugs
 
 # Route to fetch all drugs
-@drugs_router.get(f"{BASE_URL_DRUGS}/", response_model=List[ComercialNameReadWithPresentations])
+@drugs_router.get(f"{BASE_URL_DRUGS}", response_model=List[ComercialNameReadWithPresentations])
 def get_all_drugs():
     with Session(Database.db_engine()) as session:
         drugs = session.exec(
@@ -61,9 +62,10 @@ def get_one_drug(drug_id: int):
         return drug
     
 # Route to link a user to a new medication 
-@drugs_router.post(f"{BASE_URL_DRUGS}/{{user_id}}/", response_model=DrugUseRead)
-def link_user_drug(user_id: int, drug: DrugUseCreate):
+@drugs_router.post(f"{BASE_URL_DRUGS}", response_model=DrugUseRead)
+def link_user_drug(request: Request, drug: DrugUseCreate):
     with Session(Database.db_engine()) as session:
+        user_id = request.session.get("id")
         # Check if the drug exists
         comercial_name = session.exec(select(ComercialNames).where(ComercialNames.id == drug.comercial_name_id)).first()
         if not comercial_name:
@@ -109,9 +111,10 @@ def link_user_drug(user_id: int, drug: DrugUseCreate):
         return drug_use
 
 # Route to Deactivate a drug from a user
-@drugs_router.put(f"{BASE_URL_DRUGS}/deactivate/{{user_id}}/{{drug_id}}/", response_model=List[DrugUseRead])
-def deactivate_user_drug(user_id: int, drug_id: int):
+@drugs_router.put(f"{BASE_URL_DRUGS}/deactivate/{{drug_id}}", response_model=List[DrugUseRead])
+def deactivate_user_drug(request: Request, drug_id: int):
     with Session(Database.db_engine()) as session:
+        user_id = request.session.get("id")
         drug = session.exec(
             select(DrugUse)
             .where(DrugUse.id == drug_id)

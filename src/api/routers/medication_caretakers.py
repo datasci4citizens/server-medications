@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException, Depends, Request
 from sqlmodel import Session, select
 from db.manager import Database
 from db.models import User, UserCaretaker
@@ -17,9 +17,10 @@ def read_caretakers():
         ).all()
     return caretakers
     
-@caretaker_router.get(f"{BASE_URL_CARETAKERS}/{{user_id}}/relationships")
-def get_user_relationships(user_id: int):
+@caretaker_router.get(f"{BASE_URL_CARETAKERS}/relationships")
+def get_user_relationships(request: Request):
     with Session(Database.db_engine()) as session:
+        user_id = request.session.get("id")
         user = session.get(User, user_id)
         if not user:
             raise HTTPException(status_code=404, detail="User not found")
@@ -42,9 +43,10 @@ def get_user_relationships(user_id: int):
             "users_cared_for": [{"id": u.id, "name": u.name} for u in users_cared_for],
         }
     
-@caretaker_router.post(f"{BASE_URL_CARETAKERS}/{{user_id}}/caretakers/{{caretaker_id}}")
-def link_user_and_caretaker(user_id: int, caretaker_id: int):
+@caretaker_router.post(f"{BASE_URL_CARETAKERS}/caretakers/{{caretaker_id}}")
+def link_user_and_caretaker(request: Request, caretaker_id: int):
     with Session(Database.db_engine()) as session:
+        user_id = request.session.get("id")
         # Fetch users to ensure they exist
         user = session.get(User, user_id)
         caretaker = session.get(User, caretaker_id)

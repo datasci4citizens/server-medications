@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException, Depends, Request
 from sqlmodel import Session, select
 from db.manager import Database
 from db.models import Disease, User, UserDisease
@@ -57,9 +57,10 @@ def delete_disease(disease_id: int):
     return {"message": "Disease deleted successfully"}
 
 #route to add disease to user
-@disease_router.post(f"{BASE_URL_DISEASES}/{{user_id}}/disease/", response_model=UserDiseaseModel)
-def add_disease_to_user(user_id: int, disease: DiseaseModel):
+@disease_router.post(f"{BASE_URL_DISEASES}/disease/", response_model=UserDiseaseModel)
+def add_disease_to_user(request: Request, disease: DiseaseModel):
     with Session(Database.db_engine()) as session:
+        user_id = request.session.get("id")
         # Check if the user exists
         user = session.get(User, user_id)
         if user is None:

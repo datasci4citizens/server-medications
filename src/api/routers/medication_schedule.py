@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException, Depends, Request
 from sqlmodel import Session, select
 from sqlalchemy.orm import selectinload
 from db.manager import Database
@@ -11,9 +11,10 @@ schedule_router = APIRouter(dependencies=[Depends(AuthService.get_current_user)]
 BASE_URL_SCHEDULE = "/schedule"
 
 #route to return the schedule of a user
-@schedule_router.get(f"{BASE_URL_SCHEDULE}/{{user_id}}/schedule", response_model=list[GroupedScheduleResponse])
-def read_user_schedule(user_id: int):
+@schedule_router.get(f"{BASE_URL_SCHEDULE}/schedule", response_model=list[GroupedScheduleResponse])
+def read_user_schedule(request: Request):
     with Session(Database.db_engine()) as session:
+        user_id = request.session.get("id")
         # Verify the user exists
         user = session.get(User, user_id)
         if not user:
@@ -66,9 +67,10 @@ def read_user_schedule(user_id: int):
     return result
     
 #drug to create schedule
-@schedule_router.post(f"{BASE_URL_SCHEDULE}/{{user_id}}/schedule", response_model=ScheduleRead)
-def create_schedule(user_id: int, schedule: ScheduleCreate):
+@schedule_router.post(f"{BASE_URL_SCHEDULE}/schedule", response_model=ScheduleRead)
+def create_schedule(request: Request, schedule: ScheduleCreate):
     with Session(Database.db_engine()) as session:
+        user_id = request.session.get("id")
         # Verify the user exists
         user = session.get(User, user_id)
         if not user:
@@ -103,9 +105,10 @@ def create_schedule(user_id: int, schedule: ScheduleCreate):
     return created_schedule
 
 #route to delete a schedule
-@schedule_router.delete(f"{BASE_URL_SCHEDULE}/{{user_id}}/schedule/{{schedule_id}}")
-def delete_schedule(user_id: int, schedule_id: int):
+@schedule_router.delete(f"{BASE_URL_SCHEDULE}/schedule/{{schedule_id}}")
+def delete_schedule(request: Request, schedule_id: int):
     with Session(Database.db_engine()) as session:
+        user_id = request.session.get("id")
         # Verify the user exists
         user = session.get(User, user_id)
         if not user:
@@ -122,9 +125,10 @@ def delete_schedule(user_id: int, schedule_id: int):
         return {"message": "Schedule deleted successfully"}
     
 #route to update a schedule
-@schedule_router.put(f"{BASE_URL_SCHEDULE}/{{user_id}}/schedule/{{schedule_id}}", response_model=ScheduleRead)
-def update_schedule(user_id: int, schedule_id: int, schedule: ScheduleUpdate):
+@schedule_router.put(f"{BASE_URL_SCHEDULE}/schedule/{{schedule_id}}", response_model=ScheduleRead)
+def update_schedule(request: Request, schedule_id: int, schedule: ScheduleUpdate):
     with Session(Database.db_engine()) as session:
+        user_id = request.session.get("id")
         # Verify the user exists
         user = session.get(User, user_id)
         if not user:
