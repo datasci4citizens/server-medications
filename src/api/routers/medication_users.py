@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException, Depends, Request
 from sqlmodel import Session, select
 from db.manager import Database
 from db.models import User, UserDisease
@@ -40,9 +40,10 @@ def read_user(user_id: int):
         )
     return user
 
-@user_router.put(f"{BASE_URL_USERS}/{{user_id}}", response_model=UserPublic)
-def update_user(user_id: int, user: UserUpdate):
+@user_router.put(f"{BASE_URL_USERS}", response_model=UserPublic)
+def update_user(request: Request, user: UserUpdate):
     with Session(Database.db_engine()) as session:
+        user_id = request.session.get("id")
         user_db = session.get(User, user_id)
         if user_db is None:
             raise HTTPException(status_code=404, detail="User not found")
