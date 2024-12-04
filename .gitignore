@@ -3,3 +3,4 @@ docker-compose.yml
 .venv/
 .idea/
 /server_medications
+.env

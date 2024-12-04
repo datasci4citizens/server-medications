@@ -29,7 +29,7 @@ async def call_google_signin(request: Request):
             "token_uri":"https://oauth2.googleapis.com/token",
             "auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs",
             "client_secret":os.getenv("CLIENT_SECRET"),
-            "redirect_uris":os.getenv("REDIRECT_URIS")
+            "redirect_uris":[os.getenv("REDIRECT_URIS")]
         }
     }
     print(CLIENT_CONFIG)
@@ -37,7 +37,7 @@ async def call_google_signin(request: Request):
         CLIENT_CONFIG, 
         scopes=SCOPES
     )
-    flow.redirect_uri = f"{os.getenv('SERVER_URL')}/auth/login/google/callback"
+    flow.redirect_uri = f"{os.getenv('SERVER_URL')}auth/login/google/callback"
     auth_url, state = flow.authorization_url(
         access_type='offline',
         include_granted_scopes='true'
@@ -55,7 +55,7 @@ async def callback_uri(request: Request, session: Session = Depends(Database.get
             "token_uri":"https://oauth2.googleapis.com/token",
             "auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs",
             "client_secret":os.getenv("CLIENT_SECRET"),
-            "redirect_uris":os.getenv("REDIRECT_URIS")
+            "redirect_uris":[os.getenv("REDIRECT_URIS")]
         }
     }
     state = request.session.get('state')
@@ -64,7 +64,7 @@ async def callback_uri(request: Request, session: Session = Depends(Database.get
         scopes=SCOPES, 
         state=state
     )
-    flow.redirect_uri = f"{os.getenv('SERVER_URL')}/auth/login/google/callback"
+    flow.redirect_uri = f"{os.getenv('SERVER_URL')}auth/login/google/callback"
     authorization_response = str(request.url)
     flow.fetch_token(authorization_response=authorization_response)
     credentials = flow.credentials
@@ -86,7 +86,7 @@ async def callback_uri(request: Request, session: Session = Depends(Database.get
         session.refresh(user)
 
     # adds the information we need from the user to the cookies
-    request.session['id'] = user_info['sub'] 
+    request.session['id'] = user.id
     request.session['email'] = user_info['email']
 
     return RedirectResponse(os.getenv("LOGIN_CALLBACK_URL"))
