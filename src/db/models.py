@@ -110,6 +110,9 @@ class User(SQLModel, table=True):
     gender: Optional[str] = None
     sex: Optional[str] = None
     is_caretaker: Optional[bool] = None
+    district: Optional[str] = None
+    city: Optional[str] = None
+    state: Optional[str] = None
 
     caretakers: List["User"] = Relationship(
         back_populates="users_cared_for",

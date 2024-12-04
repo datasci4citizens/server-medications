@@ -58,6 +58,9 @@ def update_user(request: Request, user: UserUpdate):
         user_db.gender = user.gender
         user_db.sex = user.sex
         user_db.is_caretaker = user.is_caretaker
+        user_db.district = user.district
+        user_db.city = user.city
+        user_db.state = user.state
         session.add(user_db)
         session.commit()
         session.refresh(user_db)

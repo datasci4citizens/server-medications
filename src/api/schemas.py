@@ -66,6 +66,10 @@ class UserRead(SQLModel):
     disease_links: list[DiseaseModel]
     gender: str | None
     sex: str | None = None
+    is_caretaker: bool | None = None
+    district: str | None = None
+    city: str | None = None
+    state: str | None = None
 
 class CaretakerCreate(CaretakerBase):
     pass
@@ -90,7 +94,9 @@ class UserBase(SQLModel):
     gender: str | None
     sex: str | None = None
     is_caretaker: bool | None = None    
-
+    district: str | None = None
+    city: str | None = None
+    state: str | None = None
 class UserCreate(UserBase):
     pass
 
@@ -106,7 +112,9 @@ class UserUpdate(SQLModel):
     gender: str | None
     sex: str | None = None
     is_caretaker: bool | None = None
-
+    district: str | None = None
+    city: str | None = None
+    state: str | None = None
 class UserPublic(UserBase):
     id: int
 
