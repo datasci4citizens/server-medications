@@ -67,8 +67,6 @@ async def callback_uri(request: Request, session: Session = Depends(Database.get
     flow.redirect_uri = f"{os.getenv('SERVER_URL')}auth/login/google/callback"
     authorization_response = str(request.url)
     flow.fetch_token(authorization_response=authorization_response)
-    credentials = flow.credentials
-    request.session['credentials'] = credentials_to_dict(credentials)
     user_info=None
 
     try:
