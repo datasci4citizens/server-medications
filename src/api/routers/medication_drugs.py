@@ -33,7 +33,7 @@ def get_user_drugs(request: Request):
         return user_drugs
 
 # Route to fetch all drugs
-@drugs_router.get(f"{BASE_URL_DRUGS}", response_model=List[ComercialNameReadWithPresentations])
+@drugs_router.get(f"{BASE_URL_DRUGS}/all", response_model=List[ComercialNameReadWithPresentations])
 def get_all_drugs():
     with Session(Database.db_engine()) as session:
         drugs = session.exec(

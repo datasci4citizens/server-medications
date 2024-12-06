@@ -5,7 +5,8 @@ from typing import List, Optional
 # Schema for reading the presentations
 class PresentationRead(SQLModel):
     id: int
-    value: str
+    concentration: str
+    pharmaceutical_form: str
 
 # Schema for reading the commercial names
 class ComercialNameReadWithPresentations(SQLModel):
