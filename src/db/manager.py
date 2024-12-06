@@ -13,6 +13,17 @@ class Database:
         """Create the database and tables that do not exist"""
         User.metadata.create_all(self.engine)
         ComercialNames.metadata.create_all(self.engine)
+        Presentations.metadata.create_all(self.engine)
+        ActivePrinciple.metadata.create_all(self.engine)
+        UserDisease.metadata.create_all(self.engine)
+        Disease.metadata.create_all(self.engine)
+        UserCaretaker.metadata.create_all(self.engine)
+        DrugUse.metadata.create_all(self.engine)
+        Schedule.metadata.create_all(self.engine)
+        UserCaretaker.metadata.create_all(self.engine)
+        ComercialNamesActivePrinciple.metadata.create_all(self.engine)
+        ComercialNamesPresentations.metadata.create_all(self.engine)
+
     
     def add_data(self):
         """Add test data to the database"""

@@ -7,11 +7,12 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 
 from db.manager import Database
-from api.schemas.models import ActivePrinciple
+from db.models import ActivePrinciple
 
 def add_active_principles():
     # Lê o Excel com os dados
-    file_path = 'lista_principios_ativos_cas.xlsx'
+    script_dir = os.path.dirname(__file__)  # Diretório do script atual
+    file_path = os.path.join(script_dir, 'lista_principios_ativos_cas.xlsx')
     df = pd.read_excel(file_path)
 
     with Session(Database.db_engine()) as session:

@@ -6,7 +6,7 @@ from sqlmodel import Session, select
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from db.manager import Database
-from api.schemas.models import ActivePrinciple, ComercialNames, ComercialNamesActivePrinciple, ComercialNamesPresentations, Presentations
+from db.models import ActivePrinciple, ComercialNames, ComercialNamesActivePrinciple, ComercialNamesPresentations, Presentations
 
 form_mapping = {
     "ades": "Adesivo",
@@ -215,8 +215,9 @@ def add_drugs_from_sheet(file_path):
         print("Dados inseridos com sucesso.")
 
 if __name__ == "__main__":
-    file_path_associacao = 'lista_b_associacao.xlsx'
-    file_path_farmaco = 'lista_a_farmaco.xlsx'
+    script_dir = os.path.dirname(__file__) 
+    file_path_associacao = os.path.join(script_dir, 'lista_b_associacao.xlsx')
+    file_path_farmaco = os.path.join(script_dir, 'lista_a_farmaco.xlsx')
 
     add_drugs_from_sheet(file_path_associacao)
     add_drugs_from_sheet(file_path_farmaco)
