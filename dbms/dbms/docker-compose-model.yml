@@ -1,0 +1,27 @@
+services:
+  harena-dbms:
+    image: postgres
+    container_name: harena-dbms
+    volumes:
+      - harena-db:/var/lib/postgresql/data
+      - harena-impexp:/home
+    restart: on-failure:5
+    shm_size: 128mb
+    environment:
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+
+volumes:
+  harena-db:
+    driver: "local"
+    driver_opts:
+      type: "none"
+      device: "/home/user/data/pgsql/harena-db"
+      o: "bind" 
+  harena-impexp:
+    driver: "local"
+    driver_opts:
+      type: "none"
+      device: "/home/user/data/pgsql/harena-impexp"
+      o: "bind" 
