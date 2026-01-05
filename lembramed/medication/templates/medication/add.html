@@ -1,0 +1,17 @@
+{% extends 'medication/base.html' %}
+
+{% block content %}
+<h2>Adicionar Medicamento</h2>
+
+<form method="post">
+    {% csrf_token %}
+    
+    {{ form.as_p }}
+
+    <button type="submit">Salvar</button>
+</form>
+
+<br>
+<a href="{% url 'medication_list' %}">⬅ Voltar</a>
+
+{% endblock %}
