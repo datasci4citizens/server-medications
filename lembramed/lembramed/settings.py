@@ -46,6 +46,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'authentication.apps.AuthenticationConfig',
+    'medication.apps.MedicationConfig',
     'omop.apps.OmopConfig',
     'django.contrib.admin',
     'django.contrib.auth',

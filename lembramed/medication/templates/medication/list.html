@@ -1,0 +1,24 @@
+{% extends 'medication/base.html' %}
+
+{% block content %}
+<h2>Meus Medicamentos</h2>
+
+<a href="{% url 'add_medication' %}">
+    <button>➕ Adicionar medicamento</button>
+</a>
+
+<br><br>
+
+{% if medications %}
+    {% for med in medications %}
+        <div class="card">
+            <strong>{{ med.name }}</strong><br>
+            Dosagem: {{ med.dosage }}<br>
+            Horário: {{ med.time_of_day }}
+        </div>
+    {% endfor %}
+{% else %}
+    <p>Nenhum medicamento cadastrado.</p>
+{% endif %}
+
+{% endblock %}
