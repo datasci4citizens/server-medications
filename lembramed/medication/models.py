@@ -5,8 +5,9 @@ from django.db import models
 class Medication(models.Model):
     name = models.CharField(max_length=100)
     dosage = models.CharField(max_length=50)
-    time_of_day = models.CharField(max_length=50)
-    time = models.TimeField()
+    time = models.TimeField() # check how to put the format of time I wanna
+    begin = models.DateField()
+    end = models.DateField()
     # add the option to put more than one time of day
     # add option to put the day of the week
 
