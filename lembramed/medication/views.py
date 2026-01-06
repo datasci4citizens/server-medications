@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_object_or_404
 from .models import Medication
 from .forms import MedicationForm
 
@@ -23,3 +23,9 @@ def add_medication(request):
 
     })
 
+def delete_medication(request,id):
+    medication = get_object_or_404(Medication, id=id)
+    if request.method == 'POST':
+        medication.delete()
+        return redirect('medication_list')
+    # put mechanic to delete the medication after the person takes the last dose]

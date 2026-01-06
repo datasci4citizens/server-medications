@@ -14,10 +14,16 @@
         <div class="card">
             <strong>{{ med.name }}</strong><br>
             Dosagem: {{ med.dosage }}<br>
-            Período:{{med.time_of_day}}
-            Horário: {{ med.time}}
+            Horário: {{ med.time|time:"H:i" }}<br>
+            Início: {{ med.begin }}<br>
+            Fim: {{ med.end }}<br><br>
 
+            <form action="{% url 'delete_medication' med.id %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit">🗑️ Deletar</button>
+            </form>
         </div>
+        <br>
     {% endfor %}
 {% else %}
     <p>Nenhum medicamento cadastrado.</p>
