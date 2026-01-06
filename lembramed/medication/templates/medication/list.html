@@ -14,7 +14,9 @@
         <div class="card">
             <strong>{{ med.name }}</strong><br>
             Dosagem: {{ med.dosage }}<br>
-            Horário: {{ med.time_of_day }}
+            Período:{{med.time_of_day}}
+            Horário: {{ med.time}}
+
         </div>
     {% endfor %}
 {% else %}
