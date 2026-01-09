@@ -159,7 +159,8 @@ REST_FRAMEWORK = {
 
 # Allow requests from your React app
 CORS_ALLOWED_ORIGINS = [
-    CLIENT_URL
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
 ]
 
 # If you want to allow credentials (cookies, etc.)

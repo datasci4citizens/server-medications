@@ -3,12 +3,15 @@ services:
     image: postgres
     container_name: harena-dbms
     volumes:
-      - harena-db:/var/lib/postgresql/data
-      - harena-impexp:/home
+      - ./data/db:/var/lib/postgresql
+      #- harena-db:/var/lib/postgresql/data
+      #- harena-impexp:/home
     restart: on-failure:5
     shm_size: 128mb
     environment:
-      POSTGRES_PASSWORD: postgres
+      - POSTGRES_DB=harena
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
     ports:
       - "5432:5432"
 
