@@ -2,6 +2,15 @@ from django import forms
 from .models import Medication
 
 class MedicationForm(forms.ModelForm):
+    days = forms.MultipleChoiceField(
+        choices=Medication.DAYS_OF_WEEK,
+        widget=forms.CheckboxSelectMultiple,
+        label="Dias da semana"
+    )
     class Meta:
         model = Medication
-        fields = ['name', 'dosage', 'time', 'begin', 'end']
+        fields = ['name', 'dosage', 'days', 'time', 'begin', 'end']
+    
+    def clean_days(self):
+        days = self.cleaned_data['days']
+        return ','.join(days)

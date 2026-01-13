@@ -1,3 +1,4 @@
+
 {% extends 'medication/base.html' %}
 
 {% block content %}
@@ -17,7 +18,7 @@
             Horário: {{ med.time|time:"H:i" }}<br>
             Início: {{ med.begin }}<br>
             Fim: {{ med.end }}<br><br>
-
+            Dias:  {{ medication.get_days_display }}<br>
             <form action="{% url 'delete_medication' med.id %}" method="post" style="display:inline;">
                 {% csrf_token %}
                 <button type="submit">🗑️ Deletar</button>
