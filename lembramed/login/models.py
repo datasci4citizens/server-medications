@@ -9,4 +9,4 @@ class App_Person(models.Model):
     email = models.CharField(max_length=255, blank=True, null=True)
     password = models.TextField()
     def __str__(self):
-        return self.user.username
+        return self.email
