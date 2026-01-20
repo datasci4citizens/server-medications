@@ -36,8 +36,9 @@ baixe as dependecias caso seja a primeira vez rodando
 
 - Com o venv ativo e as dependencias ja instaladas pelo pip em seu ambiente virtual
 
-cria as tabelas do banco no docker
+cria as tabelas e as conecta ao banco
 
+    python manage.py makemigrations
     python manage.py migrate
 
 cria um superusuario para acessar a pagina de admin caso primeira vez acessando
@@ -60,3 +61,9 @@ inicia o servidor para desenvolvimento
 Caso ja tenha rodado anteriormente sera necessario derrubar os volumes 'fantasmas' criados anteriormente e rodar o docker compose up novamente. Na pasta do docker-compose-model.yml rode:
 
     sudo docker compose -f docker-compose-model.yml down -v
+
+Se houver algum tipo de conflito com dados salvos localmente em seu dispositivo, salvos no banco de dados localizado em server-medications/dbms/data, sera necessario excluir essa pasta, derrubar os containers usando o comando acima e subir o docker novamente com:
+
+    cd server-medications/dbms
+    sudo rm -rf data
+    sudo docker-compose -f docker-compose-model.yml up -d --build
