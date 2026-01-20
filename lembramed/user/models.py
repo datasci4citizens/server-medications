@@ -8,4 +8,4 @@ class Person(models.Model):
     )
     birth = models.DateField()
     def __str__(self):
-        return self.user.username
+        return self.person_id
