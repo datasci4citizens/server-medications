@@ -1,6 +1,6 @@
 __pycache__/
 docker-compose.yml
-.venv/
+lembramed/venv
 .idea/
 .env
 dbms/data/
