@@ -12,15 +12,14 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Medication',
+            name='New_Person',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=100)),
-                ('dosage', models.CharField(max_length=50)),
-                ('time', models.TimeField()),
-                ('begin', models.DateField()),
-                ('end', models.DateField()),
-                ('days', models.CharField(max_length=50)),
+                ('last_name', models.CharField(max_length=100)),
+                ('birth', models.DateField()),
+                ('email', models.CharField(blank=True, max_length=255, null=True)),
+                ('password', models.TextField()),
             ],
         ),
     ]
