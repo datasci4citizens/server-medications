@@ -71,3 +71,11 @@ Se houver algum tipo de conflito com dados salvos localmente em seu dispositivo,
 Caso na hora de baixar com pip der erro envolvendo a lib psycopg2, isso indica que voce nao tem postgresql instalado em sua maquina (e libs afiliadas), para corrigir tal erro, saia do ambiente virtual e rode:
 
     sudo pacman -S postgresql postgis postgresql-docs
+
+Se voce nao conseguir dar pip install, mesmo tendo pip ja instalado em sua maquina, verifique se o caminho do seu pip dentro do ambiente virtual esta correto:
+
+    which pip
+    # caso apareca usr/bin... esta incorreto, va para a pasta com o manage.py:
+    sudo rm -rf venv # delete a antiga pasta
+    python -m venv venv # crie uma nova
+    #agora ative novamente o venv, deve funcionar
