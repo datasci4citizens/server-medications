@@ -67,3 +67,7 @@ Se houver algum tipo de conflito com dados salvos localmente em seu dispositivo,
     cd server-medications/dbms
     sudo rm -rf data
     sudo docker-compose -f docker-compose-model.yml up -d --build
+
+Caso na hora de baixar com pip der erro envolvendo a lib psycopg2, isso indica que voce nao tem postgresql instalado em sua maquina (e libs afiliadas), para corrigir tal erro, saia do ambiente virtual e rode:
+
+    sudo pacman -S postgresql postgis postgresql-docs
