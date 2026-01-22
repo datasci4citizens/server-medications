@@ -16,7 +16,7 @@ class New_Person(models.Model):
     last_name = models.CharField(max_length=100)
     birth = models.DateField()
     email = models.CharField(max_length=255, blank=True, null=True)
-    password = models.TextField()
+    password = models.CharField(max_length=100)
     #gender 
     def __str__(self):
         return self.name
