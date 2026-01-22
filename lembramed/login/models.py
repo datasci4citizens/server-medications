@@ -2,8 +2,8 @@ from django.db import models
 from django.contrib.auth.hashers import make_password
 
 class App_Person(models.Model):
-    person_id = models.OneToOneField( # mesmo id do person_id do django app PERSON
-        'authentication.person',
+    person_id = models.OneToOneField( # mesmo id do person_id do django app account New_Person
+        'accounts.New_Person',
         primary_key=True,
         on_delete=models.CASCADE
     )
