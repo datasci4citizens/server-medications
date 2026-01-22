@@ -14,9 +14,11 @@ from django.db import models
 class New_Person(models.Model):
     name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    birth = models.DateField()
-    email = models.CharField(max_length=255, blank=True, null=True)
-    password = models.TextField()
+    birth = models.DateField(blank=True, null=True)
+    email = models.CharField(max_length=255, default="seu_email_aqui@gmail.com")
+    password = models.CharField(max_length=255, default="sua_senha_aqui")
     #gender 
+    #race
+    #location
     def __str__(self):
         return self.name
