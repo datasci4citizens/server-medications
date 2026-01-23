@@ -79,3 +79,7 @@ Se voce nao conseguir dar pip install, mesmo tendo pip ja instalado em sua maqui
     sudo rm -rf venv # delete a antiga pasta
     python -m venv venv # crie uma nova
     #agora ative novamente o venv, deve funcionar
+
+Caso, na tela do django admin, voce nao conseguir criar ou editar um dado ja salvo, um erro de '__dict__', possa ser que seu django no pip esteja em uma versao desatualizada, para consertar isso, dentro de seu ambiente virtual, rode:
+
+    pip install --upgrade django
