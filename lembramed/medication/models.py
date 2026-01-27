@@ -1,8 +1,16 @@
 from django.db import models
-
+from accounts.models import New_Person
 # Create your models here.
 
 class Medication(models.Model):
+
+    person = models.ForeignKey(
+        'accounts.New_Person',
+        on_delete=models.CASCADE,
+        related_name='medications',
+        null=True,
+        blank=True
+    )
     DAYS_OF_WEEK = [
         ('mon', 'Segunda'),
         ('tue', 'Terça'),

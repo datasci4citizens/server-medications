@@ -1,0 +1,70 @@
+[33mbf8003e[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdev[m[33m, [m[1;31morigin/dev[m[33m, [m[1;32mlogin[m[33m)[m login
+[33mf498296[m[33m ([m[1;31morigin/login[m[33m)[m accounts duplicated bug fix
+[33mf5d848c[m configs att
+[33me879900[m solves merge conflicts
+[33mab0d24f[m[33m ([m[1;31morigin/ML[m[33m, [m[1;32mML[m[33m)[m estado atual para ML
+[33m4db47eb[m new error update
+[33m2521f07[m saving hashed password
+[33me6485ad[m data conflict error readme att
+[33m3ce0dec[m -user +bug fixes
+[33m2704f43[m bug fix str func
+[33m7283a6f[m +person and +app_person app
+[33m1b5c2a4[m Select days of the week - closes #20
+[33m28d515a[m[33m ([m[1;31morigin/v2025[m[33m)[m better emphasis
+[33m4ae8544[m better spacing
+[33mfdad483[m code like form readme
+[33ma1de85d[m better form readme
+[33m70b2f95[m Doc on how to runserver
+[33m207a690[m path rework + medications
+[33m93c621e[m teste
+[33m132ff82[m[33m ([m[1;32mteste[m[33m)[m delete medication
+[33me299c90[m time added
+[33mf9ee304[m add medication and medication list
+[33mcdf84c1[m[33m ([m[1;32mv2025[m[33m)[m Merge pull request #8 from datasci4citizens/test
+[33m43b83d2[m remove dbms folder
+[33mf2ab1a7[m dbms add env-model add
+[33mb89dcc6[m new server base add
+[33m5b31267[m remove v2024 files
+[33mcb203e3[m test commit
+[33me89c7d8[m Delete project overview from README.md
+[33ma8b6c13[m[33m ([m[1;33mtag: [m[1;33mV2024[m[33m, [m[1;31morigin/v2024[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m fix (main): requirements and auth
+[33m6e54aad[m Merge pull request #6 from datasci4citizens/develop
+[33made9db3[m Merge pull request #5 from datasci4citizens/feat(script)
+[33m6d80033[m Merge branch 'develop' into feat(script)
+[33m94f0149[m feat: refatora variaveis de ambiente, unifica caretakers e usuários, atualiza as rotas que envolviam as duas tabelas.
+[33m0bb1eac[m Merge pull request #3 from datasci4citizens/develop
+[33ma9e3a0d[m feat(login): add login routes for caretakers
+[33m43793d9[m clean repository unecessary folders and files, general reorganizations and dockstrings, new readme
+[33mc905be9[m Merge pull request #4 from datasci4citizens/dependabot/pip/starlette-0.40.0
+[33m5798dac[m Bump starlette from 0.38.2 to 0.40.0
+[33m715203e[m feat(script): script for inserting drugs into the database added
+[33m45d099d[m normalize drug and disease status values to lowercase and change the paths to schedule routes
+[33m3dbee02[m add routes for diseases. caretakers and schedule
+[33m9fdf08b[m Add new columns after review, create routes for caretakers and schedule
+[33mfea1b41[m fix drug reading API route
+[33m34264b8[m Merge pull request #2 from datasci4citizens/feat/dockerfile
+[33m3c26786[m Merge pull request #1 from datasci4citizens/refatora-drugs
+[33m3f742e0[m new data model for drugs
+[33m1face7a[m feat (docker): add Dockerfile
+[33m2e8974b[m fix routes for reading drugs based on the new models
+[33m87d3c70[m ajuste na tabela drug use e tabelas conectadas
+[33m066fc78[m inicio refatoração
+[33m93621ee[m fix (schema): order update
+[33m081fd82[m updates to models and schemas, updates to API routes
+[33m132bab7[m add relationships table and some test data
+[33mac39442[m Add drawio model to repository
+[33m8893349[m Refactor main.py and medication_users.py
+[33m971db8f[m feat(api): add medication user endpoints and schemas
+[33mcd2b469[m Refactor user-related code and remove unused files
+[33m3313870[m feat(model): models and api corrections
+[33m8a09203[m Update mih.py
+[33m3b5c242[m feat(doc): add documentation for medications api endpoints
+[33m98ec491[m feat(model): add sqlmodels for all medications tables
+[33me6808ba[m feat (model): add sqlmodels and crud operations for wounds app
+[33m7a1dd50[m CRUD MIH User
+[33me6ad0d4[m feat(model): add sqlmodels and curd operations for medication users
+[33mc1f9168[m update (db/docker): new approach
+[33ma177233[m refactor/fix (db/manager): new better db management
+[33m24c53c3[m feat (model): model folder
+[33m68bc690[m fix (main): removing pycache
+[33ma8d8785[m feat (start): first server structure
