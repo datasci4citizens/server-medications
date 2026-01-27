@@ -1,29 +1,14 @@
 from django.db import models
 import uuid
-
-#class App_Person(models.Model):
-  #  person_id = models.OneToOneField( # mesmo id do person_id do django app PERSON
-     #   'user.person',
-      #  primary_key=True,
-      #  on_delete=models.CASCADE
-   # )
-  #  email = models.CharField(max_length=255, blank=True, null=True)
-  #  password = models.TextField()
-  #  def __str__(self):
-  #      return self.email
+from django.contrib.auth.hashers import make_password, check_password
 
 class New_Person(models.Model):
-    # user = models.OneToOneField(
-    #     User,
-    #     null = False,
-    #     blank = False,
-    #     on_delete=models.CASCADE
-    # )
+
     person_id = models.UUIDField(
         default = uuid.uuid4,
         editable = False,
         primary_key=True,
-        #unique=True
+   
     )
     name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
@@ -33,5 +18,11 @@ class New_Person(models.Model):
     #gender 
     #race
     #location
+    
+    def save(self, *args, **kwargs):
+        if not self.password.startswith('pbkdf2_sha256$'):
+            self.password = make_password(self.password)
+        super().save(*args, **kwargs)
+
     def __str__(self):
-        return self.name #self.str(person_id)
+        return self.email #self.str(person_id)

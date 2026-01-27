@@ -3,24 +3,37 @@ from .models import Medication
 from .forms import MedicationForm
 
 def medication_list(request):
-    medications = Medication.objects.order_by('time') # order the medications by time of consumption
+    person_id = request.session.get('person_id')
+
+    if not person_id:
+        return redirect('login_view')
+
+    medications = Medication.objects.filter(
+        person_id=person_id
+    ).order_by('time')
+
     return render(request, 'medication/list.html', {
         'medications': medications
-
     })
 
 def add_medication(request):
+    person_id = request.session.get('person_id')
+
+    if not person_id:
+        return redirect('login_view')
+
     if request.method == 'POST':
         form = MedicationForm(request.POST)
         if form.is_valid():
-            form.save()
+            medication = form.save(commit=False)
+            medication.person_id = person_id
+            medication.save()
             return redirect('medication_list')
     else:
         form = MedicationForm()
 
-    return render(request, 'medication/add.html',{
+    return render(request, 'medication/add.html', {
         'form': form
-
     })
 
 def delete_medication(request,id):
