@@ -1,15 +1,20 @@
+import uuid
 from django.db import models
 from accounts.models import New_Person
 # Create your models here.
 
 class Medication(models.Model):
-
-    person = models.ForeignKey(
+    medication_id = models.UUIDField(
+        default = uuid.uuid4,
+        editable = False,
+        primary_key=True,
+        db_column='medication_id'
+    )
+    person_id = models.ForeignKey(
         'accounts.New_Person',
         on_delete=models.CASCADE,
         related_name='medications',
-        null=True,
-        blank=True
+        db_column='person_id'
     )
     DAYS_OF_WEEK = [
         ('mon', 'Segunda'),
