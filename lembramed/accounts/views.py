@@ -26,6 +26,12 @@ def login_view(request):
 def add_person(request):
     if request.method =='POST' :
         form = NewPersonForm(request.POST)
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        if New_Person.objects.filter(email=email).exists():
+            form.add_error('email', 'Ja existe um usuario com este email') # ja pop up para redefinir senha a partir desse erro?
+        if password and len(password) < 8:
+            form.add_error('password', 'A senha deve ter 8 ou mais caracteres')
         if form.is_valid():
             form.save()
             return redirect('login_view') 
