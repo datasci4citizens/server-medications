@@ -10,6 +10,11 @@ class MedicationForm(forms.ModelForm):
     class Meta:
         model = Medication
         fields = ['name', 'dosage', 'days', 'time', 'begin', 'end']
+        widgets = {
+            'begin': forms.DateInput(attrs={'type': 'date'}),
+            'end': forms.DateInput(attrs={'type': 'date'}),
+            'time': forms.TimeInput(attrs={'type': 'time'}),
+        }
     
     def clean_days(self):
         days = self.cleaned_data['days']

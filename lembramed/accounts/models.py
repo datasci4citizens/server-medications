@@ -10,9 +10,9 @@ class New_Person(models.Model):
     )
     name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    birth = models.DateField(blank=True, null=True)
-    email = models.EmailField(max_length=254, default="seu_email_aqui@gmail.com") # data from app_person
-    password = models.CharField(max_length=255, default="sua_senha_aqui") # data from app_person
+    birth = models.DateField(blank=True, null=True) # YYYY-MM-DD
+    email = models.EmailField(max_length=254) # data from app_person
+    password = models.CharField(max_length=255) # data from app_person
     #gender 
     #race
     #location
