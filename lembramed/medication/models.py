@@ -5,7 +5,7 @@ from accounts.models import New_Person
 
 class Medication(models.Model):
     medication_id = models.UUIDField(
-        default = uuid.uuid4,
+        default = uuid.uuid4(),
         editable = False,
         primary_key=True,
         db_column='medication_id'

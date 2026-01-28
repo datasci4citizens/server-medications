@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect,get_object_or_404
 from .models import Medication
 from .forms import MedicationForm
+from accounts.models import New_Person
 
 def medication_list(request):
     person_id = request.session.get('person_id')
@@ -26,7 +27,9 @@ def add_medication(request):
         form = MedicationForm(request.POST)
         if form.is_valid():
             medication = form.save(commit=False)
-            medication.person_id = person_id
+            person_instance = get_object_or_404(New_Person, pk=person_id)
+            medication.person_id = person_instance
+            # medication.person_id = person_id # "Medication.person_id" must be a "New_Person" instance
             medication.save()
             return redirect('medication_list')
     else:
@@ -37,8 +40,9 @@ def add_medication(request):
     })
 
 def delete_medication(request,id):
-    medication = get_object_or_404(Medication, id=id)
+    medication = get_object_or_404(Medication, pk=id)
     if request.method == 'POST':
         medication.delete()
         return redirect('medication_list')
+    # return render(request, 'medications/confirm_delete.html', {'medication': medication})
     # put mechanic to delete the medication after the person takes the last dose]
