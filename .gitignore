@@ -4,5 +4,7 @@ lembramed/venv
 .idea/
 .env
 dbms/data/
+**/migrations/*
+!**/migrations/__init__.py
 /server_medications
 login/
