@@ -14,6 +14,7 @@ class MedicationForm(forms.ModelForm):
             'begin': forms.DateInput(attrs={'type': 'date'}),
             'end': forms.DateInput(attrs={'type': 'date'}),
             'time': forms.TimeInput(attrs={'type': 'time'}),
+            # 'name': forms.TextInput(attrs={'placeholder': 'Enter your name'}),
         }
     
     def clean_days(self):

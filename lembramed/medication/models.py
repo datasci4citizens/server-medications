@@ -35,7 +35,7 @@ class Medication(models.Model):
     # add option to put the day of the week
 
     def __str__(self):
-        return self.name
+        return str(self.medication_id)
     def get_days_display(self):
         day_dict = dict(self.DAYS_OF_WEEK)
         return ', '.join(day_dict[d] for d in self.days.split(',')) 
