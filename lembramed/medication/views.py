@@ -44,5 +44,18 @@ def delete_medication(request,id):
     if request.method == 'POST':
         medication.delete()
         return redirect('medication_list')
-    # return render(request, 'medications/confirm_delete.html', {'medication': medication})
+    return render(request, 'medication/delete.html', {'medication': medication})
     # put mechanic to delete the medication after the person takes the last dose]
+
+def edit_medication(request,id):
+    medication = get_object_or_404(Medication, pk=id)
+    if request.method == 'POST':
+        form = MedicationForm(request.POST, instance=medication)
+        if form.is_valid():
+            form.save()
+            return redirect('medication_list')
+    else:
+        form = MedicationForm(instance=medication)
+    return render(request, 'medication/edit.html', {
+        'form':form
+    })
