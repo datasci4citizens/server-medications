@@ -18,18 +18,18 @@ def medication_list(request):
     })
 
 def add_medication(request):
-    person_id = request.session.get('person_id')
+    person_id_session = request.session.get('person_id')
 
-    if not person_id:
+    if not person_id_session:
         return redirect('login_view')
 
     if request.method == 'POST':
         form = MedicationForm(request.POST)
         if form.is_valid():
             medication = form.save(commit=False)
-            person_instance = get_object_or_404(New_Person, pk=person_id)
+            person_instance = get_object_or_404(New_Person, pk=person_id_session)
             medication.person_id = person_instance
-            # medication.person_id = person_id # "Medication.person_id" must be a "New_Person" instance
+          
             medication.save()
             return redirect('medication_list')
     else:
