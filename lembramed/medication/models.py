@@ -1,15 +1,8 @@
-import uuid
 from django.db import models
 from accounts.models import New_Person
 # Create your models here.
 
 class Medication(models.Model):
-    medication_id = models.UUIDField(
-        default = uuid.uuid4,
-        editable = False,
-        primary_key=True,
-        db_column='medication_id'
-    )
     person_id = models.ForeignKey(
         'accounts.New_Person',
         on_delete=models.CASCADE,
@@ -36,6 +29,16 @@ class Medication(models.Model):
 
     def __str__(self):
         return str(self.medication_id)
+
+    @property
+    def medication_id(self):
+        """Compatibility alias: return the model's primary key (`id`).
+
+        The database already uses the default `id` column; some code
+        expects `medication.medication_id`. Provide a read-only alias
+        so queries don't require a separate `medication_id` column.
+        """
+        return self.id
     def get_days_display(self):
         day_dict = dict(self.DAYS_OF_WEEK)
         return ', '.join(day_dict[d] for d in self.days.split(',')) 

@@ -20,11 +20,11 @@ volumes:
     driver: "local"
     driver_opts:
       type: "none"
-      device: "/home/user/data/pgsql/harena-db"
+      device: "/home/machlearn/data/pgsql/harena-db"
       o: "bind" 
   harena-impexp:
     driver: "local"
     driver_opts:
       type: "none"
-      device: "/home/user/data/pgsql/harena-impexp"
+      device: "/home/machlearn/data/pgsql/harena-impexp"
       o: "bind" 
