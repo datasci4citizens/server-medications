@@ -5,17 +5,21 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.firefox.options import Options
 
 def get_bula(registerNum):
-    """A partir de um numero de registro (e empresa, opcional) abre o pdf respectivo
+    """A partir de um numero de registro (e empresa, opcional) baixa o pdf respectivo
     a bula do paciente daquele medicamento (banco de dados da ANVISA)"""
+
+    path_dowload = "/home/yanetti/Desktop/extensao/server-medications/lembramed/api/src/anvisa_data/data"
 
     options = Options()
     options.set_preference("browser.download.folderList", 2)
+    options.set_preference("browser.download.dir", path_dowload)
+    options.set_preference("browser.download.useDownloadDir", True)
     options.set_preference("browser.download.manager.showWhenStarting", False)
     options.set_preference("browser.helperApps.neverAsk.saveToDisk", "application/pdf")
     options.set_preference("pdfjs.disabled", False)  
     options.set_preference("pdfjs.firstRun", True)
 
-    driver = webdriver.Firefox()
+    driver = webdriver.Firefox(options=options)
     driver.implicitly_wait(10)
     driver.get('https://consultas.anvisa.gov.br/#/bulario/')
     driver.implicitly_wait(10)
@@ -36,4 +40,4 @@ def get_bula(registerNum):
     botao_bula_paciente = driver.find_element(By.XPATH, "//a[@ng-if='produto.idBulaPacienteProtegido']")
     botao_bula_paciente.click()
 
-# get_bula('183260244')
+get_bula('183260244')

@@ -6,5 +6,6 @@ lembramed/venv
 dbms/data/
 **/migrations/*
 !**/migrations/__init__.py
+lembramed/api/src/anvisa_data/data
 /server_medications
 login/
