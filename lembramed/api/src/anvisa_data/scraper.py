@@ -1,41 +1,35 @@
-from pdfquery import PDFQuery 
-import pandas as pd
-import re
-from pdfminer.high_level import extract_text, extract_pages
-import pypdfium2 as pdfium
+import fitz,re,os,json
 
-# re.compile() STARTWITH NUM AND HAS ONLY CAPITAL LETTERS
+def write_json(target_file, data):
+    """Dumpa as informacoes em formato json e com acentuacoes"""
+    with open(os.path.join(f"{target_file}.json"), "w") as f:
+        json.dump(data,f, indent=4, ensure_ascii=False)
 
 def get_pdf(pdf_path):
     """Returns a dictionary of topics extracted from each medication bula"""
-    # text = extract_text(f"{pdf_path}")
     
-    text = "\n".join(
-        p.get_textpage().get_text_range() 
-        for p in pdfium.PdfDocument(f"{pdf_path}")
-    )
-    print(text)
-
-    # pdf = PDFQuery(f"{pdf_path}")
-    # pdf.load()
-    # # Use CSS-like selectors to locate the elements
-    # text_elements = pdf.pq('LTTextLineHorizontal')
-    # # Extract the text from the elements
-    # text = [t.text for t in text_elements]
+    # text = "\n".join(
+    #     p.get_textpage().get_text_range() 
+    #     for p in pdfium.PdfDocument(f"{pdf_path}")
+    # )
     # print(text)
+    
+    doc = fitz.open(pdf_path)
+    full_text = ""
 
-    # pdf = PDFQuery(f"{pdf_path}")
-    # pdf.load()
-    # pdf.tree.write('customers.xml', pretty_print = True)
+    for page in doc:
+        full_text += page.get_text() + "\n"
 
-    # pdf = PDFQuery(f"{pdf_path}")
-    # topics = re.compile(r"[0-9]{1}+\.{1}+")
-    # print(topics.findall(text))
+    padrao_titulos = r"(\n(?:\d+\.|DIZERES|ANEXO)\s+[A-ZÀ-Ú\s\?\/]+(?=\n))"
+    partes = re.split(padrao_titulos, full_text)
+    dados_estruturados = {}
 
-    # label = pdf.pq('LTTextLineHorizontal:contains("PARA QUE ESTE MEDICAMENTO É INDICADO?")')
-    # left_corner = float(label.attr('x0'))
-    # bottom_corner = float(label.attr('y0'))
-    # name = pdf.pq('LTTextLineHorizontal:in_bbox("%s, %s, %s, %s")' % (left_corner, bottom_corner-30, left_corner+150, bottom_corner)).text()
-    # print(name)
+    if len(partes) > 1:
+        for i in range(1, len(partes), 2):
+            titulo = partes[i].strip()
+            conteudo = partes[i+1].strip() if i + 1 < len(partes) else ""
+            dados_estruturados[titulo] = conteudo
+    return dados_estruturados
 
-get_pdf('data/bula_1770753006028.pdf')
+resultado = get_pdf('data/bula_1770753006028.pdf')
+write_json("test", resultado)

@@ -40,4 +40,10 @@ def get_bula(registerNum):
     botao_bula_paciente = driver.find_element(By.XPATH, "//a[@ng-if='produto.idBulaPacienteProtegido']")
     botao_bula_paciente.click()
 
-get_bula('183260244')
+    # current_url = driver.current_url
+
+    # deve retornar o codigo/nome da bula baixada !!!!!!!!
+    return 
+
+resposta = get_bula('183260244')
+print(resposta)
