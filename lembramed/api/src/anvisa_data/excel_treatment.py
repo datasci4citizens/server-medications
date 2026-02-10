@@ -2,8 +2,18 @@ import pandas as pd
 import chardet, json, os
 
 def write_json(target_file, data):
+    """Dumpa as informacoes em formato json e com acentuacoes"""
     with open(os.path.join(f"{target_file}.json"), "w") as f:
         json.dump(data,f, indent=4, ensure_ascii=False)
+
+def get_dict():
+    """Abre o excel feito pelos especialistas  da ANVISA
+    e retorna um dicionario com seus dados"""
+    df = pd.read_csv(r"DADOS_ABERTOS_MEDICAMENTOS.csv", sep=';', encoding='cp1252')
+    df.columns = df.columns.str.strip()
+    df = df.dropna()
+    d = df.to_dict(orient='tight', index=False)
+    return d
 
 # USAR UTF-8-SIG E NO BANCO (utf8mb4 ou Latin1)
 
