@@ -5,6 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.support.wait import WebDriverWait
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.support import expected_conditions as EC
 
 def get_last_downloaded_file(download_dir):
@@ -28,31 +29,48 @@ def download_bula(registerNum):
     options.set_preference("pdfjs.firstRun", True)
 
     driver = webdriver.Firefox(options=options)
-    driver.implicitly_wait(10)
     driver.get('https://consultas.anvisa.gov.br/#/bulario/')
-    driver.implicitly_wait(10)
-
-    # elements = writablle page section
 
     # Numero de registro
-    element = driver.find_element(By.XPATH, "/html/body/div[3]/div[1]/form/div/div[2]/div[1]/div[2]/input")
+    wait = WebDriverWait(driver, 15)
+    element = wait.until(
+        EC.presence_of_element_located((By.XPATH, "/html/body/div[3]/div[1]/form/div/div[2]/div[1]/div[2]/input"))
+    )
     element.send_keys(registerNum)
 
-    element = driver.find_element(By.XPATH, "/html/body/div[3]/div[1]/form/div/div[3]/input[1]")
-    element.click()
+    try:
+        wait = WebDriverWait(driver, 5)
+        element = wait.until(
+            EC.element_to_be_clickable((By.XPATH, "/html/body/div[3]/div[1]/form/div/div[3]/input[1]"))
+        )
+        element.click()
+    except (NoSuchElementException):
+        driver.quit()
+        return 1
+    
+    # Problema se nao achar registro com o register number em questao
 
     # element = driver.find_element(By.XPATH, "/html/body/div[3]/div[1]/form/div/div[2]/table/tbody/tr[2]/td[6]/a")
     # actions = ActionChains(driver)
     # actions.context_click(element).perform()
 
-    botao_bula_paciente = driver.find_element(By.XPATH, "//a[@ng-if='produto.idBulaPacienteProtegido']")
-    botao_bula_paciente.click()
-
+    try:
+        wait = WebDriverWait(driver, 5)
+        botao_bula_paciente = wait.until(
+            EC.element_to_be_clickable((By.XPATH, "//a[@ng-if='produto.idBulaPacienteProtegido']"))
+        )
+        botao_bula_paciente.click()
+    except TimeoutException:
+        driver.quit()
+        return 1
+    
     # Esperar ate baixar e depois fechar o navegador
-    wait = WebDriverWait(driver, 10)
+    wait = WebDriverWait(driver, 30)
     wait.until(EC.number_of_windows_to_be(2))
 
     driver.quit()
+
+    return 0
 
 # download_bula('183260244')
 # f_name = get_last_downloaded_file('data/')
