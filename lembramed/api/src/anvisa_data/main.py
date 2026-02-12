@@ -1,4 +1,4 @@
-from web_navigator import get_bula
+from web_navigator import download_bula
 from excel_treatment import get_dict
 
 # abrir o json "anvisa_data.json" em 'data' e pegar o 
