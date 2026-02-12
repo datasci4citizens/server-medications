@@ -22,7 +22,8 @@ data = {}
 
 # Pega a bula do paciente de todos os medicamentos registrados no excel da anvisa
 for num in registerNums:
-    download_bula(num)
+    if download_bula(num) == 0:
+        continue
     file_name = get_last_downloaded_file("data/")
     data[num] = get_pdf(f"data/{file_name}")
 
