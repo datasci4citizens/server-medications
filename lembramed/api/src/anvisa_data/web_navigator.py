@@ -1,10 +1,18 @@
+import os
 from selenium import webdriver
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
-def get_bula(registerNum):
+def get_last_downloaded_file(download_dir):
+        files = os.listdir(download_dir)
+        files.sort(key=lambda x: os.path.getmtime(os.path.join(download_dir, x)))
+        return files[-1] if files else None
+
+def download_bula(registerNum):
     """A partir de um numero de registro (e empresa, opcional) baixa o pdf respectivo
     a bula do paciente daquele medicamento (banco de dados da ANVISA)"""
 
@@ -40,10 +48,12 @@ def get_bula(registerNum):
     botao_bula_paciente = driver.find_element(By.XPATH, "//a[@ng-if='produto.idBulaPacienteProtegido']")
     botao_bula_paciente.click()
 
-    # current_url = driver.current_url
+    # Esperar ate baixar e depois fechar o navegador
+    wait = WebDriverWait(driver, 10)
+    wait.until(EC.number_of_windows_to_be(2))
 
-    # deve retornar o codigo/nome da bula baixada !!!!!!!!
-    return 
+    driver.quit()
 
-resposta = get_bula('183260244')
-print(resposta)
+download_bula('183260244')
+f_name = get_last_downloaded_file('data/')
+print(f_name)
