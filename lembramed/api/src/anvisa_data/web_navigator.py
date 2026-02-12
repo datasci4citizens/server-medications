@@ -73,7 +73,6 @@ def download_bula(registerNum):
         return 1
 
     driver.quit()
-
     return 0
 
 # download_bula('183260244')
