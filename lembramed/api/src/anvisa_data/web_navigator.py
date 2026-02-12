@@ -54,6 +54,6 @@ def download_bula(registerNum):
 
     driver.quit()
 
-download_bula('183260244')
-f_name = get_last_downloaded_file('data/')
-print(f_name)
+# download_bula('183260244')
+# f_name = get_last_downloaded_file('data/')
+# print(f_name)
