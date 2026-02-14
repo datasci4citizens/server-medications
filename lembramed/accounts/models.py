@@ -6,6 +6,19 @@ class New_Person(models.Model):
     # Use the default auto-created primary key `id` (already present in DB).
     # Provide a `person_id` property to preserve existing code that expects
     # `person.person_id` without changing the database schema.
+
+    # user = models.OneToOneField(
+    #     User,
+    #     null = False,
+    #     blank = False,
+    #     on_delete=models.CASCADE
+    # )
+    person_id = models.UUIDField(
+        default = uuid.uuid4,
+        editable = False,
+        primary_key=True,
+        #unique=True
+    )
     name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     birth = models.DateField(blank=True, null=True) # YYYY-MM-DD
@@ -14,7 +27,6 @@ class New_Person(models.Model):
     #gender 
     #race
     #location
-    
     def save(self, *args, **kwargs):
         if not self.password.startswith('pbkdf2_sha256$'):
             self.password = make_password(self.password)
