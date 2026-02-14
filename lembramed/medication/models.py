@@ -1,8 +1,15 @@
 from django.db import models
 from accounts.models import New_Person
+import uuid
 # Create your models here.
 
 class Medication(models.Model):
+    medication_id = models.UUIDField(
+        default = uuid.uuid4,
+        editable = False,
+        primary_key=True,
+        db_column='medication_id'
+    )
     person_id = models.ForeignKey(
         'accounts.New_Person',
         on_delete=models.CASCADE,
