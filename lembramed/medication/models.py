@@ -31,6 +31,9 @@ class Medication(models.Model):
     begin = models.DateField() # solve data problem
     end = models.DateField()
     days= models.CharField(max_length=50)
+    format= models.CharField(max_length=50)
+    quantity = models.CharField(max_length= 50)
+    
     # add the option to put more than one time of day
     # add option to put the day of the week
 
