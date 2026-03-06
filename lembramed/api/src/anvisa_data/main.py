@@ -8,8 +8,16 @@ import os
 anvisa_dados = get_dict()
 for key,value in anvisa_dados.items():
     if (key == 'data'):
-        registerNums = [f'{int(dados[4])}' for dados in 
-        value if dados[4]]
+        # registerNums = [f'{int(dados[4])}' for dados in 
+        # value if dados[4]]
+        teste = 0
+        registerNums = []
+        for dados in value:
+            if dados[4]:
+                registerNums.append(f'{int(dados[4])}')
+                teste += 1
+                if teste >= 20:
+                    break
 
 data = {}
 
@@ -22,4 +30,4 @@ for num in registerNums:
         data[num] = get_pdf(f"data/{file_name}")
         os.remove(f"data/{file_name}")
 
-write_json("Bulario_data", data)
+write_json("Bulario_data_teste", data)
