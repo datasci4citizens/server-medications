@@ -66,8 +66,10 @@ def download_bula(registerNum):
     
     # Esperar ate baixar e depois fechar o navegador
     try:
-        wait = WebDriverWait(driver, 30)
+        wait = WebDriverWait(driver, 15)
         wait.until(EC.number_of_windows_to_be(2))
+        # wait.until(get_last_downloaded_file("data/") != None)
+        # WebDriverWait(driver, 120, 1).until(get_last_downloaded_file)
     except TimeoutException:
         driver.quit()
         return 1
