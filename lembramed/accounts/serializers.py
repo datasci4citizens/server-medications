@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import New_Person
 
-class PersonSerializer(serializers.HyperlinkedModelSerializer):
+class PersonSerializer(serializers.ModelSerializer):
     class Meta:
         model = New_Person
         # fields = '__all__'
