@@ -52,3 +52,21 @@ class Medication(models.Model):
     def get_days_display(self):
         day_dict = dict(self.DAYS_OF_WEEK)
         return ', '.join(day_dict[d] for d in self.days.split(',')) 
+
+class Bula_data(models.Model):
+    register_Num = models.IntegerField(
+        editable = False,
+        primary_key = True,
+    )
+    indicacoes_para_uso = models.TextField()
+    funcionamento_medicamento = models.TextField()
+    quando_nao_usar = models.TextField()
+    conhecimento_previo_necessario = models.TextField()
+    como_guardar_medicamento = models.TextField()
+    como_usar_medicamento = models.TextField()
+    esqueceu_medicamento = models.TextField()
+    efeitos_colaterais = models.TextField()
+    quantidade_a_mais = models.TextField()
+
+    def __str__(self):
+        return str(self.register_Num)
