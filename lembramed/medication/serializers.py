@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Medication
+from .models import Medication, Bula_data
 
 # nome da marca, OK?
 # comprimido/dosagem, OK
@@ -15,3 +15,8 @@ class MedicationSerializer(serializers.ModelSerializer):
         model = Medication
         # fields = '__all__'
         fields = ["medication_id", "person_id","name", "dosage", "time", "begin", "end", "quantity", "format"]
+
+class BulaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Bula_data
+        fields = '__all__'

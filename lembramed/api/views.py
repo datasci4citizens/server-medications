@@ -7,9 +7,9 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from accounts.models import New_Person
-from medication.models import Medication
+from medication.models import Medication, Bula_data
 from accounts.serializers import PersonSerializer
-from medication.serializers import MedicationSerializer
+from medication.serializers import MedicationSerializer, BulaSerializer
 from rest_framework import permissions,viewsets
 
 #add user, remove user, edit user, get user
@@ -22,6 +22,11 @@ class PersonViewSet(viewsets.ModelViewSet):
 class MedicationViewSet(viewsets.ModelViewSet):
     queryset = Medication.objects.all().order_by("name")
     serializer_class = MedicationSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class BulaViewSet(viewsets.ModelViewSet):
+    queryset = Bula_data.objects.all().order_by("register_Num")
+    serializer_class = BulaSerializer
     permission_classes = [permissions.IsAuthenticated]
 
 # @api_view(['GET'])
