@@ -55,7 +55,7 @@ class Medication(models.Model):
 
 class Bula_data(models.Model):
     register_Num = models.IntegerField(
-        editable = False,
+        # editable = False,
         primary_key = True,
     )
     indicacoes_para_uso = models.TextField()
