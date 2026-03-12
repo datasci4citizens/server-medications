@@ -23,9 +23,9 @@ def buscar_medicamento(nome):
                 resultados.append({
                     "nome": med[1],
                     "registro": med[4],
-                    "empresa": med[5],
-                    "classe": med[6],
-                    "principio_ativo": med[7],
+                    "empresa": med[8],
+                    "classe": med[7],
+                    "principio_ativo": med[10],
 
             })
     if len(resultados) == 0:
