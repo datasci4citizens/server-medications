@@ -2,11 +2,15 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 import json
+import os
 # Create your views here.
 
 def buscar_medicamento(nome):
 
-    with open("anvisa_data.json", "r", encoding= "utf-8") as f:
+    Base_dir = os. path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    caminho = os.path.join(Base_dir, "api","src","anvisa_data", "anvisa_data.json")
+
+    with open(caminho,  "r", encoding= "utf-8") as f:
         dados = json.load(f)
     
     resultados = []
@@ -26,12 +30,18 @@ def buscar_medicamento(nome):
             })
     if len(resultados) == 0:
             print(" Medication not found")
-            return 0
+            return []
         
     return resultados
 
-@api_view(['GET'])
 def search_med(request):
     nome = request.GET.get("nome")
-    resultado = buscar_medicamento(nome)
-    return Response(resultado)
+    resultado = []
+
+    if nome:
+        resultado = buscar_medicamento(nome)
+
+    return render(request, "medication/search_results.html", {
+        "resultados": resultado,
+        "nome": nome
+    })
