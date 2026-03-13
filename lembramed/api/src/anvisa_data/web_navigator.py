@@ -13,7 +13,20 @@ def get_last_downloaded_file(download_dir):
         files.sort(key=lambda x: os.path.getmtime(os.path.join(download_dir, x)))
         return files[-1] if files else None
 
-def download_bula(registerNum):
+def initialize_driver(path_dowload):
+    options = Options()
+    options.set_preference("browser.download.folderList", 2)
+    options.set_preference("browser.download.dir", path_dowload)
+    options.set_preference("browser.download.useDownloadDir", True)
+    options.set_preference("browser.download.manager.showWhenStarting", False)
+    options.set_preference("browser.helperApps.neverAsk.saveToDisk", "application/pdf")
+    options.set_preference("pdfjs.disabled", False)  
+    options.set_preference("pdfjs.firstRun", True)
+    # set_preference("--headless")
+    driver = webdriver.Firefox(options=options)
+    return driver
+
+def download_bula(registerNum, driver):
     """A partir de um numero de registro (e empresa, opcional) baixa o pdf respectivo
     a bula do paciente daquele medicamento (banco de dados da ANVISA)"""
 
@@ -27,8 +40,9 @@ def download_bula(registerNum):
     options.set_preference("browser.helperApps.neverAsk.saveToDisk", "application/pdf")
     options.set_preference("pdfjs.disabled", False)  
     options.set_preference("pdfjs.firstRun", True)
-
     driver = webdriver.Firefox(options=options)
+
+    # driver = driver
     driver.get('https://consultas.anvisa.gov.br/#/bulario/')
 
     # Numero de registro
