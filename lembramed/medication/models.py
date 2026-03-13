@@ -33,6 +33,9 @@ class Medication(models.Model):
     days= models.CharField(max_length=50)
     format= models.CharField(max_length=50)
     quantity = models.CharField(max_length= 50)
+    empresa = models.CharField(max_length=100)
+    principio_ativo = models.TextField()
+    classe_terapeutica = models.CharField(max_length=100)
     
     # add the option to put more than one time of day
     # add option to put the day of the week
