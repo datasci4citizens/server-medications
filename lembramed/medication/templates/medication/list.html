@@ -3,11 +3,16 @@
 {% block content %}
 <h2>Meus Medicamentos</h2>
 
+<form method="GET" action="{% url 'search_medications' %}">
+    <input type="text" name="nome" placeholder="Buscar medicamento..." required>
+    <button type="submit">🔍 Buscar</button>
+</form>
+
+<br>
+
 <a href="{% url 'add_medication' %}">
     <button>➕ Adicionar medicamento</button>
 </a>
-
-<br><br>
 
 {% if medications %}
     {% for med in medications %}
