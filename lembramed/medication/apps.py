@@ -6,3 +6,4 @@ class MedicationConfig(AppConfig):
     name = 'medication'
     def ready(self):
         call_command("load_bula_data")
+        call_command("load_medications_data")

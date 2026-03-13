@@ -1,1 +1,1 @@
-default_app_config = "medication.apps.MedicaionConfig"
+default_app_config = "medication.apps.MedicationConfig"
