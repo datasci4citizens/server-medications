@@ -12,6 +12,20 @@
             Empresa: {{ med.empresa }}<br>
             Classe: {{ med.classe }}<br>
             Princípio ativo: {{ med.principio_ativo }}
+
+            <hr>
+
+            <h4>Bula</h4>
+
+            {% if med.bula %}
+                {% for item in med.bula %}
+                    <h5>{{ item.titulo }}</h5>
+                    <p>{{ item.conteudo }}</p>
+                {% endfor %}
+            {% else %}
+                <p>Bula não disponível.</p>
+            {% endif %}
+
         </div>
         <br>
     {% endfor %}

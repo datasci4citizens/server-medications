@@ -31,7 +31,7 @@ class Medication(models.Model):
     begin = models.DateField() # solve data problem
     end = models.DateField()
     days= models.CharField(max_length=50)
-    format= models.CharField(max_length=50)
+    formato= models.CharField(max_length=50)
     quantity = models.CharField(max_length= 50)
     empresa = models.CharField(max_length=100)
     principio_ativo = models.TextField()

@@ -11,8 +11,10 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         # file_path = "lembramed/api/src/anvisa_data/Titulos_teste.json"
         # file_path = "../../../api/src/anvisa_data/Titulos_teste.json"
-        file_path = "/home/yanetti/Desktop/extensao/server-medications/lembramed/api/src/anvisa_data/Titulos_teste.json"
-        with open(file_path, 'r') as f:
+        Base_dir = os. path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        caminho = os.path.join(Base_dir, "api","src","anvisa_data", "Titulos_test.json")
+       # file_path = "/home/user/Desktop/extensao/server-medications/lembramed/api/src/anvisa_data/Titulos_teste.json"
+        with open(caminho, 'r') as f:
             data = json.load(f)
             for key,var in data.items(): # key = register num, var = list of dicts (titulo:conteudo)
                 indicacoes_para_uso = ""
