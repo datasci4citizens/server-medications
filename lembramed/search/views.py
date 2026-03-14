@@ -28,11 +28,26 @@ def buscar_medicamento(nome):
                     "principio_ativo": med[10],
 
             })
+    
+    
+    #informaçoes extras do remedio
+    caminho_ext = os.path.join(Base_dir, "api","src","anvisa_data", "Bulario_data_teste.json")
+    with open(caminho_ext,  "r", encoding= "utf-8") as f:
+        dados_ext = json.load(f)
+        for med in resultados:
+            codigo = med["registro"]
+            if codigo in dados_ext:
+               return resultados
+            
+
+            
     if len(resultados) == 0:
-            print(" Medication not found")
-            return []
-        
+        print(" Medication not found")
+        return []
+    
     return resultados
+
+        
 
 def search_med(request):
     nome = request.GET.get("nome")

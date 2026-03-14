@@ -25,8 +25,10 @@ from medication.models import Medication
 class Command(BaseCommand):
     help = "Load pre defined medications data from database"
     def handle(self, *args, **options):
-        file_path = "/home/yanetti/Desktop/extensao/server-medications/lembramed/api/src/anvisa_data/Medicamentos_teste.json"
-        with open (file_path, "r") as f:
+        #file_path = "/home/yanetti/Desktop/extensao/server-medications/lembramed/api/src/anvisa_data/Medicamentos_teste.json"
+        Base_dir = os. path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        caminho = os.path.join(Base_dir, "api","src","anvisa_data", "Medicamentos_teste.json")
+        with open ((caminho), "r") as f:
             data = json.load(f)
             for data_colums,lista in data.items():
                 # medication_id = ''
