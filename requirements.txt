@@ -1,4 +1,4 @@
-asgiref==3.8.1
+asgiref==3.9.1
 cachetools==5.5.2
 charset-normalizer==3.4.1
 Django==6.0.3
