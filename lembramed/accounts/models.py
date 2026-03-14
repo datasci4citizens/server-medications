@@ -17,6 +17,8 @@ class New_Person(models.Model):
         default = uuid.uuid4,
         editable = False,
         primary_key=True,
+        null=True,
+        blank=True,
         #unique=True
     )
     name = models.CharField(max_length=100)
