@@ -1,85 +1,88 @@
-# Como Rodar o Server em sua Maquina
+# How to Runserver
 
-obs: esse guia assume que voce ja tenha o docker e as bibliotecas auxliares do postgres instaladas em sua maquina e fora realizado em ambiente linux (arch linux)
+ps: this guide was made inside a arch environment and assumes that you already have docker and postgres related librarys installed.
 
-- O banco de dados roda isolado em um ambiente docker, abra um terminal, que digamos que seja o terminal 1:
+Iniciate docker.service:
 
-inicia o docker.service caso esteja desligado
+    sudo systemctl start docker
 
-    sudo systemctl start docker 
-
-navega ate a pasta onde ficara o banco de dados 
+Go to the directory where the database will settle:
 
     cd server-medications/dbms
 
-sobe o container do banco em segundo plano
+Start the docker container:
 
     sudo docker-compose -f docker-compose-model.yml up -d
 
-util para checagem que o container esta rodando
+(Optional to check if docker service is running)
 
     sudo docker ps
 
-- Agora que o banco esta rodando em um terminal, abra um terminal 2, vamos preparar o ambiente python da aplicacao
-
-navegue ate a pasta com o manager.py e venv
+Now that the docker service is running on background, we need to navigate into the directory with the "manage.py" file:
 
     cd server-medications/lembramed
 
-ative o ambiente virtual
+Activate the virtual environment:
 
     source venv/bin/activate
 
-baixe as dependecias caso seja a primeira vez rodando
+Dowload the project dependencies:
 
     pip install -r ../requirements.txt
 
-- Com o venv ativo e as dependencias ja instaladas pelo pip em seu ambiente virtual
-
-cria as tabelas e as conecta ao banco
+Create the tables and conect them to the dataset:
 
     python manage.py makemigrations
     python manage.py migrate
 
-cria um superusuario para acessar a pagina de admin caso primeira vez acessando
+Create a superuser to acess admin permissions:
 
     python manage.py createsuperuser
 
-inicia o servidor para desenvolvimento
+Initiates the service:
 
     python manage.py runserver
 
-# Enderecos de browser uteis para testar o servidor:
+# Utilities
 
-- Aplicacao (Frontend/API): http://127.0.0.1:8000/
+To have acess to our pre established medication and leaflets data, first enter the directory with 'manage.py' file:
 
-- Painel Administrativo: http://127.0.0.1:8000/admin/
+    cd server-medications/lembramed
 
+And then, after running "makemigrations" and "migrate" run these commands:
 
-# Erros Comuns ao Rodar
+    python manage.py load_bula_data
+    python manage.py load_medications_data
 
-Caso ja tenha rodado anteriormente sera necessario derrubar os volumes 'fantasmas' criados anteriormente e rodar o docker compose up novamente. Na pasta do docker-compose-model.yml rode:
+You should see sucess messages on terminal.
 
+# Quick Web Links to Test Server
+
+- Frontend: http://127.0.0.1:8000/
+- Admin Panel: http://127.0.0.1:8000/admin/
+- API Testing: http://127.0.0.1:8000/api/docs/
+
+Common Errors
+
+If you already had started the docker container, it will be needed for you to end their activity before starting them again:
+
+    cd server-medications/dbms
     sudo docker compose -f docker-compose-model.yml down -v
 
-Se houver algum tipo de conflito com dados salvos localmente em seu dispositivo, salvos no banco de dados localizado em server-medications/dbms/data, sera necessario excluir essa pasta, derrubar os containers usando o comando acima e subir o docker novamente com:
+If there`s data conflict locally, located in server-medications/dbms/data, it will be needed to restart that database:
 
     cd server-medications/dbms
     sudo rm -rf data
     sudo docker-compose -f docker-compose-model.yml up -d --build
 
-Caso na hora de baixar com pip der erro envolvendo a lib psycopg2, isso indica que voce nao tem postgresql instalado em sua maquina (e libs afiliadas), para corrigir tal erro, saia do ambiente virtual e rode:
+If there`s a psycopg2 error involved when trying to pip install, it indicates that you do not have postgresql and needed libs downloaded locally. Quit the virtual environment and run:
 
     sudo pacman -S postgresql postgis postgresql-docs
 
-Se voce nao conseguir dar pip install, mesmo tendo pip ja instalado em sua maquina, verifique se o caminho do seu pip dentro do ambiente virtual esta correto:
+If you cant pip install, even though you have pip installed in your machine, verify your pip`s path inside the virtual environment:
 
     which pip
-    # caso apareca usr/bin... esta incorreto, va para a pasta com o manage.py:
-    sudo rm -rf venv # delete a antiga pasta
-    python -m venv venv # crie uma nova
-    #agora ative novamente o venv, deve funcionar
-
-Caso, na tela do django admin, voce nao conseguir criar ou editar um dado ja salvo, um erro de '__dict__', possa ser que seu django no pip esteja em uma versao desatualizada, para consertar isso, dentro de seu ambiente virtual, rode:
-
-    pip install --upgrade django
+    # if something like "usr/bin..." appears, go to the "manage.py" directory (server-medications/lembramed) and:
+    sudo rm -rf venv # delete your old venv directory
+    python -m venv venv # create another one
+    # Now activate again the virtual environment, it should work just fine.
