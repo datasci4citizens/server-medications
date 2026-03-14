@@ -5,5 +5,6 @@ class MedicationConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'medication'
     def ready(self):
-        call_command("load_bula_data")
-        call_command("load_medications_data")
+        pass
+        # call_command("load_bula_data")
+        # call_command("load_medications_data")
