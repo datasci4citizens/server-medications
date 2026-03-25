@@ -14,7 +14,7 @@ class MedicationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Medication
         # fields = '__all__'
-        fields = ["medication_id", "person_id","name", "dosage", "time", "begin", "end", "quantity", "format"]
+        fields = ["medication_id", "person_id","name", "dosage", "time", "begin", "end", "quantity", "formato"]
 
 class BulaSerializer(serializers.ModelSerializer):
     class Meta:
