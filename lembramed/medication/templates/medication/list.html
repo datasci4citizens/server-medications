@@ -1,28 +1,40 @@
-
 {% extends 'medication/base.html' %}
 
 {% block content %}
 <h2>Meus Medicamentos</h2>
 
+<form method="GET" action="{% url 'search_medications' %}">
+    <input type="text" name="nome" placeholder="Buscar medicamento..." required>
+    <button type="submit">🔍 Buscar</button>
+</form>
+
+<br>
+
 <a href="{% url 'add_medication' %}">
     <button>➕ Adicionar medicamento</button>
 </a>
 
-<br><br>
-
 {% if medications %}
     {% for med in medications %}
         <div class="card">
-            <strong>{{ med.name }}</strong><br>
+            <strong>{{ med.name }}</strong><br><br>
             Dosagem: {{ med.dosage }}<br>
             Horário: {{ med.time|time:"H:i" }}<br>
             Início: {{ med.begin }}<br>
-            Fim: {{ med.end }}<br><br>
-            Dias:  {{ medication.get_days_display }}<br>
-            <form action="{% url 'delete_medication' med.id %}" method="post" style="display:inline;">
+            Fim: {{ med.end }}<br>
+            Dias:  {{ med.days }}<br><br>
+            <div class="row">
+                <a href="{% url 'delete_medication' med.pk %}">Delete</a>
+                <a href="{% url 'edit_medication' med.pk %}">Edit</a>
+            </div>
+            <!-- <form action="{% url 'delete_medication' med.pk %}" method="post" style="display:inline;">
                 {% csrf_token %}
-                <button type="submit">🗑️ Deletar</button>
+                <button type="submit">Deletar</button>
             </form>
+            <form action="{% url 'edit_medication' med.pk %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit">Editar</button>
+            </form> -->
         </div>
         <br>
     {% endfor %}

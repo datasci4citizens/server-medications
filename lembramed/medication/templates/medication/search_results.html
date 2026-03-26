@@ -1,0 +1,38 @@
+{% extends 'medication/base.html' %}
+
+{% block content %}
+
+<h2>Resultados da busca</h2>
+
+{% if resultados %}
+    {% for med in resultados %}
+        <div class="card">
+            <strong>{{ med.nome }}</strong><br>
+            Registro: {{ med.registro }}<br>
+            Empresa: {{ med.empresa }}<br>
+            Classe: {{ med.classe }}<br>
+            Princípio ativo: {{ med.principio_ativo }}
+
+            <hr>
+
+            <h4>Bula</h4>
+
+            {% if med.bula %}
+                {% for item in med.bula %}
+                    <h5>{{ item.titulo }}</h5>
+                    <p>{{ item.conteudo }}</p>
+                {% endfor %}
+            {% else %}
+                <p>Bula não disponível.</p>
+            {% endif %}
+
+        </div>
+        <br>
+    {% endfor %}
+{% else %}
+    <p>Nenhum medicamento encontrado.</p>
+{% endif %}
+
+<a href="{% url 'medication_list' %}">⬅ Voltar</a>
+
+{% endblock %}

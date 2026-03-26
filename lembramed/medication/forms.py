@@ -9,7 +9,16 @@ class MedicationForm(forms.ModelForm):
     )
     class Meta:
         model = Medication
-        fields = ['name', 'dosage', 'days', 'time', 'begin', 'end']
+        fields = ['name', 'dosage', 'days', 'time', 'begin', 'end', 'formato', 'quantity']
+        widgets = {
+            'begin': forms.DateInput(attrs={'type': 'date'}),
+            'end': forms.DateInput(attrs={'type': 'date'}),
+            'time': forms.TimeInput(attrs={'type': 'time'}),
+            'name': forms.TextInput(attrs={'placeholder': 'Enter your name'}),
+            'dosage': forms.TextInput(attrs={'placeholder': 'Enter the medication dosage'}),
+            'formato': forms.TextInput(attrs={'placeholder': 'Enter the type of medication (ex: pills)'}),
+            'quantity': forms.TextInput(attrs={'placeholder': '(ex: number of pills, ml, etc.)'}),
+        }
     
     def clean_days(self):
         days = self.cleaned_data['days']

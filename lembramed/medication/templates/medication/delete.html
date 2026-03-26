@@ -1,0 +1,13 @@
+{% extends 'medication/base.html' %}
+
+{% block content %}
+
+<!-- medication aqui sai o id (uuid) tem que ser nome da medicacao -->
+<p>Are you sure you want to delete "{{ medication }}"?</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Confirm</button>
+</form>
+
+{% endblock %}
