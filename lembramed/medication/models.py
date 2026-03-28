@@ -1,5 +1,5 @@
 from django.db import models
-from accounts.models import New_Person
+from authentication.models import Person
 import uuid, datetime
 
 # Medication DATA from scrapers
@@ -30,7 +30,7 @@ class Medication(models.Model):
 # One Person (New_Person)X takes (Medication)Y 
 class Take(models.Model):
     person_id = models.ForeignKey(
-        'accounts.New_Person',
+        'authentication.Person',
         on_delete = models.CASCADE,
         related_name = 'takes'
     )
@@ -73,8 +73,8 @@ class Take(models.Model):
     # add option to put the day of the week
     days= models.CharField(max_length=50, null=True)
     quantity = models.CharField(max_length= 50, null=True)
-    priority = models.SmallIntegerFiels()
-    state = models.CharFiels(max_length=50, null=True) # taken, forgortten, late...
+    priority = models.SmallIntegerField()
+    state = models.CharField(max_length=50, null=True) # taken, forgortten, late...
     formato= models.CharField(max_length=50, null=True) # type
 
     def get_days_display(self):
