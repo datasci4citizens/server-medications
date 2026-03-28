@@ -6,15 +6,15 @@ from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from accounts.models import New_Person
-from medication.models import Medication, Bula_data
-from accounts.serializers import PersonSerializer
-from medication.serializers import MedicationSerializer, BulaSerializer
+from authentication.models import Person
+from medication.models import Medication, Take
+from authentication.serializers import PersonSerializer
+from medication.serializers import MedicationSerializer, TakeSerializer
 from rest_framework import permissions,viewsets
 
-#add user, remove user, edit user, get user
+# #add user, remove user, edit user, get user
 class PersonViewSet(viewsets.ModelViewSet):
-    queryset = New_Person.objects.all().order_by("name")
+    queryset = Person.objects.all().order_by("person_id")
     serializer_class = PersonSerializer
     permission_classes = [permissions.IsAuthenticated]
 
@@ -24,9 +24,9 @@ class MedicationViewSet(viewsets.ModelViewSet):
     serializer_class = MedicationSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-class BulaViewSet(viewsets.ModelViewSet):
-    queryset = Bula_data.objects.all().order_by("register_Num")
-    serializer_class = BulaSerializer
+class TakeViewSet(viewsets.ModelViewSet):
+    queryset = Take.objects.all().order_by("medication_id")
+    serializer_class = TakeSerializer
     permission_classes = [permissions.IsAuthenticated]
 
 # @api_view(['GET'])
