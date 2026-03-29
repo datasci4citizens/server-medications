@@ -8,10 +8,10 @@ class Medication(models.Model):
     medication_id = models.IntegerField(primary_key = True)
 
     # Information from Anvisa_Data:
-    name = models.CharField(max_length=100)
-    empresa = models.CharField(max_length=100)
+    name = models.TextField()
+    empresa = models.TextField()
     principio_ativo = models.TextField()
-    classe_terapeutica = models.CharField(max_length=100)
+    classe_terapeutica = models.TextField()
 
     # Information from Leaflets:
     indicacoes_para_uso = models.TextField()
