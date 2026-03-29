@@ -1,3 +1,4 @@
 requests>=2.31.0
 interage_python_sdk==0.4.1
 typing_extensions>=4.14.1
+selenium==4.41.0
