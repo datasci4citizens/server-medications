@@ -8,7 +8,6 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         BASE = "/home/yanetti/Desktop/extensao/server-medications/lembramed/api/src/anvisa_data"
 
-        # ── 1. Carrega dados da ANVISA em memória ─────────────────────────────
         self.stdout.write("Carregando anvisa_data.json...")
         anvisa = {}  # medication_id → {name, empresa, principio_ativo, classe_terapeutica}
         with open(os.path.join(BASE, "anvisa_data.json"), "r") as f:
@@ -24,10 +23,9 @@ class Command(BaseCommand):
                 }
         self.stdout.write(f"  {len(anvisa)} medicamentos válidos.")
 
-        # ── 2. Carrega bulas dos 3 arquivos em memória ────────────────────────
         self.stdout.write("Carregando bulas...")
         bulas = {}  # medication_id → {indicacoes_para_uso, ...}
-        for i in range(3):
+        for i in range(5):
             path = os.path.join(BASE, f"Bulario_medicamentos_iniciais{i}.json")
             if not os.path.exists(path):
                 self.stdout.write(self.style.WARNING(f"  Não encontrado: {path}"))
@@ -72,7 +70,6 @@ class Command(BaseCommand):
             self.stdout.write(f"  Bulario{i}: {len(data)} bulas")
         self.stdout.write(f"  Total bulas: {len(bulas)}")
 
-        # ── 3. Uma única passagem no banco ────────────────────────────────────
         self.stdout.write("Populando banco...")
         criados = atualizados = sem_bula = 0
         for med_id, info in anvisa.items():
