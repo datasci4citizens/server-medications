@@ -1,0 +1,10 @@
+requests>=2.31.0
+interage_python_sdk==0.4.1
+typing_extensions>=4.14.1
+selenium==4.41.0
+PyMuPDF==1.27.2.2
+numpy==2.4.4 
+pandas==3.0.2
+python-dateutil==2.9.0
+six==1.17.0
+chardet==7.4.0

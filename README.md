@@ -85,3 +85,8 @@ If you cant pip install, even though you have pip installed in your machine, ver
     sudo rm -rf venv # delete your old venv directory
     python -m venv venv # create another one
     # Now activate again the virtual environment, it should work just fine.
+
+To revert some already made migrations on a django app named 'X':
+
+    # Run this command inside the directory with the "manage.py" file
+    python manage.py migrate X zero

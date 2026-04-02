@@ -1,0 +1,3311 @@
+{
+    "columns": [
+        "ASSOCIAÇÃO",
+        "DETENTOR",
+        "MEDICAMENTO",
+        "REGISTRO",
+        "CONCENTRAÇÃO",
+        "FORMA FARMACÊUTICA"
+    ],
+    "data": [
+        [
+            "propionato de fluticasona + cloridrato de azelastina",
+            "Mylan",
+            "DYMISTA",
+            188300058,
+            "137 µg + 50µg",
+            "Suspensao para inalaçao"
+        ],
+        [
+            "calamina + cloridrato de difenidramina + cânfora",
+            "União Química",
+            "SOLARDRIL",
+            104971473,
+            "80mg/mL + 10mg/mL + 1mg/mL",
+            "loç"
+        ],
+        [
+            "cloridrato de tiamina + cianocobalamina + cloridrato de piridoxina + fosfato dissódico de dexametasona",
+            "Procter & Gamble",
+            "DEXA-CITONEURIN NFF",
+            121420670,
+            "100mg + 100mg (ampola 1) + 5mg\n+ 4,37mg (ampola 2)",
+            "Solução injetável com 2 ampolas"
+        ],
+        [
+            "fosfato dissódico de dexametasona + sulfato de neomicina",
+            "Aché",
+            "DECADRON COLÍRIO",
+            105730299,
+            "1mg/mL + 3,5mg/mL",
+            "sol oft"
+        ],
+        [
+            "valerato de estradiol + dienogeste",
+            "Bayer",
+            "QLAIRA",
+            170560049,
+            "3mg+0 (com amarelo escuro) 2mg\n+ 2mg (com verm médio) 2mg+3mg (com amarelo claro) 1mg + 0 (com verm escuro)",
+            "com rev"
+        ],
+        [
+            "acetato de noretisterona + estradiol",
+            "Novartis Biociências",
+            "ESTALIS",
+            100680152,
+            "50µg/dia + 140µg/dia",
+            "ades transd"
+        ],
+        [
+            "estradiol hemihidratado + acetato de noretisterona",
+            "Farma Vision",
+            "SYSTEN CONTI",
+            174650003,
+            "50µg/dia + 170µg/dia",
+            "ades transd"
+        ],
+        [
+            "estradiol hemihidratado + acetato de noretisterona",
+            "Libbs",
+            "NATIFA PRO UBD",
+            100330211,
+            "0,5mg + 0,1mg",
+            "com rev"
+        ],
+        [
+            "glimepirida + cloridrato de metformina",
+            "Aché",
+            "MERITOR",
+            105730377,
+            "2,0 + 1000 mg",
+            "com rev"
+        ],
+        [
+            "glimepirida + cloridrato de metformina",
+            "Aché",
+            "MERITOR",
+            105730377,
+            "4,0 + 1000 mg",
+            "com rev"
+        ],
+        [
+            "lansoprazol + levofloxacino + amoxicilina tri-hidratada",
+            "Medley",
+            "PYLORIPAC RETRAT",
+            101810579,
+            "30mg + 500mg + 500mg",
+            "cap dura lib retard +\ncomp rev + cap dura"
+        ],
+        [
+            "lansoprazol + claritromicina + amoxicilina tri-hidratada",
+            "Medley",
+            "PYLORIPAC",
+            101810319,
+            "30mg + 500mg + 500mg",
+            "cap dura lib retard +\ncomp rev + cap dura"
+        ],
+        [
+            "paracetamol + cloridrato de fenilefrina",
+            "Reckitt Benckiser",
+            "NALDECON DIA",
+            173900006,
+            "400mg + 20mg (com amarelo) +\n400mg (com branco)",
+            "com"
+        ],
+        [
+            "paracetamol + cloridrato de fenilefrina + maleato de carbinoxamina",
+            "Reckitt Benckiser",
+            "NALDECON NOITE",
+            173900007,
+            "400mg + 20mg (com amarelo) + 400mg + 4mg (com laranja)",
+            "com"
+        ],
+        [
+            "paracetamol + cloridrato de fenilefrina + maleato de carbinoxamina",
+            "Reckitt Benckiser",
+            "NALDECON PACK",
+            173900008,
+            "400mg + 20mg (com amarelo) + 400mg + 4mg (com laranja)+\n400mg (com branco)",
+            "com"
+        ],
+        [
+            "cianocobalamina + cloridrato de tiamina + cloridrato de piridoxina + nitrato de tiamina + diclofenaco sódico",
+            "Procter & Gamble",
+            "ALGINAC",
+            121420663,
+            "amp I: (50 + 50)mg/ml                 amp\nII: (5 + 75)mg/ml",
+            "sol inj"
+        ],
+        [
+            "travoprosta + maleato de timolol",
+            "Germed",
+            "TRAVAMED MT",
+            105830997,
+            "0,04 mg/mL + 5 mg/mL",
+            "sol oft"
+        ],
+        [
+            "valerato de estradiol + acetato de ciproterona",
+            "União Química",
+            "CLIMENE",
+            104971494,
+            "2mg (comp branco) / 2mg + 1mg\n(comp rosado)",
+            "com rev"
+        ],
+        [
+            "acetato de betametasona + fosfato dissódico de\nbetametasona",
+            "Cosmed",
+            "CELESTONE SOLUSPAN",
+            178170775,
+            "3mg/mL + 3,945mg/mL",
+            "sus inj"
+        ],
+        [
+            "acetato de ciproterona + etinilestradiol",
+            "Bayer",
+            "DIANE 35",
+            170560072,
+            "2mg + 0,035mg",
+            "com rev"
+        ],
+        [
+            "acetato de clormadinona + etinilestradiol",
+            "Grünenthal do Brasil\nFarmacêutica Ltda",
+            "BELARA",
+            186100001,
+            "2mg + 0,03mg",
+            "com rev"
+        ],
+        [
+            "acetato de clormadinona + etinilestradiol",
+            "Grünenthal do Brasil\nFarmacêutica Ltda",
+            "BELARINA",
+            186100007,
+            "2mg + 0,02mg",
+            "com rev"
+        ],
+        [
+            "acetato de nomegestrol + estradiol hemihidratado",
+            "Farma Vision",
+            "STEZZA",
+            174650008,
+            "2,5mg + 1,5mg",
+            "com rev"
+        ],
+        [
+            "acetato de noretisterona + estradiol hemihidratado",
+            "Libbs",
+            "NATIFA PRO",
+            100330106,
+            "0,5mg + 1mg",
+            "com rev"
+        ],
+        [
+            "acetato de noretisterona + etinilestradiol",
+            "União Química",
+            "PRIMOSISTON",
+            104971495,
+            "2mg + 0,01mg",
+            "com"
+        ],
+        [
+            "ácido acetilsalicílico + ácido ascórbico",
+            "Bayer",
+            "ASPIRINA C EFERVESCENTE",
+            170560105,
+            "400mg + 240mg",
+            "com efev"
+        ],
+        [
+            "ácido acetilsalicílico + cafeína",
+            "Cosmed",
+            "DORIL",
+            178170007,
+            "500mg + 30 mg",
+            "com"
+        ],
+        [
+            "ácido bórico + ácido salicílico + enxofre + óxido de zinco",
+            "Casa Granado",
+            "POLVILHO ANTI-SÉPTICCO\nGRANADO",
+            108170030,
+            "3g + 0,352g + 17,602g + 11,735g",
+            "po top"
+        ],
+        [
+            "ácido fusídico + valerato de betametasona",
+            "Leo Pharma",
+            "VERUTEX B",
+            185690001,
+            "20mg/g + 1mg/g",
+            "crem"
+        ],
+        [
+            "adapaleno + fosfato de clindamicina",
+            "Glenmark",
+            "ADACNE CLIN",
+            110130249,
+            "1mg/g + 10mg/g",
+            "gel derm"
+        ],
+        [
+            "adapaleno + fosfato de clindamicina",
+            "Glenmark",
+            "DERIVA C MICRO",
+            110130266,
+            "1mg/g + 10mg/g",
+            "gel derm lib prol"
+        ],
+        [
+            "adapaleno + peróxido de benzoíla",
+            "Galderma",
+            "EPIDUO",
+            129160068,
+            "1mg/g+ 25mg/g",
+            "gel top"
+        ],
+        [
+            "adapaleno + peróxido de benzoíla",
+            "Galderma",
+            "EPIDUO",
+            129160068,
+            "3mg/g+ 25mg/g",
+            "gel top"
+        ],
+        [
+            "alendronato de sódio + carbonato de cálcio +\ncolecalciferol",
+            "Farmoquímica",
+            "ALENDIL CÁLCIO D",
+            103900175,
+            "70mg + (500 + 2)mg",
+            "com + com rev"
+        ],
+        [
+            "alendronato de sódio + colecalciferol",
+            "Organon",
+            "FOSAMAX D",
+            100290180,
+            "70mg (ác. alendrônico)/ 5600UI",
+            "com"
+        ],
+        [
+            "algestona acetofenida + enantato de estradiol",
+            "União Química",
+            "CICLOVULAR",
+            104970099,
+            "150mg/ml + 10mg/ml",
+            "sol inj"
+        ],
+        [
+            "alginato de sódio + bicarbonato de potássio",
+            "Reckitt Benckiser",
+            "LUFTAGASTROPRO",
+            173900005,
+            "100 mg/ml + 20 mg/ml",
+            "sus or"
+        ],
+        [
+            "cloridrato de amilorida + hidroclorotiazida",
+            "EMS S/A",
+            "CLORIDRATO DE AMILORIDA +\nHIDROCLOROTIAZIDA",
+            102350675,
+            "2,5mg + 25mg",
+            "com"
+        ],
+        [
+            "cloridrato de amilorida + hidroclorotiazida",
+            "EMS S/A",
+            "CLORIDRATO DE AMILORIDA +\nHIDROCLOROTIAZIDA",
+            102350675,
+            "5mg + 50mg",
+            "com"
+        ],
+        [
+            "amoxicilina tri-hidratada + claritromicina +\nesomeprazol magnésico tri-hidratado",
+            "EMS S/A",
+            "ESOGASTRO IBP",
+            102351096,
+            "500mg + 500mg + 20mg",
+            "cap dura + com rev +\ncom rev lib retard"
+        ],
+        [
+            "amoxicilina + clavulanato de potássio",
+            "Glaxosmithkline",
+            "CLAVULIN",
+            101070076,
+            "50mg/mL + 12,5mg/mL",
+            "po sus or"
+        ],
+        [
+            "amoxicilina + clavulanato de potássio",
+            "Glaxosmithkline",
+            "CLAVULIN",
+            101070076,
+            "500 mg + 125 mg",
+            "com rev"
+        ],
+        [
+            "amoxicilina + clavulanato de potássio",
+            "Glaxosmithkline",
+            "CLAVULIN BD",
+            101070076,
+            "40 mg/mL + 5,7 mg/mL",
+            "po sus or"
+        ],
+        [
+            "amoxicilina + clavulanato de potássio",
+            "Glaxosmithkline",
+            "CLAVULIN BD",
+            101070076,
+            "80 mg/mL + 11,4 mg/mL",
+            "po sus or"
+        ],
+        [
+            "amoxicilina + clavulanato de potássio",
+            "Glaxosmithkline",
+            "CLAVULIN BD",
+            101070076,
+            "875 mg + 125 mg",
+            "com rev"
+        ],
+        [
+            "amoxicilina + clavulanato de potássio",
+            "Glaxosmithkline",
+            "CLAVULIN ES",
+            101070076,
+            "120 mg/mL + 8,58 mg/mL",
+            "po sus or"
+        ],
+        [
+            "amoxicilina + clavulanato de potássio",
+            "Eurofarma",
+            "AMOXICILINA + CLAVULANATO\nDE POTÁSSIO",
+            100430811,
+            "1000mg + 200mg",
+            "po sol inj"
+        ],
+        [
+            "amoxicilina + clavulanato de potássio",
+            "Blau",
+            "DOCLAXIN",
+            116370094,
+            "500mg + 100 mg",
+            "po sol inj"
+        ],
+        [
+            "amoxicilina + sulbactam sódico",
+            "Bagó",
+            "TRIFAMOX IBL  1500",
+            156260020,
+            "1000mg + 500mg",
+            "po sol inj"
+        ],
+        [
+            "amoxicilina + sulbactam sódico",
+            "Bagó",
+            "TRIFAMOX IBL 750",
+            156260020,
+            "500mg + 250mg",
+            "po sol inj"
+        ],
+        [
+            "amoxicilina tri-hidratada + sulbactam pivoxila",
+            "Bagó",
+            "TRIFAMOX IBL BD",
+            156260020,
+            "200mg/mL + 50mg/mL",
+            "po susp oral"
+        ],
+        [
+            "amoxicilina tri-hidratada + sulbactam pivoxila",
+            "Bagó",
+            "TRIFAMOX IBL BD",
+            156260020,
+            "875 mg + 125 mg",
+            "com rev"
+        ],
+        [
+            "ampicilina sódica + sulbactam sódico",
+            "Fresenius",
+            "AMPICILINA SÓDICA +\nSULBACTAM SÓDICO",
+            100410214,
+            "1g + 0,5g",
+            "po sol inj"
+        ],
+        [
+            "ampicilina sódica + sulbactam sódico",
+            "Fresenius",
+            "AMPICILINA SÓDICA +\nSULBACTAM SÓDICO",
+            100410214,
+            "2g + 1g",
+            "po sol inj"
+        ],
+        [
+            "arteméter + lumefantrina",
+            "Novartis Biociências",
+            "COARTEM",
+            100680103,
+            "20mg + 120mg",
+            "com"
+        ],
+        [
+            "artesunato + cloridrato de mefloquina",
+            "Fiocruz",
+            "ARTESUNATO + MEFLOQUINA\nFARMANGUINHOS",
+            110630124,
+            "100mg + 220mg",
+            "com rev"
+        ],
+        [
+            "artesunato + cloridrato de mefloquina",
+            "Fiocruz",
+            "ARTESUNATO + MEFLOQUINA\nFARMANGUINHOS",
+            110630124,
+            "25mg + 55mg",
+            "com rev"
+        ],
+        [
+            "atenolol + clortalidona",
+            "Aché",
+            "ANGIPRESS CD",
+            105730569,
+            "100mg + 25mg",
+            "com"
+        ],
+        [
+            "atenolol + clortalidona",
+            "Aché",
+            "ANGIPRESS CD",
+            105730569,
+            "50mg + 12,5mg",
+            "com"
+        ],
+        [
+            "atenolol + clortalidona",
+            "Aché",
+            "ANGIPRESS CD",
+            105730569,
+            "25mg + 12,5mg",
+            "com"
+        ],
+        [
+            "benzoato de alogliptina + cloridrato de metformina",
+            "Cosmed",
+            "NESINA MET",
+            178170910,
+            "12,5mg + 850mg",
+            "com rev"
+        ],
+        [
+            "benzoato de alogliptina + cloridrato de metformina",
+            "Cosmed",
+            "NESINA MET",
+            178170910,
+            "12,5mg + 1000mg",
+            "com rev"
+        ],
+        [
+            "benzoato de alogliptina + cloridrato de pioglitazona",
+            "Cosmed",
+            "NESINA PIO",
+            178170903,
+            "25mg + 15mg",
+            "com rev"
+        ],
+        [
+            "benzoato de alogliptina + cloridrato de pioglitazona",
+            "Cosmed",
+            "NESINA PIO",
+            178170903,
+            "25mg + 30mg",
+            "com rev"
+        ],
+        [
+            "benzoilmetronidazol + nistatina + cloreto de\nbenzalcônio",
+            "Aché",
+            "COLPISTATIN",
+            105730008,
+            "62,5 mg/g + 25.000UI/g + 1,25 mg/g",
+            "crem vag"
+        ],
+        [
+            "besilato de anlodipino + atenolol",
+            "Aché",
+            "BETALOR",
+            105730575,
+            "5,0 mg (comp rev) + 25 mg (gran)",
+            "cap dura"
+        ],
+        [
+            "besilato de anlodipino + atenolol",
+            "Aché",
+            "BETALOR",
+            105730575,
+            "5,0 mg (comp rev) + 50 mg (gran)",
+            "cap dura"
+        ],
+        [
+            "besilato de anlodipino + losartana potássica",
+            "Aché",
+            "LOTAR",
+            105730577,
+            "2,5mg + 50mg",
+            "cap dura"
+        ],
+        [
+            "besilato de anlodipino + losartana potássica",
+            "Aché",
+            "LOTAR",
+            105730577,
+            "5,0mg + 50mg",
+            "cap dura"
+        ],
+        [
+            "besilato de anlodipino + losartana potássica",
+            "Aché",
+            "LOTAR",
+            105730577,
+            "5,0mg + 100mg",
+            "cap dura"
+        ],
+        [
+            "betametasona + maleato de dexclorfeniramina",
+            "Cosmed",
+            "CELESTAMINE",
+            178170783,
+            "0,05mg/mL + 0,4mg/mL",
+            "xpe"
+        ],
+        [
+            "betametasona + maleato de dexclorfeniramina",
+            "Cosmed",
+            "CELESTAMINE",
+            178170783,
+            "0,25mg + 2mg",
+            "sol or"
+        ],
+        [
+            "Bictegravir sódico + entricitabina + hemifumarato de tenofovir alafenamida",
+            "Gilead Sciences Farmacêutica do Brasil\nLtda.",
+            "Biktarvy",
+            109290008,
+            "50 mg + 200mg + 25mg",
+            "com rev"
+        ],
+        [
+            "bimatoprosta + maleato de timolol + tartarato de brimonidina",
+            "Allergan",
+            "TRIPLENEX",
+            101470186,
+            "0,1mg/mL + 1,5mg/mL + 6,83\nmg/mL",
+            "sol oft"
+        ],
+        [
+            "bimatoprosta + maleato de timolol",
+            "Allergan",
+            "GANFORT",
+            101470171,
+            "0,3mg/ml + 5,0 mg/ml",
+            "sol oft"
+        ],
+        [
+            "bisacodil + docusato de sódio",
+            "Cosmed",
+            "HUMECTOL D",
+            178170103,
+            "5mg + 60mg",
+            "com rev"
+        ],
+        [
+            "brinzolamida + tartarato de brimonidina",
+            "Novartis Biociências",
+            "SIMBRINZA",
+            100681131,
+            "10mg/mL + 2mg/mL",
+            "sus oft"
+        ],
+        [
+            "brinzolamida + maleato de timolol",
+            "Novartis Biociências",
+            "AZORGA",
+            100681108,
+            "10mg/mL + 5mg/mL",
+            "sus oft"
+        ],
+        [
+            "bromazepam + sulpirida",
+            "Cosmed",
+            "SULPAN",
+            178170939,
+            "1mg + 25mg",
+            "cap gel dura"
+        ],
+        [
+            "brometo de tiotrópio monoidratado + cloridrato de\nolodaterol",
+            "Boehringer Ingelheim",
+            "SPIOLTO",
+            103670177,
+            "2,5µg + 2,5µg",
+            "sol inal or"
+        ],
+        [
+            "brometo de umeclidínio + trifenatato de vilanterol",
+            "Glaxosmithkline",
+            "ANORO ELLIPTA",
+            101070318,
+            "62,5µg + 25µg",
+            "po inal"
+        ],
+        [
+            "butilbrometo de escopolamina + dipirona monoidratada",
+            "Cosmed",
+            "BUSCOPAN COMPOSTO",
+            178170891,
+            "10mg + 250mg",
+            "com rev"
+        ],
+        [
+            "butilbrometo de escopolamina + dipirona monoidratada",
+            "Cosmed",
+            "BUSCOPAN COMPOSTO",
+            178170891,
+            "4mg/mL + 500mgmL",
+            "sol inj"
+        ],
+        [
+            "butilbrometo de escopolamina + dipirona monoidratada",
+            "Natulab",
+            "BUSCOPLEX COMPOSTO",
+            138410066,
+            "6,67mg/mL + 333,4mg/mL",
+            "sol or (got)"
+        ],
+        [
+            "butilbrometo de escopolamina + paracetamol",
+            "Cosmed",
+            "BUSCODUO",
+            178170889,
+            "10mg + 500mg",
+            "com rev"
+        ],
+        [
+            "cafeína + dipirona monoidratada + cloridrato de\nisometepteno",
+            "Cosmed",
+            "NEOSALDINA",
+            178170899,
+            "30mg/mL + 300mg/mL + 50mg/mL",
+            "sol or"
+        ],
+        [
+            "cafeína + dipirona monoidratada + mucato de\nisometepteno",
+            "Cosmed",
+            "NEOSALDINA",
+            178170899,
+            "30mg + 300mg + 30mg",
+            "com rev"
+        ],
+        [
+            "candesartana cilexetila + felodipino",
+            "Astrazeneca",
+            "ATACAND COMB",
+            116180235,
+            "16mg + 2,5mg",
+            "com + com lib prol"
+        ],
+        [
+            "candesartana cilexetila + felodipino",
+            "Astrazeneca",
+            "ATACAND COMB",
+            116180235,
+            "16mg + 5mg",
+            "com + com lib prol"
+        ],
+        [
+            "candesartana cilexetila + hidroclorotiazida",
+            "Astrazeneca",
+            "ATACAND HCT",
+            116180083,
+            "16mg + 12,5mg",
+            "com"
+        ],
+        [
+            "candesartana cilexetila + hidroclorotiazida",
+            "Astrazeneca",
+            "ATACAND HCT",
+            116180083,
+            "8,0mg + 12,5mg",
+            "com"
+        ],
+        [
+            "carbidopa + levodopa",
+            "Teuto",
+            "CARBIDOL",
+            103700237,
+            "25mg + 250mg",
+            "com"
+        ],
+        [
+            "ceftazidima pentaidratada + avibactam sódico",
+            "Wyeth",
+            "TORGENA",
+            121100443,
+            "2000mg + 500mg",
+            "pó sol inf"
+        ],
+        [
+            "cetoconazol + dipropionato de betametasona +\nsulfato de neomicina",
+            "Aché",
+            "NOVACORT",
+            105730012,
+            "20mg/g + 0,64mg/g + 2,5mg/g",
+            "crem"
+        ],
+        [
+            "cetoconazol + dipropionato de betametasona +\nsulfato de neomicina",
+            "Aché",
+            "NOVACORT",
+            105730012,
+            "20mg/g + 0,64mg/g + 2,5mg/g",
+            "pom"
+        ],
+        [
+            "cetoprofeno + omeprazol",
+            "Sanofi Medley",
+            "PROFENID PROTECT",
+            183260361,
+            "200mg + 20mg",
+            "cap dura lib prol"
+        ],
+        [
+            "cianocobalamina + cloridrato de piridoxina + nitrato de\ntiamina + diclofenaco sódico",
+            "Procter & Gamble",
+            "ALGINAC",
+            121420663,
+            "1 mg + 50 mg + 50 mg + 50 mg",
+            "com rev"
+        ],
+        [
+            "cianocobalamina + cloridrato de piridoxina + nitrato de\ntiamina + diclofenaco sódico",
+            "Procter & Gamble",
+            "ALGINAC",
+            121420663,
+            "1 mg + 100 mg + 100 mg + 100 mg",
+            "com rev lib retard"
+        ],
+        [
+            "dipirona monoidratada + citrato de orfenadrina +\ncafeína",
+            "Opella Healthcare",
+            "DORFLEX",
+            186200008,
+            "300mg + 35mg + 50mg",
+            "com"
+        ],
+        [
+            "dipirona monoidratada + citrato de orfenadrina\n+ cafeína",
+            "Opella Healthcare",
+            "DORFLEX",
+            186200008,
+            "600mg + 70mg + 100mg",
+            "com"
+        ],
+        [
+            "citrato de orfenadrina + dipirona monoidratada +\ncafeína",
+            "Opella Healthcare",
+            "DORFLEX",
+            186200008,
+            "35mg/ml + 300mg/ml + 50mg/ml",
+            "sol or"
+        ],
+        [
+            "clindamicina + peróxido de benzoíla",
+            "GLAXOSMITHKLINE",
+            "CLINDOXYL",
+            101070339,
+            "10mg/g + 50mg/g",
+            "gel"
+        ],
+        [
+            "clonixinato de lisina + cloridrato de ciclobenzaprina",
+            "Farmoquímica",
+            "DOLAMIN FLEX",
+            103900174,
+            "125mg + 5mg",
+            "com rev"
+        ],
+        [
+            "cloreto de benzalcônio + cloridrato de lidocaína",
+            "3M do BRASIL",
+            "NEXCARE",
+            102070085,
+            "1,30mg/mL + 25mg/mL",
+            "sol top"
+        ],
+        [
+            "cloreto de cetilpiridínio + benzocaína",
+            "Kley Hertz",
+            "SANILIN",
+            106890151,
+            "0,5mg/ml + 4mg/mL",
+            "sol oral"
+        ],
+        [
+            "cloridrato de bupropiona + cloridrato de naltrexona",
+            "Merck S/A",
+            "CONTRAVE",
+            100890415,
+            "90mg + 8mg",
+            "com rev lib prol"
+        ],
+        [
+            "cloridrato de ciclobenzaprina + cafeína",
+            "Apsen",
+            "MIOSAN CAF",
+            101180611,
+            "5mg + 30mg",
+            "com rev"
+        ],
+        [
+            "cloridrato de ciclobenzaprina + cafeína",
+            "Apsen",
+            "MIOSAN CAF",
+            101180611,
+            "10mg+60mg",
+            "com rev"
+        ],
+        [
+            "cloridrato de ciprofloxacino + dexametasona",
+            "Novartis Biociências",
+            "CILODEX",
+            100681086,
+            "3mg/ml +1mg/ml",
+            "sus oft"
+        ],
+        [
+            "cloridrato de ciprofloxacino + dexametasona",
+            "União Química",
+            "CYLOCORT",
+            104971307,
+            "3mg/ml +1mg/ml",
+            "sol oft"
+        ],
+        [
+            "cloridrato de ciprofloxacino + dexametasona",
+            "União Química",
+            "CYLOCORT",
+            104971307,
+            "3mg/g +1mg/g",
+            "pom oft"
+        ],
+        [
+            "cloridrato de clobutinol + succinato de doxilamina",
+            "União Química",
+            "HYTOS PLUS",
+            104970226,
+            "4 mg/mL + 0,75 mg/mL",
+            "xpe"
+        ],
+        [
+            "cloridrato de clobutinol + succinato de doxilamina",
+            "União Química",
+            "HYTOS PLUS",
+            104970226,
+            "48 mg/mL + 9 mg/mL",
+            "sol oral"
+        ],
+        [
+            "cloridrato de delapril + dicloridrato de manidipino",
+            "Chiesi",
+            "HIPERTIL",
+            100580106,
+            "30 mg+10 mg",
+            "com"
+        ],
+        [
+            "cloridrato de difenidramina + cloreto de amônio + citrato de sódio",
+            "Johnson & Johnson",
+            "BENALET",
+            157211204,
+            "5mg + 50mg + 10mg",
+            "past"
+        ],
+        [
+            "cloridrato de donepezila + cloridrato de memantina",
+            "Aché",
+            "DONILA DUO",
+            105730467,
+            "10mg + 5mg",
+            "com rev"
+        ],
+        [
+            "cloridrato de donepezila + cloridrato de memantina",
+            "Aché",
+            "DONILA DUO",
+            105730467,
+            "10mg + 10mg",
+            "com rev"
+        ],
+        [
+            "cloridrato de donepezila + cloridrato de memantina",
+            "Aché",
+            "DONILA DUO",
+            105730467,
+            "10mg + 15mg",
+            "com rev"
+        ],
+        [
+            "cloridrato de donepezila + cloridrato de memantina",
+            "Aché",
+            "DONILA DUO",
+            105730467,
+            "10mg + 20mg",
+            "com rev"
+        ],
+        [
+            "cloridrato de dorzolamida + maleato de timolol",
+            "Mundipharma",
+            "COSOPT",
+            191980003,
+            "20mg/mL + 5,0mg/mL",
+            "sol oft"
+        ],
+        [
+            "cloridrato de fexofenadina + cloridrato de\npseudoefedrina",
+            "Sanofi Medley",
+            "ALLEGRA D",
+            183260313,
+            "60mg + 120mg",
+            "com rev lib prol"
+        ],
+        [
+            "cloridrato de levobupivacaína + hemitartarato de\nepinefrina",
+            "Cristália",
+            "NOVABUPI C/ VASO\nCONSTRICTOR",
+            102980160,
+            "2,5mg/mL + 9,1µg/mL",
+            "sol inj"
+        ],
+        [
+            "cloridrato de levobupivacaína + hemitartarato de\nepinefrina",
+            "Cristália",
+            "NOVABUPI C/ VASO\nCONSTRICTOR",
+            102980160,
+            "0,5mg/mL + 9,1mcg/mL",
+            "sol inj"
+        ],
+        [
+            "cloridrato de levobupivacaína + hemitartarato de\nepinefrina",
+            "Cristália",
+            "NOVABUPI C/ VASO\nCONSTRICTOR",
+            102980160,
+            "0,75mg/mL + 9,1mcg/mL",
+            "sol inj"
+        ],
+        [
+            "cloridrato de lidocaína + hemitartarato de epinefrina",
+            "Cristália",
+            "XYLESTESIN 1% COM\nVASOCONSTRITOR",
+            102980072,
+            "10mg/mL + 9,1mcg/mL",
+            "sol inj"
+        ],
+        [
+            "cloridrato de lidocaína + hemitartarato de epinefrina",
+            "Cristália",
+            "XYLESTESIN 2% COM\nVASOCONSTRITOR",
+            102980072,
+            "20mg/mL + 9,1mcg/mL",
+            "sol inj"
+        ],
+        [
+            "cloridrato de lidocaína + hemitartarato de epinefrina",
+            "DLA",
+            "LIDOSTESIM AD",
+            109930014,
+            "20mg/mL + 0,02mg/mL",
+            "sol inj buc"
+        ],
+        [
+            "cloridrato de mepivacaína + epinefrina",
+            "DFL",
+            "MEPIADRE",
+            101770022,
+            "20mg/mL + 10µg/mL",
+            "sol inj"
+        ],
+        [
+            "cloridrato de metformina + glibenclamida",
+            "Merck S/A",
+            "GLUCOVANCE",
+            100890270,
+            "500mg + 2,5mg",
+            "com rev"
+        ],
+        [
+            "cloridrato de metformina + glibenclamida",
+            "Merck S/A",
+            "GLUCOVANCE",
+            100890270,
+            "500mg + 5,0mg",
+            "com rev"
+        ],
+        [
+            "cloridrato de metformina + gliclazida",
+            "Merck S/A",
+            "GLIVANCE XR",
+            100890404,
+            "500mg + 30mg",
+            "com rev lib prol"
+        ],
+        [
+            "cloridrato de metoclopramida + dimeticona + pepsina",
+            "Aché",
+            "DIGEPLUS",
+            105730365,
+            "7mg + 40mg + 50mg",
+            "cap gel dura com\nmicrogrânulos"
+        ],
+        [
+            "cloridrato de moxifloxacino+ fosfato dissódico de\ndexametasona",
+            "Novartis Biociências",
+            "VIGADEXA",
+            100681102,
+            "5mg/mL + 1mg/mL",
+            "sol oft"
+        ],
+        [
+            "cloridrato de nafazolina + maleato de feniramina",
+            "Novartis Biociências",
+            "CLARIL",
+            100681115,
+            "0,25mg/mL+ 3mg/mL",
+            "sol oft"
+        ],
+        [
+            "cloridrato de nafazolina + sulfato de zinco\nheptaidratado",
+            "Sanofi Medley",
+            "COLÍRIO MOURA BRASIL",
+            183260307,
+            "0,15mg/mL +0,30mg/mL",
+            "sol oft"
+        ],
+        [
+            "cloridrato de oxicodona + cloridrato de naloxona",
+            "Mundipharma",
+            "TARGIN",
+            191980009,
+            "5mg + 2,5mg",
+            "com rev lib prol"
+        ],
+        [
+            "cloridrato de oxicodona + cloridrato de naloxona",
+            "Mundipharma",
+            "TARGIN",
+            191980009,
+            "10mg + 5mg",
+            "com rev lib prol"
+        ],
+        [
+            "cloridrato de oxicodona + cloridrato de naloxona",
+            "Mundipharma",
+            "TARGIN",
+            191980009,
+            "20mg + 10mg",
+            "com rev lib prol"
+        ],
+        [
+            "cloridrato de oxomemazina + iodeto de potássio +\nbenzoato de sódio + guaifenesina",
+            "Legrand",
+            "EXPEC",
+            167730271,
+            "0,4mg/mL + 20mg/mL + 4mg/mL\n+6mg/mL",
+            "xarope"
+        ],
+        [
+            "cloridrato de palonosetrona + netupitanto",
+            "United Medical",
+            "AKYNZEO",
+            125760036,
+            "0,56mg + 300mg",
+            "cap dura"
+        ],
+        [
+            "cloridrato de propranolol + hidroclorotiazida",
+            "EMS Sigma Pharma",
+            "TENADREN",
+            135690231,
+            "40 mg + 12,5 mg",
+            "com"
+        ],
+        [
+            "cloridrato de propranolol + hidroclorotiazida",
+            "EMS Sigma Pharma",
+            "TENADREN",
+            135690231,
+            "80 mg +12,5 mg",
+            "com"
+        ],
+        [
+            "cloridrato de tramadol + diclofenaco sódico",
+            "Grünenthal do Brasil\nFarmacêutica Ltda",
+            "ADORLAN",
+            186100017,
+            "25mg + 25mg",
+            "com"
+        ],
+        [
+            "cloridrato de tramadol + diclofenaco sódico",
+            "Grünenthal do Brasil\nFarmacêutica Ltda",
+            "ADORLAN",
+            186100017,
+            "50mg + 50mg",
+            "com"
+        ],
+        [
+            "cloridrato de tramadol + paracetamol",
+            "Janssen Cilag",
+            "ULTRACET",
+            112363356,
+            "37,5 mg + 325 mg",
+            "com rev"
+        ],
+        [
+            "clortalidona + cloridrato de amilorida",
+            "Eurofarma",
+            "DIUPRESS",
+            100430981,
+            "25mg + 5mg",
+            "com"
+        ],
+        [
+            "clotrimazol + acetato de dexametasona",
+            "Bayer",
+            "BAYCUTEN-N",
+            170560023,
+            "10mg/g + 0,443mg/g",
+            "crem"
+        ],
+        [
+            "desloratadina + sulfato de pseudoefedrina",
+            "Organon",
+            "DESALEX D12",
+            100290187,
+            "2,5 mg + 120 mg",
+            "com lib modificada"
+        ],
+        [
+            "desogestrel + etinilestradiol",
+            "Organon",
+            "GRACIAL",
+            100290219,
+            "0,125mg + 0,03mg (com branco) +\n0,025mg + 0,04mg (com azul)",
+            "com"
+        ],
+        [
+            "desogestrel + etinilestradiol",
+            "Organon",
+            "MERCILON",
+            100290220,
+            "0,15mg + 0,02mg",
+            "com"
+        ],
+        [
+            "desogestrel + etinilestradiol",
+            "Organon",
+            "MERCILON CONTI",
+            100290221,
+            "150+20 μg (com branco) / 0+10 μg\n(com amarelo)",
+            "com rev"
+        ],
+        [
+            "desogestrel + etinilestradiol",
+            "Organon",
+            "MICRODIOL",
+            100290223,
+            "0,15mg + 0,03mg",
+            "com"
+        ],
+        [
+            "desoximetasona + sulfato de neomicina",
+            "Sanofi Medley",
+            "ESPERSON N",
+            183260380,
+            "2,5 mg + 7,1 mg",
+            "pom"
+        ],
+        [
+            "dexametasona + sulfato de neomicina + sulfato de\npolimixina b",
+            "Novartis Biociências",
+            "MAXITROL",
+            100681106,
+            "1mg/mL + 3,5mg/mL + 6.000 UI/mL",
+            "sus oft"
+        ],
+        [
+            "dexametasona + sulfato de neomicina + sulfato de\npolimixina b",
+            "Novartis Biociências",
+            "MAXITROL",
+            100681106,
+            "1mg/g + 3,5mg/g + 6.000 UI/g",
+            "pom oft"
+        ],
+        [
+            "diclofenaco sódico + fosfato de codeína",
+            "Novartis Biociências",
+            "CODATEN",
+            100680898,
+            "50 mg + 50 mg",
+            "com rev"
+        ],
+        [
+            "dimenidrinato + cloridrato de piridoxina",
+            "Cosmed",
+            "DRAMIN B6",
+            178170907,
+            "25 mg/mL + 5 mg/mL",
+            "sol or"
+        ],
+        [
+            "dimenidrinato + cloridrato de piridoxina",
+            "Cosmed",
+            "DRAMIN B6",
+            178170907,
+            "50 mg + 10 mg",
+            "com rev"
+        ],
+        [
+            "dimenidrinato + cloridrato de piridoxina + glicose +\nfrutose",
+            "Cosmed",
+            "DRAMIN B6 DL",
+            178170900,
+            "3 mg/mL + 5 mg/mL + 100 mg/mL +\n100 mg/mL",
+            "sol inj"
+        ],
+        [
+            "dipirona monoidratada + cafeína",
+            "Cosmed",
+            "CAFILISADOR",
+            178170097,
+            "500mg + 65mg",
+            "com"
+        ],
+        [
+            "dipirona + cafeína + maleato de\nclorfeniramina",
+            "Cosmed",
+            "BENEGRIP",
+            178170092,
+            "250mg + 30mg (verde) + 250mg +\n2,0mg (amarelo)",
+            "com rev"
+        ],
+        [
+            "dipropionato de beclometasona + fumarato de formoterol di-hidratado",
+            "Chiesi",
+            "FOSTAIR",
+            100580114,
+            "100µg + 6µg/dose",
+            "aer or + disp or"
+        ],
+        [
+            "dipropionato de beclometasona + fumarato de formoterol di-hidratado",
+            "Chiesi",
+            "FOSTAIR",
+            100580114,
+            "100µg + 6µg/dose",
+            "po inal + disp inal"
+        ],
+        [
+            "dipropionato de beclometasona + fumarato de formoterol di-hidratado",
+            "Chiesi",
+            "FOSTAIR",
+            100580114,
+            "200µg + 6µg/dose",
+            "sol aer"
+        ],
+        [
+            "dipropionato de beclometasona + sulfato de\nsalbutamol",
+            "Chiesi",
+            "CLENIL COMPOSITUM HFA\nSPR",
+            100580116,
+            "50µg /dose+100µg/dose",
+            "sus aer inal or + bomb"
+        ],
+        [
+            "dipropionato de beclometasona + sulfato de\nsalbutamol",
+            "Chiesi",
+            "CLENIL COMPOSITUM HFA JET",
+            100580116,
+            "50µg /dose+100µg/dose",
+            "sus aer inal or + espaç"
+        ],
+        [
+            "dipropionato de beclometasona + sulfato de\nsalbutamol",
+            "Chiesi",
+            "CLENIL COMPOSITUM HFA\nSPR JET",
+            100580116,
+            "50µg /dose+100µg/dose",
+            "sus aer inal or + bomb +\nespaç"
+        ],
+        [
+            "dipropionato de beclometasona + sulfato de\nsalbutamol",
+            "Chiesi",
+            "CLENIL COMPOSITUM HFA\nSPR",
+            100580116,
+            "250µg/dose +100µg/dose",
+            "sus aer inal or+ bomb"
+        ],
+        [
+            "dipropionato de beclometasona + sulfato de\nsalbutamol",
+            "Chiesi",
+            "CLENIL COMPOSITUM HFA JET",
+            100580116,
+            "250µg/dose +100µg/dose",
+            "sus aer inal or + espaç"
+        ],
+        [
+            "dipropionato de beclometasona + sulfato de\nsalbutamol",
+            "Chiesi",
+            "CLENIL COMPOSITUM HFA\nSPR JET",
+            100580116,
+            "250µg/dose +100µg/dose",
+            "sus aer inal or + bomb +\nespaç"
+        ],
+        [
+            "dipropionato de betametasona + ácido salicílico",
+            "Cosmed",
+            "DIPROSALIC",
+            178170793,
+            "0,64mg + 30mg",
+            "pom"
+        ],
+        [
+            "dipropionato de betametasona + ácido salicílico",
+            "Cosmed",
+            "DIPROSALIC",
+            178170793,
+            "0,64mg + 20mg",
+            "sol top"
+        ],
+        [
+            "dipropionato de betametasona + fosfato dissódico de\nbetametasona",
+            "Cosmed",
+            "DIPROSPAN",
+            178170801,
+            "5,0mg/mL + 2,0mg/mL",
+            "sus inj"
+        ],
+        [
+            "dipropionato de betametasona + sulfato de\ngentamicina",
+            "Cosmed",
+            "DIPROGENTA",
+            178170786,
+            "0,64mg/g + 1mg/g",
+            "crem"
+        ],
+        [
+            "dipropionato de betametasona + sulfato de\ngentamicina",
+            "Cosmed",
+            "DIPROGENTA",
+            178170786,
+            "0,64mg/g + 1mg/g",
+            "pom"
+        ],
+        [
+            "drospirenona + clatrato de etinilestradiol\nbetaciclodextrina",
+            "Bayer",
+            "YAZ",
+            170560069,
+            "3mg + 0,02mg",
+            "com rev"
+        ],
+        [
+            "drospirenona + etinilestradiol",
+            "Bayer",
+            "YASMIN",
+            170560070,
+            "3mg + 0,03mg",
+            "com rev"
+        ],
+        [
+            "drospirenona + etinilestradiol",
+            "Libbs",
+            "ELANI",
+            100330124,
+            "3mg + 0,03mg",
+            "com rev uso contínuo"
+        ],
+        [
+            "dutasterida + cloridrato de tansulosina",
+            "Glaxosmithkline",
+            "COMBODART",
+            101070287,
+            "0,5mg+ 0,4mg",
+            "cap dura lib prol"
+        ],
+        [
+            "empagliflozina + linagliptina",
+            "Boehringer Ingelheim",
+            "GLYXAMBI",
+            103670176,
+            "10mg+5mg",
+            "com rev"
+        ],
+        [
+            "empagliflozina + linagliptina",
+            "Boehringer Ingelheim",
+            "GLYXAMBI",
+            103670176,
+            "25mg+5mg",
+            "com rev"
+        ],
+        [
+            "empagliflozina + cloridrato de metformina",
+            "Boehringer Ingelheim",
+            "JARDIANCE DUO",
+            103670178,
+            "12,5mg+850mg",
+            "com rev"
+        ],
+        [
+            "empagliflozina + cloridrato de metformina",
+            "Boehringer Ingelheim",
+            "JARDIANCE DUO",
+            103670178,
+            "12,5mg+1000mg",
+            "com rev"
+        ],
+        [
+            "enantato de noretisterona + valerato de estradiol",
+            "Bayer",
+            "MESIGYNA",
+            170560043,
+            "50mg/mL + 5mg/mL",
+            "sol ole inj"
+        ],
+        [
+            "entricitabina + fumarato de tenofovir desoproxila",
+            "Gilead",
+            "TRUVADA",
+            109290004,
+            "200mg+300mg",
+            "com rev"
+        ],
+        [
+            "estradiol + didrogesterona",
+            "Abbott",
+            "FEMOSTON",
+            105530349,
+            "1mg + 5mg",
+            "com rev"
+        ],
+        [
+            "estradiol + didrogesterona",
+            "Abbott",
+            "FEMOSTON",
+            105530349,
+            "1mg + 0mg (com branco) + 1mg +\n10mg (com cinza)",
+            "com rev"
+        ],
+        [
+            "estradiol hemihidratado + drospirenona",
+            "Bayer",
+            "ANGELIQ",
+            170560039,
+            "1mg + 2mg",
+            "com rev"
+        ],
+        [
+            "formoterol",
+            "Libbs",
+            "GESTINOL",
+            100330027,
+            "0,03mg + 0,075mg",
+            "com rev"
+        ],
+        [
+            "etinilestradiol + gestodeno",
+            "Aché",
+            "ALLESTRA",
+            105730734,
+            "0,03mg + 0,075mg",
+            "com rev"
+        ],
+        [
+            "etinilestradiol + norelgestromina",
+            "Gedeon",
+            "EVRA",
+            191290002,
+            "33,9µg/dia + 203µg/dia",
+            "ades"
+        ],
+        [
+            "etonogestrel + etinilestradiol",
+            "Organon",
+            "NUVARING",
+            100290213,
+            "11,7mg + 2,7mg",
+            "anel vag"
+        ],
+        [
+            "ezetimiba + sinvastatina",
+            "Organon",
+            "VYTORIN",
+            100290135,
+            "10mg + 10mg",
+            "com"
+        ],
+        [
+            "ezetimiba + sinvastatina",
+            "Organon",
+            "VYTORIN",
+            100290135,
+            "10mg + 20mg",
+            "com"
+        ],
+        [
+            "ezetimiba + sinvastatina",
+            "Organon",
+            "VYTORIN",
+            100290135,
+            "10mg + 40mg",
+            "com"
+        ],
+        [
+            "felodipino + succinato de metoprolol",
+            "Astrazeneca",
+            "SELOZOK FIX",
+            116180241,
+            "5mg + 50mg",
+            "com rev lib prol"
+        ],
+        [
+            "fosfato de sitagliptina + cloridrato de metformina",
+            "Merck Sharp & Dohme",
+            "JANUMET",
+            101710232,
+            "50mg + 500mg",
+            "com rev"
+        ],
+        [
+            "fosfato de sitagliptina + cloridrato de metformina",
+            "Merck Sharp & Dohme",
+            "JANUMET",
+            101710232,
+            "50 mg +850 mg",
+            "com rev"
+        ],
+        [
+            "fosfato de sitagliptina + cloridrato de metformina",
+            "Merck Sharp & Dohme",
+            "JANUMET",
+            101710232,
+            "50 mg +1000 mg",
+            "com rev"
+        ],
+        [
+            "fosfato de sitagliptina + cloridrato de metformina",
+            "Merck Sharp & Dohme",
+            "JANUMET XR",
+            101710232,
+            "50mg + 500mg",
+            "com rev lib prol"
+        ],
+        [
+            "fosfato de sitagliptina + cloridrato de metformina",
+            "Merck Sharp & Dohme",
+            "JANUMET XR",
+            101710232,
+            "50 mg +1000 mg",
+            "com rev lib prol"
+        ],
+        [
+            "fosfato de sitagliptina + cloridrato de metformina",
+            "Merck Sharp & Dohme",
+            "JANUMET XR",
+            101710232,
+            "100 mg +1000 mg",
+            "com rev lib prol"
+        ],
+        [
+            "fumarato de formoterol di-hidratado + budesonida",
+            "Astrazeneca",
+            "SYMBICORT TURBUHALER",
+            116180106,
+            "12mcg/dose + 400mcg/dose",
+            "po inal"
+        ],
+        [
+            "fumarato de formoterol di-hidratado + budesonida",
+            "Astrazeneca",
+            "SYMBICORT TURBUHALER",
+            116180106,
+            "6 mcg /dose + 100mcg/dose",
+            "po inal"
+        ],
+        [
+            "fumarato de formoterol di-hidratado + budesonida",
+            "Astrazeneca",
+            "SYMBICORT TURBUHALER",
+            116180106,
+            "6 mcg /dose+ 200mcg/dose",
+            "po inal"
+        ],
+        [
+            "fumarato de formoterol di-hidratado + budesonida",
+            "Aché",
+            "ALENIA",
+            105730566,
+            "6mcg/dose + 100mcg/dose",
+            "Cápsula gelatinosa dura com pó para inalaçao"
+        ],
+        [
+            "fumarato de formoterol di-hidratado + budesonida",
+            "Aché",
+            "ALENIA",
+            105730566,
+            "6mcg/dose + 200mcg/dose",
+            "Cápsula gelatinosa dura com pó para inalaçao"
+        ],
+        [
+            "fumarato de formoterol di-hidratado + budesonida",
+            "Aché",
+            "ALENIA",
+            105730566,
+            "12mcg/dose + 400mcg/dose",
+            "Cápsula gelatinosa dura com pó para inalaçao"
+        ],
+        [
+            "fumarato de formoterol di-hidratado + budesonida",
+            "Sandoz",
+            "FORASEQ",
+            100470658,
+            "12mcg/dose + 200mcg/dose",
+            "po inal"
+        ],
+        [
+            "fumarato de formoterol di-hidratado + budesonida",
+            "Sandoz",
+            "FORASEQ",
+            100470658,
+            "12mcg/dose + 400mcg/dose",
+            "po inal"
+        ],
+        [
+            "fumarato de formoterol di-hidratado + budesonida",
+            "Astrazeneca",
+            "VANNAIR",
+            116180234,
+            "6 mcg /dose+100mcg/dose",
+            "sus aer"
+        ],
+        [
+            "fumarato de formoterol di-hidratado + budesonida",
+            "Astrazeneca",
+            "VANNAIR",
+            116180234,
+            "6 mcg /dose+200mcg/dose",
+            "sus aer"
+        ],
+        [
+            "fumarato de formoterol di-hidratado + propionato de\nfluticasona",
+            "Eurofarma",
+            "LUGANO",
+            100431173,
+            "12mcg/dose + 250mcg/dose",
+            "Cápsula gelatinosa dura com pó para inalaçao"
+        ],
+        [
+            "furoato de fluticasona + brometo de umeclidínio +\ntrifenatato de vilanterol",
+            "Glaxosmithkline",
+            "TRELEGY",
+            101070344,
+            "100 + 62,5 + 25 µg",
+            "Pó para inalação"
+        ],
+        [
+            "furoato de fluticasona + trifenatato de vilanterol",
+            "Glaxosmithkline",
+            "RELVAR ELLIPTA",
+            101070299,
+            "100mcg + 25mcg",
+            "po inal"
+        ],
+        [
+            "furoato de fluticasona + trifenatato de vilanterol",
+            "Glaxosmithkline",
+            "RELVAR ELLIPTA",
+            101070299,
+            "200mcg + 25mcg",
+            "po inal"
+        ],
+        [
+            "gatifloxacino + acetato de prednisolona",
+            "Allergan",
+            "ZYPRED",
+            101470175,
+            "3mg/ml + 10mg/ml",
+            "sus oft"
+        ],
+        [
+            "gestodeno + etinilestradiol",
+            "União Química",
+            "FEMIANE",
+            104971497,
+            "0,075mg + 0,020mg",
+            "drag"
+        ],
+        [
+            "gestodeno + etinilestradiol",
+            "Farmoquímica",
+            "ADOLESS",
+            103900140,
+            "0,06mg + 0,015mg",
+            "com rev"
+        ],
+        [
+            "hemifumarato de bisoprolol + besilato de anlodipino",
+            "Merck",
+            "CONCOR ANLO",
+            100890413,
+            "5mg + 5mg",
+            "com"
+        ],
+        [
+            "hemifumarato de bisoprolol + besilato de anlodipino",
+            "Merck",
+            "CONCOR ANLO",
+            100890413,
+            "5mg + 10mg",
+            "com"
+        ],
+        [
+            "hemifumarato de bisoprolol + besilato de anlodipino",
+            "Merck",
+            "CONCOR ANLO",
+            100890413,
+            "10mg + 5mg",
+            "com"
+        ],
+        [
+            "hemifumarato de bisoprolol + besilato de anlodipino",
+            "Merck",
+            "CONCOR ANLO",
+            100890413,
+            "10mg + 10mg",
+            "com"
+        ],
+        [
+            "hemifumarato de bisoprolol + hidroclorotiazida",
+            "Merck S/A",
+            "BICONCOR",
+            100890201,
+            "2,5mg + 6,25mg",
+            "com rev"
+        ],
+        [
+            "hemifumarato de bisoprolol + hidroclorotiazida",
+            "Merck S/A",
+            "BICONCOR",
+            100890201,
+            "5mg + 6,25mg",
+            "com rev"
+        ],
+        [
+            "hialuronidase + valerato de betametasona",
+            "Apsen",
+            "POSTEC",
+            101180164,
+            "150 UTR/g + 2,5mg/g",
+            "pom"
+        ],
+        [
+            "calcipotriol monoidratado + dipropionato de betametasona",
+            "Leo Pharma",
+            "DAIVOBET",
+            185690004,
+            "50mcg/g + 0,5mg/g",
+            "gel"
+        ],
+        [
+            "calcipotriol monoidratado + dipropionato de betametasona",
+            "Leo Pharma",
+            "DAIVOBET",
+            185690004,
+            "50mcg/g + 0,5mg/g",
+            "pom"
+        ],
+        [
+            "hidrocortisona + sulfato de neomicina + sulfato de\npolimixina b",
+            "Farmoquímica",
+            "OTOSPORIN",
+            103900154,
+            "10.000UI + 5mg/mL + 10mg/mL",
+            "sups otol"
+        ],
+        [
+            "imipeném monoidratado + cilastatina sódica",
+            "União Química",
+            "IMICIL",
+            104970228,
+            "500mg + 500mg",
+            "po sol inj"
+        ],
+        [
+            "isetionato de hexamidina + cloridrato de tetracaína",
+            "Cosmed",
+            "HEXOMEDINE",
+            178170933,
+            "1mg/mL + 0,5mg/mL",
+            "colut spr"
+        ],
+        [
+            "isoniazida + rifampicina",
+            "Fundação Oswaldo Cruz",
+            "Farmanguinhos isoniazida +\nrifampicina",
+            110630139,
+            "150 mg + 300 mg",
+            "com rev"
+        ],
+        [
+            "isotretinoína + eritromicina",
+            "Stiefel",
+            "ISOTREXIN",
+            106750057,
+            "0,5mg/g + 20,0mg/g",
+            "gel"
+        ],
+        [
+            "Lamivudina + dolutegravir sódico",
+            "Glaxosmithkline",
+            "DOVATO",
+            101070353,
+            "300mg + 50mg",
+            "com rev"
+        ],
+        [
+            "lamivudina + fumarato de tenofovir desoproxila",
+            "Blanver",
+            "DUPLIVIR",
+            115240002,
+            "300mg+300mg",
+            "com rev"
+        ],
+        [
+            "lamivudina + zidovudina",
+            "Glaxosmithkline",
+            "BIOVIR",
+            101070214,
+            "150mg + 300mg",
+            "com rev"
+        ],
+        [
+            "latanoprosta + maleato de timolol",
+            "Upjohn Brasil",
+            "XALACOM",
+            115350002,
+            "50mcg/mL + 5mg/mL",
+            "sol oft"
+        ],
+        [
+            "levodopa + carbidopa + entacapona",
+            "Sandoz",
+            "STALEVO",
+            100470632,
+            "50mg+12,5mg+200mg",
+            "com rev"
+        ],
+        [
+            "levodopa + carbidopa + entacapona",
+            "Sandoz",
+            "STALEVO",
+            100470632,
+            "100mg + 25mg + 200mg",
+            "com rev"
+        ],
+        [
+            "levodopa + carbidopa + entacapona",
+            "Sandoz",
+            "STALEVO",
+            100470632,
+            "150mg + 37,5mg + 200mg",
+            "com rev"
+        ],
+        [
+            "levodopa + cloridrato de benserazida",
+            "Roche",
+            "PROLOPA",
+            101000064,
+            "200mg + 50mg",
+            "com"
+        ],
+        [
+            "levodopa + cloridrato de benserazida",
+            "Roche",
+            "PROLOPA BD",
+            101000064,
+            "100mg + 25mg",
+            "com"
+        ],
+        [
+            "levodopa + cloridrato de benserazida",
+            "Roche",
+            "PROLOPA",
+            101000064,
+            "100mg + 25mg",
+            "com sus"
+        ],
+        [
+            "levodopa + cloridrato de benserazida",
+            "Roche",
+            "PROLOPA HBS",
+            101000064,
+            "100mg + 25mg",
+            "cap dura lib prol"
+        ],
+        [
+            "levodopa + cloridrato de benserazida",
+            "Roche",
+            "PROLOPA DR",
+            101000064,
+            "200mg + 50mg",
+            "com lib modificada"
+        ],
+        [
+            "levonorgestrel + etinilestradiol",
+            "União Química",
+            "NEOVLAR",
+            104971498,
+            "0,25mg + 0,05mg",
+            "com rev"
+        ],
+        [
+            "levonorgestrel + etinilestradiol",
+            "Biolab Sanus",
+            "LEVEL",
+            109740115,
+            "0,10mg + 0,02mg",
+            "com rev"
+        ],
+        [
+            "levonorgestrel + etinilestradiol",
+            "Wyeth",
+            "NORDETTE",
+            121100001,
+            "0,15mg + 0,03mg",
+            "com rev"
+        ],
+        [
+            "levonorgestrel + etinilestradiol",
+            "União Química",
+            "TRIQUILAR",
+            104971501,
+            "0,05mg + 0,03mg (drag a) + 0,075mg + 0,04mg (drag b) +\n0,125mg + 0,03mg (drag c)",
+            "com rev"
+        ],
+        [
+            "lidocaína + acetato de hidrocortisona + óxido de zinco + subacetato de alumínio",
+            "Aspen Pharma",
+            "XYLOPROCT",
+            137640159,
+            "50mg + 2.5mg + 180mg + 35mg",
+            "pom ret"
+        ],
+        [
+            "lidocaína + prilocaína",
+            "Aspen Pharma",
+            "EMLA",
+            137640156,
+            "25mg/g + 25mg/g",
+            "crem"
+        ],
+        [
+            "lidocaína + tetracaína",
+            "Galderma",
+            "PLIAGLIS",
+            129160070,
+            "70mg/g + 70mg/g",
+            "crem"
+        ],
+        [
+            "linagliptina + cloridrato de metformina",
+            "Boehringer Ingelheim",
+            "TRAYENTA DUO",
+            103670170,
+            "2,5mg + 500mg",
+            "com rev"
+        ],
+        [
+            "linagliptina + cloridrato de metformina",
+            "Boehringer Ingelheim",
+            "TRAYENTA DUO",
+            103670170,
+            "2,5mg + 850mg",
+            "com rev"
+        ],
+        [
+            "linagliptina + cloridrato de metformina",
+            "Boehringer Ingelheim",
+            "TRAYENTA DUO",
+            103670170,
+            "2,5mg + 1000mg",
+            "com rev"
+        ],
+        [
+            "lopinavir + ritonavir",
+            "Abbvie",
+            "KALETRA",
+            198600010,
+            "80mg/mL + 20mg/mL",
+            "sol or"
+        ],
+        [
+            "loratadina + sulfato de pseudoefedrina",
+            "Germed",
+            "loratadina + sulfato de\npseudoefedrina",
+            105830314,
+            "1mg/mL + 12mg/mL",
+            "xpe"
+        ],
+        [
+            "losartana potássica + hidroclorotiazida",
+            "Organon",
+            "HYZAAR",
+            100290013,
+            "100mg + 25mg",
+            "com rev"
+        ],
+        [
+            "losartana potássica + hidroclorotiazida",
+            "Organon",
+            "HYZAAR",
+            100290013,
+            "50mg + 12,5mg",
+            "com rev"
+        ],
+        [
+            "losartana potássica + besilato de anlodipino",
+            "Torrent",
+            "BRANTA",
+            105250032,
+            "50mg +5mg",
+            "com rev"
+        ],
+        [
+            "maleato de bronfeniramina + cloridrato de fenilefrina",
+            "Aché",
+            "DECONGEX PLUS",
+            105730231,
+            "0,4 mg/ml + 1mg/ml",
+            "xarope"
+        ],
+        [
+            "maleato de bronfeniramina + cloridrato de fenilefrina",
+            "Aché",
+            "DECONGEX PLUS",
+            105730231,
+            "2 mg /ml+ 2,5 mg/ml",
+            "sol oral"
+        ],
+        [
+            "maleato de bronfeniramina + cloridrato de fenilefrina",
+            "Aché",
+            "DECONGEX PLUS",
+            105730231,
+            "12 mg + 15 mg",
+            "com rev lib prol"
+        ],
+        [
+            "maleato de bronfeniramina + cloridrato de\npseudoefedrina",
+            "Wyeth",
+            "DIMETAPP (ELX)",
+            121100089,
+            "0,2mg/mL + 3mg/mL",
+            "elx"
+        ],
+        [
+            "maleato de bronfeniramina + cloridrato de\npseudoefedrina",
+            "Wyeth",
+            "DIMETAPP (GELCAPS)",
+            121100089,
+            "4mg + 60mg",
+            "cap mole"
+        ],
+        [
+            "maleato de bronfeniramina + cloridrato de\npseudoefedrina",
+            "Wyeth",
+            "DIMETAPP (GOTAS)",
+            121100089,
+            "0,2mg/mL + 3mg/mL",
+            "sol or"
+        ],
+        [
+            "maleato de dexclorfeniramina + betametasona",
+            "União Química",
+            "CELESTRAT",
+            104971142,
+            "2,0mg + 0,25mg",
+            "com"
+        ],
+        [
+            "maleato de dexclorfeniramina + cloridrato de\nfenilefrina + cafeína + ácido acetilsalicílico",
+            "Cosmed",
+            "CORISTINA D",
+            178170797,
+            "1mg/g + 10mg/g + 30mg/g +\n400mg/g",
+            "com"
+        ],
+        [
+            "maleato de dexclorfeniramina + sulfato de\npseudoefedrina + guaifenesina",
+            "EMS S/A",
+            "MALEATO DE DEXCLORFENIRAMINA + SULFATO DE PSEUDOEFEDRINA + GUAIFENESINA",
+            102350684,
+            "0,4 mg/ml+ 4 mg/ml+ 20 mg/ml",
+            "sol oral"
+        ],
+        [
+            "maleato de enalapril + besilato de anlodipino",
+            "Aché",
+            "SINERGEN",
+            105730586,
+            "2,5mg + 10mg",
+            "cap dura"
+        ],
+        [
+            "maleato de enalapril + besilato de anlodipino",
+            "Aché",
+            "SINERGEN",
+            105730586,
+            "5,0mg + 10mg",
+            "cap dura"
+        ],
+        [
+            "maleato de enalapril + besilato de anlodipino",
+            "Aché",
+            "SINERGEN",
+            105730586,
+            "5,0mg + 20mg",
+            "cap dura"
+        ],
+        [
+            "maleato de enalapril + hidroclorotiazida",
+            "Biolab Sanus",
+            "VASOPRIL PLUS",
+            109740110,
+            "10mg + 25mg",
+            "com"
+        ],
+        [
+            "maleato de enalapril + hidroclorotiazida",
+            "Biolab Sanus",
+            "VASOPRIL PLUS",
+            109740110,
+            "20mg + 12,5mg",
+            "com"
+        ],
+        [
+            "maleato de indacaterol + brometo de glicopirrônio",
+            "Novartis Biociências",
+            "ULTIBRO",
+            100681123,
+            "110mcg + 50mcg/dose",
+            "cap dura"
+        ],
+        [
+            "maleato de mepiramina + hidróxido de alumínio +\nácido acetilsalicílico + cafeína",
+            "Cosmed",
+            "ENGOV",
+            178170093,
+            "15mg + 150mg + 150mg + 50mg",
+            "com"
+        ],
+        [
+            "medroxiprogesterona + estradiol",
+            "Hemafarma",
+            "CYCLOFEMINA",
+            110360266,
+            "25mg/0,5ml + 5mg/0,5ml",
+            "sus inj"
+        ],
+        [
+            "mepartricina + cloridrato de tetraciclina",
+            "Aché",
+            "TRICANGINE-A",
+            105730331,
+            "5000UI/g + 20mg/g",
+            "crem vag"
+        ],
+        [
+            "finasterida + mesilato de doxazosina",
+            "Eurofarma",
+            "DUOMO HP",
+            100431076,
+            "2mg+ 5mg",
+            "cap dura"
+        ],
+        [
+            "metronidazol + nistatina",
+            "Prati",
+            "METRONIDAZOL + NISTATINA",
+            125680044,
+            "100mg/g + 20.000UI/g",
+            "crem vag"
+        ],
+        [
+            "metronidazol + nitrato de miconazol",
+            "Exeltis",
+            "GYNOTRAN",
+            135640005,
+            "750mg+200mg",
+            "ovl vag"
+        ],
+        [
+            "montelucaste de sódio + dicloridrato de levocetirizina",
+            "Glenmark",
+            "LEVOLUKAST",
+            110130274,
+            "10mg + 5mg",
+            "com rev"
+        ],
+        [
+            "naproxeno + esomeprazol magnésico tri-hidratado",
+            "Grünenthal do Brasil\nFarmacêutica Ltda",
+            "VIMOVO",
+            186100014,
+            "500mg +20mg",
+            "com rev"
+        ],
+        [
+            "nimesulida + pantoprazol sódico",
+            "EMS S/A",
+            "NIVUX",
+            102351266,
+            "100mg + 20mg",
+            "com lib modificada"
+        ],
+        [
+            "nistatina + óxido de zinco",
+            "Takeda",
+            "DERMODEX",
+            106390260,
+            "100.000U/g + 200mg/g",
+            "pom"
+        ],
+        [
+            "nitrato de miconazol + tinidazol",
+            "Geolab",
+            "GINO COLON",
+            154230112,
+            "30mg/g + 20mg/g",
+            "crem vag"
+        ],
+        [
+            "norgestrel + etinilestradiol",
+            "Wyeth",
+            "ANFERTIL",
+            121100027,
+            "0,5mg + 0,05mg",
+            "com"
+        ],
+        [
+            "olmesartana medoxomila + anlodipino",
+            "Daiichi Sankyo",
+            "BENICARANLO",
+            104540175,
+            "20mg + 5mg",
+            "com rev"
+        ],
+        [
+            "olmesartana medoxomila + anlodipino",
+            "Daiichi Sankyo",
+            "BENICARANLO",
+            104540175,
+            "40mg + 5mg",
+            "com rev"
+        ],
+        [
+            "olmesartana medoxomila + anlodipino",
+            "Daiichi Sankyo",
+            "BENICARANLO",
+            104540175,
+            "40mg +10mg",
+            "com rev"
+        ],
+        [
+            "olmesartana medoxomila + hidroclorotiazida",
+            "Sankyo Pharma",
+            "BENICAR HCT",
+            104540173,
+            "20mg + 12,5mg",
+            "com rev"
+        ],
+        [
+            "olmesartana medoxomila + hidroclorotiazida",
+            "Sankyo Pharma",
+            "BENICAR HCT",
+            104540173,
+            "40mg + 12,5mg",
+            "com rev"
+        ],
+        [
+            "olmesartana medoxomila + hidroclorotiazida",
+            "Sankyo Pharma",
+            "BENICAR HCT",
+            104540173,
+            "40mg + 25mg",
+            "com rev"
+        ],
+        [
+            "olmesartana medoxomila + besilato de anlodipino+\nhidroclorotiazida",
+            "Torrent",
+            "OLMECOR TRIPLO",
+            105250103,
+            "40mg + 10mg + 12,5mg",
+            "com rev"
+        ],
+        [
+            "olmesartana medoxomila + hidroclorotiazida +\nanlodipino",
+            "Daiichi Sankyo",
+            "BENICAR TRIPLO",
+            104540190,
+            "20mg + 12,5mg + 5mg",
+            "com rev"
+        ],
+        [
+            "olmesartana medoxomila + hidroclorotiazida +\nanlodipino",
+            "Daiichi Sankyo",
+            "BENICAR TRIPLO",
+            104540190,
+            "40mg + 12,5mg + 5mg",
+            "com rev"
+        ],
+        [
+            "olmesartana medoxomila + hidroclorotiazida +\nanlodipino",
+            "Daiichi Sankyo",
+            "BENICAR TRIPLO",
+            104540190,
+            "40mg + 25mg + 10mg",
+            "com rev"
+        ],
+        [
+            "omeprazol + claritromicina + amoxicilina",
+            "Aché",
+            "OMEPRAMIX",
+            105730282,
+            "20mg + 500mg + 500mg",
+            "cap gel dur + comp ver +\ncap gel du"
+        ],
+        [
+            "paracetamol + ácido acetilsalicílico + cafeína",
+            "Cosmed",
+            "DORIL ENXAQUECA",
+            178170123,
+            "250mg+250mg+65mg",
+            "com rev"
+        ],
+        [
+            "paracetamol + cafeína",
+            "Johnson & Johnson",
+            "TYLENOL DC",
+            157211205,
+            "500mg + 65mg",
+            "com rev"
+        ],
+        [
+            "paracetamol + cafeína",
+            "PF Consumer Healthcare",
+            "SONRIDOR CAF",
+            192900006,
+            "500mg + 65mg",
+            "com efev"
+        ],
+        [
+            "paracetamol + ibuprofeno",
+            "Reckitt Benckiser",
+            "NUROMOL",
+            173900010,
+            "500mg + 200mg",
+            "com rev"
+        ],
+        [
+            "paracetamol + carisoprodol + diclofenaco sódico +\ncafeína",
+            "Brainfarma",
+            "TORSILAX",
+            155840234,
+            "300mg + 125mg + 50mg + 30mg",
+            "com"
+        ],
+        [
+            "paracetamol + cloridrato de fenilefrina+ maleato de\ncarbinoxamina",
+            "União Química",
+            "NASALIV",
+            104971164,
+            "40mg/mL + 1mg/mL+ 0,4 mg/mL",
+            "sol or"
+        ],
+        [
+            "paracetamol + cloridrato de fenilefrina+ maleato de\ncarbinoxamina",
+            "Cosmed",
+            "BENEGRIP MULTI",
+            178170768,
+            "13,3mg/mL + 0,33mg/mL +\n0,13mg/mL",
+            "sol or"
+        ],
+        [
+            "paracetamol + cloridrato de pseudoefedrina",
+            "Johnson & Johnson",
+            "TYLENOL SINUS",
+            157211208,
+            "500mg + 30mg",
+            "com rev"
+        ],
+        [
+            "paracetamol + fosfato de codeína",
+            "Cellera",
+            "TYLEX",
+            104400227,
+            "500mg + 30mg",
+            "com"
+        ],
+        [
+            "paracetamol + fosfato de codeína",
+            "Cellera",
+            "TYLEX",
+            104400227,
+            "500mg + 7,5mg",
+            "com"
+        ],
+        [
+            "paracetamol + maleato de clorfeniramina + cloridrato\nde fenilefrina",
+            "Pharmascience",
+            "RESFEDRYL",
+            117170010,
+            "400mg/5g + 4mg/5g + 4mg/ 5g",
+            "po sol or"
+        ],
+        [
+            "paracetamol + maleato de clorfeniramina + cloridrato\nde fenilefrina",
+            "Kley Hertz",
+            "RESFENOL",
+            106890135,
+            "400mg + 4mg + 4mg",
+            "cap dura"
+        ],
+        [
+            "paracetamol + maleato de clorfeniramina + cloridrato\nde fenilefrina",
+            "Cosmed",
+            "CORISTINA D PRO",
+            178170919,
+            "400mg + 4mg + 4mg",
+            "com"
+        ],
+        [
+            "paracetamol + maleato de clorfeniramina + cloridrato\nde fenilefrina",
+            "Kley Hertz",
+            "RESFENOL",
+            106890135,
+            "40mg/mL + 0,6mg/mL + 0,6mg/mL",
+            "sol or"
+        ],
+        [
+            "perindopril arginina + besilato de anlodipino",
+            "Servier",
+            "ACERTANLO",
+            112780075,
+            "3,5mg + 2,5mg",
+            "com"
+        ],
+        [
+            "perindopril arginina + besilato de anlodipino",
+            "Servier",
+            "ACERTANLO",
+            112780075,
+            "7mg + 5mg",
+            "com"
+        ],
+        [
+            "perindopril arginina + besilato de anlodipino",
+            "Servier",
+            "ACERTANLO",
+            112780075,
+            "14mg + 10mg",
+            "com"
+        ],
+        [
+            "perindopril + indapamida",
+            "Servier",
+            "COVERSYL PLUS",
+            112780056,
+            "4mg + 1,25mg",
+            "com"
+        ],
+        [
+            "perindopril arginina + indapamida",
+            "Servier",
+            "ACERTALIX",
+            112780077,
+            "5mg + 1,25mg",
+            "com rev"
+        ],
+        [
+            "perindopril arginina + indapamida",
+            "Servier",
+            "ACERTALIX",
+            112780077,
+            "10mg + 2,5mg",
+            "com rev"
+        ],
+        [
+            "perindopril arginina + indapamida + besilato de\nanlodipino",
+            "Servier",
+            "TRIPLIXAM",
+            112780084,
+            "5mg + 1,25mg + 5mg",
+            "com rev"
+        ],
+        [
+            "perindopril arginina + indapamida + besilato de\nanlodipino",
+            "Servier",
+            "TRIPLIXAM",
+            112780085,
+            "5mg + 1,25mg + 10mg",
+            "com rev"
+        ],
+        [
+            "perindopril arginina + indapamida + besilato de\nanlodipino",
+            "Servier",
+            "TRIPLIXAM",
+            112780086,
+            "10mg + 2,5mg + 5mg",
+            "com rev"
+        ],
+        [
+            "perindopril arginina + indapamida + besilato de\nanlodipino",
+            "Servier",
+            "TRIPLIXAM",
+            112780087,
+            "10mg + 2,5mg + 10mg",
+            "com rev"
+        ],
+        [
+            "picossulfato de sódio + óxido de magnésio + ácido\ncítrico",
+            "Ferring",
+            "PICOPREP",
+            128760019,
+            "10mg + 3,5g + 12g",
+            "po prep ext"
+        ],
+        [
+            "piperacilina sódica + tazobactam sódico",
+            "Wyeth",
+            "TAZOCIN",
+            121100095,
+            "2g + 250mg",
+            "po liof sol inj"
+        ],
+        [
+            "piperacilina sódica + tazobactam sódico",
+            "Wyeth",
+            "TAZOCIN",
+            121100095,
+            "4g + 500mg",
+            "po liof sol inj"
+        ],
+        [
+            "pivalato de fluocortolona + cloridrato de lidocaína",
+            "Moksha 8 Brasil",
+            "ULTRAPROCT LDO",
+            164250007,
+            "1mg/g + 20mg/g",
+            "crem ret"
+        ],
+        [
+            "policresuleno + cloridrato de cinchocaína",
+            "Takeda",
+            "PROCTYL",
+            106390111,
+            "50mg/g + 10mg/g",
+            "pom ret"
+        ],
+        [
+            "policresuleno + cloridrato de cinchocaína",
+            "Takeda",
+            "PROCTYL",
+            106390111,
+            "100mg/g + 27mg/g",
+            "sup"
+        ],
+        [
+            "propilenoglicolato de dapagliflozina monoidratado + cloridrato de\nMetformina",
+            "Astrazeneca",
+            "XIGDUO XR",
+            116180262,
+            "5 mg + 1000mg",
+            "com rev lib prol"
+        ],
+        [
+            "propilenoglicolato de dapagliflozina monoidratado + cloridrato de\nMetformina",
+            "Astrazeneca",
+            "XIGDUO XR",
+            116180262,
+            "5 mg + 500mg",
+            "com rev lib prol"
+        ],
+        [
+            "propilenoglicolato de dapagliflozina monoidratado + cloridrato de\nMetformina",
+            "Astrazeneca",
+            "XIGDUO XR",
+            116180262,
+            "10 mg + 500mg",
+            "com rev lib prol"
+        ],
+        [
+            "propilenoglicolato de dapagliflozina monoidratado + cloridrato de\nMetformina",
+            "Astrazeneca",
+            "XIGDUO XR",
+            116180262,
+            "10 mg + 1000mg",
+            "com rev lib prol"
+        ],
+        [
+            "propilenoglicolato de dapagliflozina monoidratado +\ncloridrato de saxagliptina di-hidratada",
+            "Astrazeneca",
+            "QTERN",
+            116180273,
+            "10mg + 05mg",
+            "com rev lib ret"
+        ],
+        [
+            "propionato de testosterona + isocaproato de testosterona + decanoato de testosterona +\nfempropionato de testosterona",
+            "Aspen Pharma",
+            "DURATESTON",
+            137640164,
+            "30mg + 60mg + 100mg + 60mg",
+            "sol inj"
+        ],
+        [
+            "ramipril + hidroclorotiazida",
+            "Libbs",
+            "NAPRIX D",
+            100330178,
+            "5mg + 25mg",
+            "cap dura"
+        ],
+        [
+            "ramipril + besilato de anlodipino",
+            "Libbs",
+            "NAPRIX A",
+            100330096,
+            "10mg + 10mg",
+            "cap dura"
+        ],
+        [
+            "ramipril + besilato de anlodipino",
+            "Libbs",
+            "NAPRIX A",
+            100330096,
+            "2,5mg + 5mg",
+            "cap dura"
+        ],
+        [
+            "ramipril + besilato de anlodipino",
+            "Libbs",
+            "NAPRIX A",
+            100330096,
+            "10mg + 5mg",
+            "cap dura"
+        ],
+        [
+            "ramipril + besilato de anlodipino",
+            "Libbs",
+            "NAPRIX A",
+            100330096,
+            "5mg + 5mg",
+            "cap dura"
+        ],
+        [
+            "rosuvastatina cálcica + ezetimiba",
+            "Aché",
+            "TREZETE",
+            105730719,
+            "10mg + 10mg",
+            "com rev"
+        ],
+        [
+            "rosuvastatina cálcica + ezetimiba",
+            "Aché",
+            "TREZETE",
+            105730720,
+            "20mg + 10mg",
+            "com rev"
+        ],
+        [
+            "rosuvastatina cálcica + ezetimiba",
+            "Sanofi Medley",
+            "ZINPASS EZE",
+            183260461,
+            "40mg + 10mg",
+            "com rev"
+        ],
+        [
+            "rosuvastatina cálcica + ezetimiba",
+            "Libbs",
+            "PLENANCE EZE",
+            1003302210,
+            "5mg + 10mg",
+            "cap dura"
+        ],
+        [
+            "rosuvastatina cálcica + ezetimiba",
+            "Libbs",
+            "PLENANCE EZE",
+            1003302210,
+            "10mg + 10mg",
+            "cap dura"
+        ],
+        [
+            "rosuvastatina cálcica + ezetimiba",
+            "Libbs",
+            "PLENANCE EZE",
+            1003302210,
+            "20mg + 10mg",
+            "cap dura"
+        ],
+        [
+            "saxagliptina + cloridrato de metformina",
+            "Astrazeneca",
+            "KOMBIGLYZE XR",
+            116180264,
+            "2,5mg + 1000mg",
+            "com rev"
+        ],
+        [
+            "saxagliptina + cloridrato de metformina",
+            "Astrazeneca",
+            "KOMBIGLYZE XR",
+            116180264,
+            "5mg + 500mg",
+            "com rev"
+        ],
+        [
+            "saxagliptina + cloridrato de metformina",
+            "Astrazeneca",
+            "KOMBIGLYZE XR",
+            116180264,
+            "5mg + 1000mg",
+            "com rev"
+        ],
+        [
+            "sofosbuvir + velpatasvir",
+            "Gilead",
+            "EPCLUSA",
+            109290003,
+            "400mg + 100mg",
+            "com rev"
+        ],
+        [
+            "succinato de solifenacina + cloridrato de tansulosina",
+            "Astellas",
+            "VESOMNI",
+            177170005,
+            "6mg + 0,4mg",
+            "com rev lib prol"
+        ],
+        [
+            "succinato de sumatriptana + naproxeno sódico",
+            "Libbs",
+            "SUMAXPRO",
+            100330176,
+            "85 mg + 500 mg",
+            "com rev"
+        ],
+        [
+            "succinato de sumatriptana + naproxeno sódico",
+            "Libbs",
+            "SUMAXPRO",
+            100330176,
+            "50 mg + 500 mg",
+            "com rev"
+        ],
+        [
+            "sulfadiazina de prata + nitrato de cério",
+            "Cristália",
+            "DERMACERIUM",
+            102980560,
+            "10mg/g + 4mg/g",
+            "crem"
+        ],
+        [
+            "sulfametoxazol + trimetoprima",
+            "FARMOQUÍMICA",
+            "BACTRIM",
+            103900205,
+            "400mg + 80mg",
+            "com"
+        ],
+        [
+            "sulfametoxazol + trimetoprima",
+            "FARMOQUÍMICA",
+            "BACTRIM",
+            103900205,
+            "40mg/mL + 8mg/mL",
+            "sups or"
+        ],
+        [
+            "sulfametoxazol + trimetoprima",
+            "FARMOQUÍMICA",
+            "BACTRIM",
+            103900205,
+            "800mg + 160mg",
+            "com"
+        ],
+        [
+            "sulfametoxazol + trimetoprima",
+            "FARMOQUÍMICA",
+            "BACTRIM",
+            103900205,
+            "80mg/mL + 16mg/mL",
+            "sups or"
+        ],
+        [
+            "sulfato de ceftolozana + tazobactam sódico",
+            "Merck Sharp & Dohme",
+            "ZERBAXA",
+            101710231,
+            "1g + 0,5g",
+            "pó sol inf"
+        ],
+        [
+            "sulfato de gentamicina + fosfato dissódico de\nbetametasona",
+            "Cosmed",
+            "GARASONE",
+            178170794,
+            "3mg/mL + 1mg/mL",
+            "sol oft (got)"
+        ],
+        [
+            "sulfato de neomicina + acetato de clostebol",
+            "Pfizer",
+            "TROFODERMIN",
+            102160154,
+            "5mg/g + 5mg/g",
+            "crem"
+        ],
+        [
+            "sulfato de neomicina + acetato de clostebol",
+            "Pfizer",
+            "TROFODERMIN",
+            102160154,
+            "5mg/g + 5mg/g",
+            "crem vag"
+        ],
+        [
+            "sulfato de neomicina + bacitracina zíncica",
+            "Cosmed",
+            "NEBACETIN",
+            178170904,
+            "5mg/g + 250UI/g",
+            "pom"
+        ],
+        [
+            "sulfato de neomicina + sulfato de polimixina b +\nnistatina + tinidazol",
+            "Abbott",
+            "POLIGINAX",
+            105530354,
+            "35.000UI + 35.000UI + 100.000UI +\n150mg",
+            "crem vag"
+        ],
+        [
+            "sulfato de salbutamol + guaifenesina",
+            "Glaxosmithkline",
+            "AEROFLUX",
+            101070195,
+            "0,48mg/mL + 20mg/mL",
+            "sol or"
+        ],
+        [
+            "tartarato de brimonidina + maleato de timolol",
+            "Allergan",
+            "COMBIGAN",
+            101470188,
+            "2,0 mg/mL + 5,0 mg/mL",
+            "sol oft"
+        ],
+        [
+            "telmisartana + besilato de anlodipino",
+            "Boehringer Ingelheim",
+            "MICARDIS ANLO",
+            103670166,
+            "40mg+ 5 mg",
+            "com"
+        ],
+        [
+            "telmisartana + besilato de anlodipino",
+            "Boehringer Ingelheim",
+            "MICARDIS ANLO",
+            103670166,
+            "80mg+ 5 mg",
+            "com"
+        ],
+        [
+            "telmisartana + besilato de anlodipino",
+            "Boehringer Ingelheim",
+            "MICARDIS ANLO",
+            103670166,
+            "80mg+ 10 mg",
+            "com"
+        ],
+        [
+            "telmisartana + hidroclorotiazida",
+            "Boehringer Ingelheim",
+            "MICARDIS HCT",
+            103670134,
+            "80 mg + 25 mg",
+            "com"
+        ],
+        [
+            "telmisartana + hidroclorotiazida",
+            "Boehringer Ingelheim",
+            "MICARDIS HCT",
+            103670134,
+            "40 mg + 12,5 mg",
+            "com"
+        ],
+        [
+            "telmisartana + hidroclorotiazida",
+            "Boehringer Ingelheim",
+            "MICARDIS HCT",
+            103670134,
+            "80 mg + 12,5 mg",
+            "com"
+        ],
+        [
+            "ticarcilina + ácido clavulânico",
+            "Glaxosmithkline",
+            "TIMENTIN",
+            101070075,
+            "3,34g + 0,119g",
+            "pó sol inj"
+        ],
+        [
+            "tinidazol + tioconazol",
+            "FARMOQUÍMICA",
+            "GYNOMAX",
+            103900115,
+            "30mg/g + 20mg/g",
+            "crem vag"
+        ],
+        [
+            "tioconazol+ tinidazol+ secnidazol",
+            "Farmoquímica",
+            "GYNOPAC",
+            103900165,
+            "20mg/g+30mg/g+1g (2 comp)",
+            "crem vag + comp rev"
+        ],
+        [
+            "tioconazol+ tinidazol+ secnidazol",
+            "Farmoquímica",
+            "GYNOPAC plus",
+            103900165,
+            "20mg/g+30mg/g+1g ( 4comp)",
+            "crem vag + comp rev"
+        ],
+        [
+            "tobramicina + dexametasona",
+            "Novartis Biociências",
+            "TOBRADEX",
+            100681098,
+            "3mg + 1,0mg",
+            "sus oft"
+        ],
+        [
+            "tobramicina + dexametasona",
+            "União Química",
+            "TOBRACORT",
+            104971305,
+            "3mg + 1,0mg",
+            "pom oft"
+        ],
+        [
+            "tretinoína + fosfato de clindamicina",
+            "Theraskin",
+            "VITACID ACNE",
+            101910303,
+            "0,25 MG/G + 12 MG/G (EQ.\n10MG/G)",
+            "Gel"
+        ],
+        [
+            "tribenosídeo + cloridrato de lidocaína",
+            "Glaxosmithkline",
+            "PROCTO-GLYVENOL",
+            101070329,
+            "50mg/g + 20mg/g",
+            "crem"
+        ],
+        [
+            "trifluridina + cloridrato de tipiracila",
+            "Servier",
+            "LONSURF",
+            112780083,
+            "15mg + 6,14mg",
+            "com rev"
+        ],
+        [
+            "trifluridina + cloridrato de tipiracila",
+            "Servier",
+            "LONSURF",
+            112780083,
+            "20mg + 8,19mg",
+            "com rev"
+        ],
+        [
+            "valerato de betametasona + clioquinol",
+            "Glaxosmithkline",
+            "BETNOVATE Q",
+            101070215,
+            "1mg/g + 30mg/g",
+            "crem"
+        ],
+        [
+            "valerato de betametasona + clioquinol",
+            "Glaxosmithkline",
+            "BETNOVATE Q",
+            101070215,
+            "1mg/g + 30mg/g",
+            "pom"
+        ],
+        [
+            "valerato de betametasona + sulfato de gentamicina +\ntolnaftato + clioquinol",
+            "Cosmed",
+            "QUADRIDERM",
+            178170790,
+            "0,5mg/g + 1mg/g + 10mg/g +\n10mg/g",
+            "crem"
+        ],
+        [
+            "valerato de betametasona + sulfato de gentamicina +\ntolnaftato + clioquinol",
+            "Cosmed",
+            "QUADRIDERM",
+            178170790,
+            "0,5mg/g + 1mg/g + 10mg/g +\n10mg/g",
+            "pom"
+        ],
+        [
+            "valerato de betametasona + sulfato de neomicina",
+            "Glaxosmithkline",
+            "BETNOVATE N",
+            101070216,
+            "1mg/g + 5mg/g",
+            "pom"
+        ],
+        [
+            "valerato de betametasona + sulfato de neomicina",
+            "Glaxosmithkline",
+            "BETNOVATE N",
+            101070216,
+            "1mg/g + 5mg/g",
+            "crem"
+        ],
+        [
+            "valerato de diflucortolona + nitrato de isoconazol",
+            "LEO PHARMA",
+            "ICACORT",
+            185690009,
+            "1mg/g + 10mg/g",
+            "creme"
+        ],
+        [
+            "valproato de sódio + ácido valproico",
+            "Torrent",
+            "TORVAL CR",
+            105250018,
+            "300mg ( 199,80mg + 87mg)",
+            "com lib prolong"
+        ],
+        [
+            "valproato de sódio + ácido valproico",
+            "Torrent",
+            "TORVAL CR",
+            105250018,
+            "500mg (333mg + 145mg)",
+            "com lib prolong"
+        ],
+        [
+            "valsartana + besilato de anlodipino",
+            "Novartis Biociências",
+            "DIOVAN AMLO FIX",
+            100681053,
+            "80mg + 5mg",
+            "com rev"
+        ],
+        [
+            "valsartana + besilato de anlodipino",
+            "Novartis Biociências",
+            "DIOVAN AMLO FIX",
+            100681053,
+            "160mg + 5,0mg",
+            "com rev"
+        ],
+        [
+            "valsartana + besilato de anlodipino",
+            "Novartis Biociências",
+            "DIOVAN AMLO FIX",
+            100681053,
+            "160mg + 10,0mg",
+            "com rev"
+        ],
+        [
+            "valsartana + besilato de anlodipino",
+            "Novartis Biociências",
+            "DIOVAN AMLO FIX",
+            100681053,
+            "320mg + 5,0mg",
+            "com rev"
+        ],
+        [
+            "valsartana + besilato de anlodipino",
+            "Novartis Biociências",
+            "DIOVAN AMLO FIX",
+            100681053,
+            "320mg + 10,0mg",
+            "com rev"
+        ],
+        [
+            "valsartana + hidroclorotiazida",
+            "Novartis Biociências",
+            "DIOVAN HCT",
+            100680097,
+            "160mg + 12,5mg",
+            "com rev"
+        ],
+        [
+            "valsartana + hidroclorotiazida",
+            "Novartis Biociências",
+            "DIOVAN HCT",
+            100680097,
+            "160mg + 25mg",
+            "com rev"
+        ],
+        [
+            "valsartana + hidroclorotiazida",
+            "Novartis Biociências",
+            "DIOVAN HCT",
+            100680097,
+            "80mg + 12,5mg",
+            "com rev"
+        ],
+        [
+            "valsartana + hidroclorotiazida",
+            "Novartis Biociências",
+            "DIOVAN HCT",
+            100680097,
+            "320mg + 12,5mg",
+            "com rev"
+        ],
+        [
+            "valsartana + hidroclorotiazida",
+            "Novartis Biociências",
+            "DIOVAN HCT",
+            100680097,
+            "320mg + 25mg",
+            "com rev"
+        ],
+        [
+            "valsartana+hidroclorotiazida+ besilato de anlodipino",
+            "Novartis Biociências",
+            "EXFORGE HCT",
+            100681082,
+            "160mg + 12,5mg + 5mg",
+            "com rev"
+        ],
+        [
+            "valsartana+hidroclorotiazida+ besilato de anlodipino",
+            "Novartis Biociências",
+            "EXFORGE HCT",
+            100681082,
+            "160mg + 12,5mg + 10mg",
+            "com rev"
+        ],
+        [
+            "valsartana+hidroclorotiazida+ besilato de anlodipino",
+            "Novartis Biociências",
+            "EXFORGE HCT",
+            100681082,
+            "160mg + 25mg + 5mg",
+            "com rev"
+        ],
+        [
+            "valsartana+hidroclorotiazida+ besilato de anlodipino",
+            "Novartis Biociências",
+            "EXFORGE HCT",
+            100681082,
+            "160mg + 25mg + 10mg",
+            "com rev"
+        ],
+        [
+            "valsartana+hidroclorotiazida+ besilato de anlodipino",
+            "Novartis Biociências",
+            "EXFORGE HCT",
+            100681082,
+            "320mg + 25mg + 10mg",
+            "com rev"
+        ],
+        [
+            "vildagliptina + cloridrato de metformina",
+            "Novartis Biociências",
+            "GALVUS MET",
+            100681059,
+            "50+500 / 50+850 / 50+1000 mg",
+            "com rev"
+        ],
+        [
+            "xinafoato de salmeterol + propionato de fluticasona",
+            "Glaxosmithkline",
+            "SERETIDE DISKUS",
+            101070230,
+            "50 mcg /dose+ 100 mcg /dose",
+            "po inal"
+        ],
+        [
+            "xinafoato de salmeterol + propionato de fluticasona",
+            "Glaxosmithkline",
+            "SERETIDE DISKUS",
+            101070230,
+            "50 mcg/dose + 250 mcg/dose",
+            "po inal"
+        ],
+        [
+            "xinafoato de salmeterol + propionato de fluticasona",
+            "Glaxosmithkline",
+            "SERETIDE DISKUS",
+            101070230,
+            "50 mcg /dose+ 500 mcg/dose",
+            "po inal"
+        ],
+        [
+            "xinafoato de salmeterol + propionato de fluticasona",
+            "Glaxosmithkline",
+            "SERETIDE spr",
+            101070230,
+            "25 mcg/dose + 125 mcg/dose",
+            "sus aer"
+        ],
+        [
+            "xinafoato de salmeterol + propionato de fluticasona",
+            "Glaxosmithkline",
+            "SERETIDE spr",
+            101070230,
+            "25 mcg/dose+ 250 mcg/dose",
+            "sus aer"
+        ],
+        [
+            "xinafoato de salmeterol + propionato de fluticasona",
+            "Glaxosmithkline",
+            "SERETIDE spr",
+            101070230,
+            "25 mcg/dose+ 50 mcg/dose",
+            "sus aer"
+        ]
+    ],
+    "column_names": [
+        null
+    ]
+}
