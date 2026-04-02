@@ -6,10 +6,10 @@ class Command(BaseCommand):
     help = "Load pre defined medications data from database"
 
     def handle(self, *args, **options):
-        BASE = "/home/yanetti/Desktop/extensao/server-medications/lembramed/api/src/anvisa_data"
+        BASE = "/server-medications/lembramed/api/src/anvisa_data""
 
         self.stdout.write("Carregando anvisa_data.json...")
-        anvisa = {}  # medication_id → {name, empresa, principio_ativo, classe_terapeutica}
+        anvisa = {}
         with open(os.path.join(BASE, "anvisa_data.json"), "r") as f:
             json_data = json.load(f)
         for elemento in json_data.get("data", []):
@@ -24,7 +24,7 @@ class Command(BaseCommand):
         self.stdout.write(f"  {len(anvisa)} medicamentos válidos.")
 
         self.stdout.write("Carregando bulas...")
-        bulas = {}  # medication_id → {indicacoes_para_uso, ...}
+        bulas = {}
         for i in range(5):
             path = os.path.join(BASE, f"Bulario_medicamentos_iniciais{i}.json")
             if not os.path.exists(path):
@@ -66,7 +66,7 @@ class Command(BaseCommand):
                         campos["quantidade_a_mais"] = conteudo
                     elif titulo.startswith("ONDE COMO E POR QUANTO TEMPO POSSO GUARDAR"):
                         campos["como_guardar_medicamento"] = conteudo
-                bulas[med_id] = campos  # salva no dict, não bate no banco aqui
+                bulas[med_id] = campos
             self.stdout.write(f"  Bulario{i}: {len(data)} bulas")
         self.stdout.write(f"  Total bulas: {len(bulas)}")
 

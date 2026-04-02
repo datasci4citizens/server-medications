@@ -4,7 +4,7 @@ from excel_treatment import get_dict
 import os
 
 DOWNLOAD_DIR = os.path.abspath("data")
-DOWNLOAD_DIR = "/home/yanetti/Desktop/extensao/server-medications/lembramed/api/src/anvisa_data/data"
+DOWNLOAD_DIR = "data/"
 OUTPUT_NAME  = "Bulario_medicamentos_iniciais_continuacao"
 
 os.makedirs(DOWNLOAD_DIR, exist_ok=True)
