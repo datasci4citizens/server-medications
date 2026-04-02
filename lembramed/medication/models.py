@@ -3,6 +3,9 @@ from authentication.models import Person
 import uuid, datetime
 from django.utils import timezone
 from django.core.exceptions import ValidationError
+import json
+import os
+from django.conf import settings
 
 class Medication(models.Model):
     # RegisterNum for ANVISA, RxCUI for RxNorm:
@@ -143,6 +146,59 @@ class Take(models.Model):
     def get_priority_display(self):
         prio_dict = dict(self.PRIOTITY_TYPES)
         return prio_dict[priority]
+
+    def check_interactions(person, new_medication):
+        json_path = os.path.join(
+            settings.BASE_DIR, 'api', 'src', 'lembramed_data', 'interactions.json'
+        )
+
+        try: # open json
+            with open(json_path, 'r', encoding='utf-8') as f:
+                all_interactions = json.load(f)
+        except (FileNotFoundError, json.JSONDecodeError) as e:
+            raise ValueError(f"Erro ao carregar interactions.json: {e}")
+
+        new_ingredients = set(
+            self.medication_id.ingredient
+                .values_list('active_ingredient', flat=True)
+        )
+
+        # active ingridient of the new medication
+        new_ingredients = {i.lower().strip() for i in new_ingredients}
+
+        #active ingridient of the patient medications
+        current_ingredients = set(
+            Active_Ingredient.objects.filter(
+                medication_id__takes__person_id=self.person_id
+            )
+            .exclude(medication_id=self.medication_id)
+            .values_list('active_ingredient', flat=True)
+            .distinct()
+        )
+        current_ingredients = {i.lower().strip() for i in current_ingredients}
+
+        # check conflicts
+        conflicts = []
+        for interaction in all_interactions:
+            ing1 = interaction.get('ingredient1', '').lower().strip()
+            ing2 = interaction.get('ingredient2', '').lower().strip()
+
+            # Verifica nos dois sentidos (A→B ou B→A)
+            match = (
+                (ing1 in new_ingredients and ing2 in current_ingredients) or
+                (ing2 in new_ingredients and ing1 in current_ingredients)
+            )
+
+            if match:
+                conflicts.append({
+                    'ingredient1': interaction['ingredient1'],
+                    'ingredient2': interaction['ingredient2'],
+                    'severity': interaction.get('severity', 'Unknown'),
+                    'description': interaction.get('description', ''),
+                })
+
+        return conflicts
+
 
 
 class TakeRecord(models.Model):
