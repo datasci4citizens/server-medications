@@ -49,9 +49,8 @@ To have acess to our pre established medication and leaflets data, first enter t
 
     cd server-medications/lembramed
 
-And then, after running "makemigrations" and "migrate" run these commands:
+And then, after running "makemigrations" and "migrate" run this commands:
 
-    python manage.py load_bula_data
     python manage.py load_medications_data
 
 You should see sucess messages on terminal.

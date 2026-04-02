@@ -1,79 +1,21 @@
 from django.db import models
-from accounts.models import New_Person
+from authentication.models import Person
 import uuid, datetime
-# Create your models here.
+from django.utils import timezone
+from django.core.exceptions import ValidationError
 
-# django.core.exceptions.FieldError: Cannot resolve keyword 'medication_id' into field. Choices are: begin, classe_terapeutica, days, dosage, empresa, end, formato,
-# id, name, person_id, person_id_id, principio_ativo, quantity, time
-
+# Medication DATA from scrapers
 class Medication(models.Model):
-    # medication_id = models.UUIDField(
-    #     default = uuid.uuid4,
-    #     editable = False,
-    #     primary_key=True,
-    #     db_column='medication_id'
-    # )
-    medication_id = models.IntegerField(
-        primary_key = True,
-        editable = False,
-        db_column='medication_id',
-        default=123
-    )
-    person_id = models.ForeignKey(
-        'accounts.New_Person',
-        on_delete=models.CASCADE,
-        related_name='medications',
-        db_column='person_id',
-        null=True,
-        blank=True,
-    )
-    DAYS_OF_WEEK = [
-        ('mon', 'Segunda'),
-        ('tue', 'Terça'),
-        ('wed', 'Quarta'),
-        ('thu', 'Quinta'),
-        ('fri', 'Sexta'),
-        ('sat', 'Sábado'),
-        ('sun', 'Domingo'),
-    ]
-    name = models.CharField(max_length=100)
-    dosage = models.CharField(max_length=50, null=True)
-    time = models.TimeField(null=True) # check how to put the format of time I wanna
+    # RegisterNum for ANVISA, RxCUI for RxNorm:
+    medication_id = models.IntegerField(primary_key = True)
 
-    begin = models.DateField(default=datetime.date.today, null=True) # solve data problem
-    end = models.DateField(default=datetime.date.today, null=True)
-
-    days= models.CharField(max_length=50, null=True)
-    formato= models.CharField(max_length=50, null=True)
-    quantity = models.CharField(max_length= 50, null=True)
-    empresa = models.CharField(max_length=100)
+    # Information from Anvisa_Data:
+    name = models.TextField()
+    empresa = models.TextField()
     principio_ativo = models.TextField()
-    classe_terapeutica = models.CharField(max_length=100)
-    
-    # add the option to put more than one time of day
-    # add option to put the day of the week
+    classe_terapeutica = models.TextField()
 
-    def __str__(self):
-        return str(self.medication_id)
-
-    # @property
-    # def medication_id(self):
-    #     """Compatibility alias: return the model's primary key (`id`).
-
-    #     The database already uses the default `id` column; some code
-    #     expects `medication.medication_id`. Provide a read-only alias
-    #     so queries don't require a separate `medication_id` column.
-    #     """
-    #     return self.id
-    def get_days_display(self):
-        day_dict = dict(self.DAYS_OF_WEEK)
-        return ', '.join(day_dict[d] for d in self.days.split(',')) 
-
-class Bula_data(models.Model):
-    register_Num = models.IntegerField(
-        # editable = False,
-        primary_key = True,
-    )
+    # Information from Leaflets:
     indicacoes_para_uso = models.TextField()
     funcionamento_medicamento = models.TextField()
     quando_nao_usar = models.TextField()
@@ -85,4 +27,127 @@ class Bula_data(models.Model):
     quantidade_a_mais = models.TextField()
 
     def __str__(self):
-        return str(self.register_Num)
+        return str(self.medication_id)
+
+# One Person (New_Person)X takes (Medication)Y 
+class Take(models.Model):
+    person_id = models.ForeignKey(
+        'authentication.Person',
+        on_delete = models.CASCADE,
+        related_name = 'takes'
+    )
+    medication_id = models.ForeignKey(
+        Medication,
+        on_delete = models.CASCADE,
+        related_name = 'takes',
+    )
+    taken_id = models.AutoField(primary_key=True)
+
+    # comprimido/dosagem, OK
+    # forma de medicacao (pilula...), ok
+    # horario, OK
+    # quantidade, ok
+    # lembrete de repor estoque (lembrete), !!!!!!!!!
+    # Int de prioridade da notificacao daquele medicamento
+    # inicio e final de tratamento (opcional) OK
+
+    PRIOTITY_TYPES = [
+        (0, 'Low'),
+        (1, 'Medium'),
+        (2, 'High'),
+        (3, 'Important')
+    ]
+    
+    dosage = models.CharField(max_length=50, null=True)
+    quantity = models.CharField(max_length= 50, null=True)
+    priority = models.SmallIntegerField()
+    formato= models.CharField(max_length=50, null=True) # type
+
+    def __str__(self):
+       return f"{self.person_id} - {self.medication_id}"
+    
+
+    def get_priority_display(self):
+        prio_dict = dict(self.PRIOTITY_TYPES)
+        return ', '.join(prio_dict[d] for d in self.days.split(',')) 
+
+
+class TakeRecord(models.Model):
+
+    taken_id = models.ForeignKey(    
+        Take,
+        on_delete = models.CASCADE,
+        related_name = 'records',
+    )
+
+    DAYS_OF_WEEK = [
+        ('mon', 'Segunda'),
+        ('tue', 'Terça'),
+        ('wed', 'Quarta'),
+        ('thu', 'Quinta'),
+        ('fri', 'Sexta'),
+        ('sat', 'Sábado'),
+        ('sun', 'Domingo'),
+    ]
+
+    CYCLE_TYPE = [
+        ('daily', 'Uma vez ao dia'),
+        ('interval', 'De X em X horas'),
+
+    ]
+
+    cycle_type = models.CharField(max_length=10, choices=CYCLE_TYPE )
+    begin = models.DateField(default=datetime.date.today) 
+    end = models.DateField(default=datetime.date.today)
+    days= models.CharField(max_length=50, null=True)
+    take_at = models.TimeField(null=True, blank=True)  #first time you will take the medicine
+    take_cicle = models.IntegerField(null=True, blank=True) # ex: take in 8-8 hours...
+    state = models.CharField(max_length=50, null=True) # taken, forgortten, late...
+
+    def get_days_display(self):
+        day_dict = dict(self.DAYS_OF_WEEK)
+        return ', '.join(day_dict[d] for d in self.days.split(',')) 
+
+    def clean(self):
+        if self.end <self.begin:
+            raise ValidationError("Data final não pode ser menor que a inicial")
+
+        if self.cycle_type == 'daily' and not self.take_at:
+            raise ValidationError("Informe o horário em que o medicamento será tomado")
+
+        if self.cycle_type == 'interval' and not self.take_cicle:
+             raise ValidationError("Informe de quanto em quanto tempo o medicamento será tomado")
+        
+        if self.cycle_type == 'interval' and not self.take_at:
+             raise ValidationError("Informe o horário em que o medicamento será tomado pela primeira vez")
+    
+    def calculate_schedule(self):
+        
+        if not self.take_at:
+            return []
+        
+        if self.cycle_type == 'daily' :
+            return [self.take_at]
+        
+        if self.cycle_type == 'interval' and self.take_cicle:
+            scheduels = []
+
+            base_date = datetime.date.today()
+            current_dt = datetime.datetime.combine(base_date, self.take_at)
+
+            total_hours = 0
+            while total_hours < 24:
+                scheduels.append(current_dt.time())
+                current_dt += datetime.timedelta(hours=self.take_cicle)
+                tatal_hours += self.take_cicle
+
+                if current_dt.date() > base_date:
+                    break
+
+            return scheduels
+        return []
+            
+    
+    def __str__(self):
+        horarios = ", ".join([t.strftime('%H:%M') for t in self.calculate_schedule()])
+        return f"{self.taken_id} - Horários: {horarios}"
