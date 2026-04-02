@@ -4,16 +4,9 @@ import uuid, datetime
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 
-# Medication DATA from scrapers
 class Medication(models.Model):
     # RegisterNum for ANVISA, RxCUI for RxNorm:
     medication_id = models.IntegerField(primary_key = True)
-
-    # Information from Anvisa_Data:
-    name = models.TextField()
-    empresa = models.TextField()
-    principio_ativo = models.TextField()
-    classe_terapeutica = models.TextField()
 
     # Information from Leaflets:
     indicacoes_para_uso = models.TextField()
@@ -29,7 +22,98 @@ class Medication(models.Model):
     def __str__(self):
         return str(self.medication_id)
 
-# One Person (New_Person)X takes (Medication)Y 
+class Medication_Name(models.Model):
+    medication_id = models.ForeignKey(
+        Medication,
+        on_delete = models.CASCADE,
+        related_name = 'name',
+    )
+    name = models.TextField()
+
+    def __str__(self):
+        return self.name
+
+class Active_Ingredient(models.Model):
+    medication_id = models.ForeignKey(
+        Medication,
+        on_delete = models.CASCADE,
+        related_name = 'ingredient',
+    )
+    active_ingredient = models.TextField()
+
+    def __str__(self):
+        return self.active_ingredient
+
+class ingredient_Interaction(models.Model):
+    active_ingredient1 = models.ForeignKey(
+        Active_Ingredient,
+        on_delete = models.CASCADE,
+        related_name = 'ingredient1'
+    )
+    active_ingredient2 = models.ForeignKey(
+        Active_Ingredient,
+        on_delete = models.CASCADE,
+        related_name = 'ingredient2'
+    )
+    # Major, Moderate, Minor, Unknown
+    severity = models.CharField(max_length=10)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.severity
+
+class Therapeutic_Class(models.Model):
+    medication_id = models.ForeignKey(
+        Medication,
+        on_delete = models.CASCADE,
+        related_name = 'class',
+    )
+    therapeutic_class = models.TextField()
+
+    def __str__(self):
+        return self.therapeutic_class
+
+class Brand(models.Model):
+    medication_id = models.ForeignKey(
+        Medication,
+        on_delete = models.CASCADE,
+        related_name = 'brand',
+    )
+    brand = models.TextField()
+
+    def __str__(self):
+        return self.brand
+    
+class Dosage(models.Model):
+    medication_id = models.ForeignKey(
+        Medication,
+        on_delete = models.CASCADE,
+        related_name = 'dosage',
+    )
+    dosage = models.CharField(max_length=50, null=True)
+
+    def __str__(self):
+        return self.dosage
+
+class Company(models.Model):
+    medication_id = models.ForeignKey(
+        Medication,
+        on_delete = models.CASCADE,
+        related_name = 'company',
+    )
+    company = models.TextField()
+
+    def __str__(self):
+        return self.company
+
+# class Formato(models.Model):
+#     medication_id = models.ForeignKey(
+#         Medication,
+#         on_delete = models.CASCADE,
+#         related_name = 'formato',
+#     )
+#     formato = models.CharField(max_length=50, null=True) # type
+
 class Take(models.Model):
     person_id = models.ForeignKey(
         'authentication.Person',
@@ -43,14 +127,6 @@ class Take(models.Model):
     )
     taken_id = models.AutoField(primary_key=True)
 
-    # comprimido/dosagem, OK
-    # forma de medicacao (pilula...), ok
-    # horario, OK
-    # quantidade, ok
-    # lembrete de repor estoque (lembrete), !!!!!!!!!
-    # Int de prioridade da notificacao daquele medicamento
-    # inicio e final de tratamento (opcional) OK
-
     PRIOTITY_TYPES = [
         (0, 'Low'),
         (1, 'Medium'),
@@ -58,22 +134,18 @@ class Take(models.Model):
         (3, 'Important')
     ]
     
-    dosage = models.CharField(max_length=50, null=True)
-    quantity = models.CharField(max_length= 50, null=True)
     priority = models.SmallIntegerField()
-    formato= models.CharField(max_length=50, null=True) # type
+    quantity = models.CharField(max_length= 50, null=True) # estoque
 
     def __str__(self):
        return f"{self.person_id} - {self.medication_id}"
     
-
     def get_priority_display(self):
         prio_dict = dict(self.PRIOTITY_TYPES)
-        return ', '.join(prio_dict[d] for d in self.days.split(',')) 
+        return prio_dict[priority]
 
 
 class TakeRecord(models.Model):
-
     taken_id = models.ForeignKey(    
         Take,
         on_delete = models.CASCADE,
@@ -139,7 +211,7 @@ class TakeRecord(models.Model):
             while total_hours < 24:
                 scheduels.append(current_dt.time())
                 current_dt += datetime.timedelta(hours=self.take_cicle)
-                tatal_hours += self.take_cicle
+                total_hours += self.take_cicle
 
                 if current_dt.date() > base_date:
                     break

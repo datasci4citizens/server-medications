@@ -1,0 +1,248 @@
+
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; }
+.wrap { font-family: var(--font-sans); color: var(--color-text-primary); padding: 8px 0; }
+
+.section-label {
+  font-size: 11px; font-weight: 500; letter-spacing: .06em;
+  color: var(--color-text-tertiary); text-transform: uppercase;
+  margin: 0 0 6px 4px;
+}
+
+.row { display: flex; gap: 10px; margin-bottom: 10px; align-items: stretch; }
+
+.table-card {
+  border: 1px solid var(--color-border-tertiary);
+  border-radius: 10px; overflow: hidden; flex: 1; min-width: 0;
+}
+.table-card.purple { border-color: #7F77DD; }
+.table-card.teal   { border-color: #1D9E75; }
+.table-card.gray   { border-color: var(--color-border-secondary); }
+.table-card.coral  { border-color: #D85A30; }
+.table-card.amber  { border-color: #BA7517; }
+
+.table-head {
+  padding: 7px 10px 6px;
+  font-size: 12px; font-weight: 500;
+  display: flex; align-items: center; gap: 6px;
+}
+.table-card.purple .table-head { background: #EEEDFE; color: #3C3489; }
+.table-card.teal   .table-head { background: #E1F5EE; color: #085041; }
+.table-card.gray   .table-head { background: var(--color-background-secondary); color: var(--color-text-primary); }
+.table-card.coral  .table-head { background: #FAECE7; color: #712B13; }
+.table-card.amber  .table-head { background: #FAEEDA; color: #633806; }
+
+@media (prefers-color-scheme: dark) {
+  .table-card.purple .table-head { background: #26215C; color: #CECBF6; }
+  .table-card.teal   .table-head { background: #04342C; color: #9FE1CB; }
+  .table-card.coral  .table-head { background: #4A1B0C; color: #F5C4B3; }
+  .table-card.amber  .table-head { background: #412402; color: #FAC775; }
+}
+
+.badge {
+  font-size: 10px; font-weight: 500; padding: 1px 6px; border-radius: 4px;
+  background: var(--color-background-tertiary); color: var(--color-text-secondary);
+  margin-left: auto; white-space: nowrap;
+}
+
+.table-body { padding: 6px 10px 8px; }
+.field { font-size: 11px; color: var(--color-text-secondary); padding: 2px 0; display: flex; gap: 5px; align-items: baseline; }
+.field-name { font-weight: 500; color: var(--color-text-primary); min-width: 120px; }
+.field-type { font-size: 10px; color: var(--color-text-tertiary); }
+.pk { color: #BA7517; }
+.fk { color: #1D9E75; }
+
+.arrow-row {
+  display: flex; align-items: center; justify-content: center;
+  gap: 8px; margin: 2px 0 4px; color: var(--color-text-tertiary); font-size: 11px;
+}
+.arrow-row svg { flex-shrink: 0; }
+
+.source-row { display: flex; gap: 10px; margin-bottom: 10px; }
+.source-badge {
+  flex: 1; border-radius: 8px; padding: 8px 10px;
+  font-size: 11px; font-weight: 500;
+  display: flex; flex-direction: column; gap: 3px;
+  border: 1px dashed;
+}
+.source-badge.ext-blue  { border-color: #378ADD; background: #E6F1FB; color: #0C447C; }
+.source-badge.ext-green { border-color: #639922; background: #EAF3DE; color: #27500A; }
+.source-badge.ext-coral { border-color: #D85A30; background: #FAECE7; color: #712B13; }
+.source-badge.ext-gray  { border-color: var(--color-border-secondary); background: var(--color-background-secondary); color: var(--color-text-secondary); }
+@media (prefers-color-scheme: dark) {
+  .source-badge.ext-blue  { background: #042C53; color: #B5D4F4; border-color: #185FA5; }
+  .source-badge.ext-green { background: #173404; color: #C0DD97; border-color: #3B6D11; }
+  .source-badge.ext-coral { background: #4A1B0C; color: #F5C4B3; border-color: #993C1D; }
+}
+.source-sub { font-size: 10px; font-weight: 400; opacity: .8; }
+
+.divider { border: none; border-top: 1px dashed var(--color-border-tertiary); margin: 8px 0; }
+
+.flow-label {
+  font-size: 10px; color: var(--color-text-tertiary);
+  display: flex; align-items: center; gap: 5px; margin: 1px 0 5px;
+}
+</style>
+
+<div class="wrap">
+
+<div class="section-label">fontes externas</div>
+<div class="source-row">
+  <div class="source-badge ext-blue">
+    RxNorm API
+    <span class="source-sub">rxcui · nome normalizado · classe terapêutica</span>
+  </div>
+  <div class="source-badge ext-green">
+    DrugBank / Drugs.com
+    <span class="source-sub">interações por rxcui · severidade · descrição</span>
+  </div>
+  <div class="source-badge ext-coral">
+    ANVISA scraper
+    <span class="source-sub">número de registro · empresa · bula do paciente</span>
+  </div>
+  <div class="source-badge ext-gray">
+    usuário do app
+    <span class="source-sub">medicamentos que toma · horário · dose · ciclo</span>
+  </div>
+</div>
+
+<div class="flow-label">
+  <svg width="12" height="12" viewBox="0 0 12 12"><path d="M6 1v10M6 11l-3-3M6 11l3-3" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/></svg>
+  popula
+</div>
+
+<div class="section-label">catálogo — dados de referência (somente leitura pelo app)</div>
+
+<div class="row">
+  <div class="table-card purple">
+    <div class="table-head">
+      ActiveIngredient
+      <span class="badge">conceito central</span>
+    </div>
+    <div class="table-body">
+      <div class="field"><span class="field-name pk">id</span><span class="field-type">int PK</span></div>
+      <div class="field"><span class="field-name">rxcui</span><span class="field-type">string · null até RxNorm</span></div>
+      <div class="field"><span class="field-name">name</span><span class="field-type">text</span></div>
+      <div class="field"><span class="field-name">therapeutic_class</span><span class="field-type">text</span></div>
+    </div>
+  </div>
+
+  <div class="table-card purple">
+    <div class="table-head">
+      Interaction
+      <span class="badge">nível de ingrediente</span>
+    </div>
+    <div class="table-body">
+      <div class="field"><span class="field-name pk">id</span><span class="field-type">int PK</span></div>
+      <div class="field"><span class="field-name fk">ingredient_a_id</span><span class="field-type">FK → ActiveIngredient</span></div>
+      <div class="field"><span class="field-name fk">ingredient_b_id</span><span class="field-type">FK → ActiveIngredient</span></div>
+      <div class="field"><span class="field-name">severity</span><span class="field-type">low/moderate/high/contraindicated</span></div>
+      <div class="field"><span class="field-name">description</span><span class="field-type">text</span></div>
+      <div class="field"><span class="field-name">source</span><span class="field-type">rxnorm/drugbank/anvisa_bula</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="flow-label">
+  <svg width="12" height="12" viewBox="0 0 12 12"><path d="M6 1v10M6 11l-3-3M6 11l3-3" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/></svg>
+  ActiveIngredient ← referenciado por
+</div>
+
+<div class="row">
+  <div class="table-card teal">
+    <div class="table-head">Medication</div>
+    <div class="table-body">
+      <div class="field"><span class="field-name pk">medication_id</span><span class="field-type">int PK · registro ANVISA</span></div>
+      <div class="field"><span class="field-name fk">active_ingredients</span><span class="field-type">M2M → ActiveIngredient</span></div>
+    </div>
+  </div>
+  <div class="table-card teal">
+    <div class="table-head">MedicationName</div>
+    <div class="table-body">
+      <div class="field"><span class="field-name fk">medication_id</span><span class="field-type">FK → Medication</span></div>
+      <div class="field"><span class="field-name">name</span><span class="field-type">text · ex: AAS, Aspirina</span></div>
+      <div class="field"><span class="field-name">is_primary</span><span class="field-type">bool</span></div>
+    </div>
+  </div>
+  <div class="table-card teal">
+    <div class="table-head">Brand / Company / Dosage</div>
+    <div class="table-body">
+      <div class="field"><span class="field-name fk">medication_id</span><span class="field-type">FK → Medication</span></div>
+      <div class="field"><span class="field-name">value</span><span class="field-type">text · ex: Bayer, 100mg</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="flow-label">
+  <svg width="12" height="12" viewBox="0 0 12 12"><path d="M6 1v10M6 11l-3-3M6 11l3-3" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/></svg>
+  Medication ← referenciado por
+</div>
+
+<div class="row">
+  <div class="table-card gray">
+    <div class="table-head">Leaflet<span class="badge">1:1 com Medication</span></div>
+    <div class="table-body">
+      <div class="field"><span class="field-name fk">medication_id</span><span class="field-type">OneToOne PK</span></div>
+      <div class="field"><span class="field-name">indicacoes_para_uso</span><span class="field-type">text</span></div>
+      <div class="field"><span class="field-name">quando_nao_usar</span><span class="field-type">text</span></div>
+      <div class="field"><span class="field-name">efeitos_colaterais</span><span class="field-type">text</span></div>
+      <div class="field"><span class="field-name">como_usar_medicamento</span><span class="field-type">text</span></div>
+      <div class="field" style="opacity:.6"><span class="field-name">+ 5 campos</span><span class="field-type">text</span></div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider"/>
+<div class="section-label">uso — dados criados pelo usuário</div>
+
+<div class="row">
+  <div class="table-card amber">
+    <div class="table-head">Person<span class="badge">authentication app</span></div>
+    <div class="table-body">
+      <div class="field"><span class="field-name pk">person_id</span><span class="field-type">uuid PK</span></div>
+      <div class="field"><span class="field-name fk">user_id</span><span class="field-type">FK → auth_user</span></div>
+      <div class="field"><span class="field-name">birth</span><span class="field-type">date</span></div>
+      <div class="field"><span class="field-name">google_id</span><span class="field-type">string · null</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="flow-label">
+  <svg width="12" height="12" viewBox="0 0 12 12"><path d="M6 1v10M6 11l-3-3M6 11l3-3" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/></svg>
+  Person toma Medication →
+</div>
+
+<div class="row">
+  <div class="table-card coral">
+    <div class="table-head">Take<span class="badge">"eu tomo este med."</span></div>
+    <div class="table-body">
+      <div class="field"><span class="field-name pk">taken_id</span><span class="field-type">int PK</span></div>
+      <div class="field"><span class="field-name fk">person_id</span><span class="field-type">FK → Person</span></div>
+      <div class="field"><span class="field-name fk">medication_id</span><span class="field-type">FK → Medication</span></div>
+      <div class="field"><span class="field-name">quantity</span><span class="field-type">string</span></div>
+      <div class="field"><span class="field-name">priority</span><span class="field-type">0–3</span></div>
+      <div class="field"><span class="field-name">formato</span><span class="field-type">comprimido/spray…</span></div>
+    </div>
+  </div>
+  <div class="table-card coral">
+    <div class="table-head">TakeRecord<span class="badge">"quando e como"</span></div>
+    <div class="table-body">
+      <div class="field"><span class="field-name pk">id</span><span class="field-type">int PK</span></div>
+      <div class="field"><span class="field-name fk">take_id</span><span class="field-type">FK → Take</span></div>
+      <div class="field"><span class="field-name">cycle_type</span><span class="field-type">daily / interval</span></div>
+      <div class="field"><span class="field-name">begin / end</span><span class="field-type">date</span></div>
+      <div class="field"><span class="field-name">days</span><span class="field-type">mon,wed,fri…</span></div>
+      <div class="field"><span class="field-name">take_at</span><span class="field-type">time · primeira dose</span></div>
+      <div class="field"><span class="field-name">take_cicle</span><span class="field-type">int · de Xh em Xh</span></div>
+      <div class="field"><span class="field-name">state</span><span class="field-type">taken/forgotten/late</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="flow-label" style="margin-top:8px">
+  <svg width="12" height="12" viewBox="0 0 12 12"><path d="M1 6h10M11 6l-3-3M11 6l-3 3" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/></svg>
+  query de interações: Take → Medication → ActiveIngredient → Interaction
+</div>
+
+</div>

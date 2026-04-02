@@ -1,0 +1,164 @@
+
+<div id="erd" style="padding: 8px 0;"></div>
+<style>
+#erd svg { max-width: 100%; }
+#erd svg.erDiagram .divider path { stroke-opacity: 0.4; }
+#erd svg.erDiagram .row-rect-odd path,
+#erd svg.erDiagram .row-rect-odd rect,
+#erd svg.erDiagram .row-rect-even path,
+#erd svg.erDiagram .row-rect-even rect { stroke: none !important; }
+</style>
+<script type="module">
+import mermaid from 'https://esm.sh/mermaid@11/dist/mermaid.esm.min.mjs';
+const dark = matchMedia('(prefers-color-scheme: dark)').matches;
+await document.fonts.ready;
+mermaid.initialize({
+  startOnLoad: false,
+  theme: 'base',
+  fontFamily: '"Anthropic Sans", sans-serif',
+  themeVariables: {
+    darkMode: dark,
+    fontSize: '12px',
+    fontFamily: '"Anthropic Sans", sans-serif',
+    lineColor: dark ? '#9c9a92' : '#73726c',
+    textColor: dark ? '#c2c0b6' : '#3d3d3a',
+    primaryColor: dark ? '#1c1b27' : '#EEEDFE',
+    primaryBorderColor: dark ? '#534AB7' : '#534AB7',
+    primaryTextColor: dark ? '#c2c0b6' : '#26215C',
+    secondaryColor: dark ? '#0a2a20' : '#E1F5EE',
+    secondaryBorderColor: dark ? '#0F6E56' : '#0F6E56',
+    tertiaryColor: dark ? '#1a1209' : '#FAEEDA',
+    tertiaryBorderColor: dark ? '#854F0B' : '#854F0B',
+  },
+});
+
+const diagram = `erDiagram
+  auth_user {
+    int id PK
+    string username
+    string email
+    string first_name
+    string last_name
+    string password
+  }
+
+  authentication_person {
+    uuid person_id PK
+    int user_id FK
+    date birth
+    string google_id
+  }
+
+  medication_medication {
+    int medication_id PK
+    text name
+    text empresa
+    text principio_ativo
+    text classe_terapeutica
+    text indicacoes_para_uso
+    text funcionamento_medicamento
+    text quando_nao_usar
+    text conhecimento_previo_necessario
+    text como_usar_medicamento
+    text esqueceu_medicamento
+    text efeitos_colaterais
+    text quantidade_a_mais
+    text como_guardar_medicamento
+  }
+
+  medication_name {
+    int id PK
+    int medication_id FK
+    text name
+  }
+
+  active_ingredient {
+    int id PK
+    int medication_id FK
+    text active_ingredient
+  }
+
+  therapeutic_class {
+    int id PK
+    int medication_id FK
+    text therapeutic_class
+  }
+
+  brand {
+    int id PK
+    int medication_id FK
+    text brand
+  }
+
+  dosage {
+    int id PK
+    int medication_id FK
+    string dosage
+  }
+
+  company {
+    int id PK
+    int medication_id FK
+    text company
+  }
+
+  medication_take {
+    int taken_id PK
+    uuid person_id FK
+    int medication_id FK
+    string quantity
+    smallint priority
+    string formato
+  }
+
+  medication_takerecord {
+    int id PK
+    int taken_id FK
+    string cycle_type
+    date begin
+    date end
+    string days
+    time take_at
+    int take_cicle
+    string state
+  }
+
+  auth_user ||--|| authentication_person : "1-to-1"
+  authentication_person ||--o{ medication_take : "takes"
+  medication_medication ||--o{ medication_take : "taken via"
+  medication_medication ||--o{ medication_name : "has"
+  medication_medication ||--o{ active_ingredient : "has"
+  medication_medication ||--o{ therapeutic_class : "has"
+  medication_medication ||--o{ brand : "has"
+  medication_medication ||--o{ dosage : "has"
+  medication_medication ||--o{ company : "has"
+  medication_take ||--o{ medication_takerecord : "records"
+`;
+
+const { svg } = await mermaid.render('erd-svg', diagram);
+document.getElementById('erd').innerHTML = svg;
+
+document.querySelectorAll('#erd svg.erDiagram .node').forEach(node => {
+  const firstPath = node.querySelector('path[d]');
+  if (!firstPath) return;
+  const d = firstPath.getAttribute('d');
+  const nums = d.match(/-?[\d.]+/g)?.map(Number);
+  if (!nums || nums.length < 8) return;
+  const xs = [nums[0], nums[2], nums[4], nums[6]];
+  const ys = [nums[1], nums[3], nums[5], nums[7]];
+  const x = Math.min(...xs), y = Math.min(...ys);
+  const w = Math.max(...xs) - x, h = Math.max(...ys) - y;
+  const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+  rect.setAttribute('x', x); rect.setAttribute('y', y);
+  rect.setAttribute('width', w); rect.setAttribute('height', h);
+  rect.setAttribute('rx', '8');
+  for (const a of ['fill', 'stroke', 'stroke-width', 'class', 'style']) {
+    if (firstPath.hasAttribute(a)) rect.setAttribute(a, firstPath.getAttribute(a));
+  }
+  firstPath.replaceWith(rect);
+});
+
+document.querySelectorAll('#erd svg.erDiagram .row-rect-odd path, #erd svg.erDiagram .row-rect-even path').forEach(p => {
+  p.setAttribute('stroke', 'none');
+});
+</script>
