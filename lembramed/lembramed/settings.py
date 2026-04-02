@@ -171,8 +171,8 @@ CORS_ALLOWED_ORIGINS = [
 # If you want to allow credentials (cookies, etc.)
 CORS_ALLOW_CREDENTIALS = True
 
-from datetime import timedelta
-SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME':  timedelta(hours=1),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
-}
+# from datetime import timedelta
+# SIMPLE_JWT = {
+#     'ACCESS_TOKEN_LIFETIME':  timedelta(hours=1),
+#     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+# }
