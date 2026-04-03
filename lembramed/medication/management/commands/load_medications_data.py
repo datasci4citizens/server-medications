@@ -1,6 +1,9 @@
 import json, os
 from django.core.management.base import BaseCommand
-from medication.models import Medication
+from medication.models import (
+    Medication, Medication_Name, Company,
+   Active_Ingredient, Therapeutic_Class
+)
 
 class Command(BaseCommand):
     help = "Load pre defined medications data from database"
@@ -76,10 +79,34 @@ class Command(BaseCommand):
             bula = bulas.get(med_id, {})
             if not bula:
                 sem_bula += 1
-            _, created = Medication.objects.update_or_create(
+            med, created = Medication.objects.update_or_create(
                 medication_id=med_id,
                 defaults={**info, **bula},
             )
+
+            Medication_Name.objects.get_or_create(
+                medication_id=med,
+                name=info["name"]
+            )
+
+            Company.objects.get_or_create(
+                medication_id=med,
+                company=info["empresa"]
+            )
+
+            for principio in info["principio_ativo"].split("+"):
+                principio =principio.strip()
+                if principio:
+                    Active_Ingredient.objecst.get_or_create(
+                        medication_id=med,
+                        active_ingredient=principio
+                    )
+
+            Therapeutic_Class.objects.get_or_create(
+                medication_id=med,
+                therapeutic_class=info["classe_terapeutica"]
+            )
+
             if created:
                 criados += 1
             else:
