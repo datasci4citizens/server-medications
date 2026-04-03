@@ -137,6 +137,29 @@ class Take(models.Model):
     priority = models.SmallIntegerField()
     quantity = models.CharField(max_length= 50, null=True) # estoque
 
+    DAYS_OF_WEEK = [
+        ('mon', 'Segunda'),
+        ('tue', 'Terça'),
+        ('wed', 'Quarta'),
+        ('thu', 'Quinta'),
+        ('fri', 'Sexta'),
+        ('sat', 'Sábado'),
+        ('sun', 'Domingo'),
+    ]
+
+    CYCLE_TYPE = [
+        ('daily', 'Uma vez ao dia'),
+        ('interval', 'De X em X horas'),
+
+    ]
+
+    cycle_type = models.CharField(max_length=10, choices=CYCLE_TYPE )
+    begin = models.DateField(default=datetime.date.today) 
+    end = models.DateField(default=datetime.date.today)
+    days= models.CharField(max_length=50, null=True)
+    take_at = models.TimeField(null=True, blank=True)  #first time you will take the medicine
+    take_cicle = models.IntegerField(null=True, blank=True) # ex: take in 8-8 hours...
+
     def __str__(self):
        return f"{self.person_id} - {self.medication_id}"
     
@@ -190,42 +213,7 @@ class Take(models.Model):
                 })
 
         return conflicts
-
-class TakeRecord(models.Model):
-    taken_id = models.ForeignKey(    
-        Take,
-        on_delete = models.CASCADE,
-        related_name = 'records',
-    )
-
-    DAYS_OF_WEEK = [
-        ('mon', 'Segunda'),
-        ('tue', 'Terça'),
-        ('wed', 'Quarta'),
-        ('thu', 'Quinta'),
-        ('fri', 'Sexta'),
-        ('sat', 'Sábado'),
-        ('sun', 'Domingo'),
-    ]
-
-    CYCLE_TYPE = [
-        ('daily', 'Uma vez ao dia'),
-        ('interval', 'De X em X horas'),
-
-    ]
-
-    cycle_type = models.CharField(max_length=10, choices=CYCLE_TYPE )
-    begin = models.DateField(default=datetime.date.today) 
-    end = models.DateField(default=datetime.date.today)
-    days= models.CharField(max_length=50, null=True)
-    take_at = models.TimeField(null=True, blank=True)  #first time you will take the medicine
-    take_cicle = models.IntegerField(null=True, blank=True) # ex: take in 8-8 hours...
-    state = models.CharField(max_length=50, null=True) # taken, forgortten, late...
-
-    def get_days_display(self):
-        day_dict = dict(self.DAYS_OF_WEEK)
-        return ', '.join(day_dict[d] for d in self.days.split(',')) 
-
+    
     def clean(self):
         if self.end <self.begin:
             raise ValidationError("Data final não pode ser menor que a inicial")
@@ -264,8 +252,31 @@ class TakeRecord(models.Model):
 
             return scheduels
         return []
+
+    def get_days_display(self):
+        day_dict = dict(self.DAYS_OF_WEEK)
+        return ', '.join(day_dict[d] for d in self.days.split(',')) 
             
-    
     def __str__(self):
         horarios = ", ".join([t.strftime('%H:%M') for t in self.calculate_schedule()])
         return f"{self.taken_id} - Horários: {horarios}"
+    
+
+
+class TakeRecord(models.Model):
+    taken_id = models.ForeignKey(    
+        Take,
+        on_delete = models.CASCADE,
+        related_name = 'records',
+    )
+
+    when_was_taked = models.TimeField(null=True, blank=True) 
+    state = models.CharField(max_length=50, null=True) # taken, forgortten, late...
+    
+    def __str__(self):
+       return f"{self.taken_id} - {self.when_was_taked}"
+    
+ 
+
+    
+  
