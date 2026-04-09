@@ -3,6 +3,7 @@ from authentication.models import Person
 import uuid, datetime, json, os
 from django.utils import timezone
 from django.core.exceptions import ValidationError
+from datetime import datetime, date, timedelta
 
 class Medication(models.Model):
     # RegisterNum for ANVISA, RxCUI for RxNorm:
@@ -271,12 +272,63 @@ class TakeRecord(models.Model):
     )
 
     when_was_taked = models.TimeField(null=True, blank=True) 
-    state = models.CharField(max_length=50, null=True) # taken, forgortten, late...
+
+    STATE_CHOICES = [
+        ('taken', 'Tomado'),
+        ('late', 'Atrasado'),
+        ('skipped', 'Esquecido'),
+        ('advance', 'Adiantado')
+    ]
+    state = models.CharField(max_length=50, choices=STATE_CHOICES, null=True)
     
-    def __str__(self):
-       return f"{self.taken_id} - {self.when_was_taked}"
-    
- 
+    PRIORITY_TOLERANCE_MAP = {
+        0: 60,
+        1: 30,
+        2: 10,
+        3: 5
+    }
 
     
-  
+    def mark_medication_as_taken(take_instance, time_now): # para multiplos horarios de um remedio
+        # 1. Pega todos os horários previstos 
+        schedules = take_instance.calculate_schedule()
+        
+        # 2. Encontra o horário mais próximo do agora
+        closest_schedule = min(schedules, key=lambda x: abs(
+            datetime.combine(date.today(), x) - datetime.combine(date.today(), time_now)
+        ))
+
+    
+        record = TakeRecord.objects.create(
+            taken_id=take_instance,
+            when_was_taked=time_now
+        )
+        record.determine_state(closest_schedule)
+    
+    def determine_state(self, scheduled_time):
+
+        if not self.when_was_taked:
+            self.state = 'skipped'
+            return
+        today = date.today()
+        dt_scheduled = datetime.combine(today, scheduled_time)
+        dt_taken = datetime.combine(today, self.when_was_taked)
+
+        diff_minutes = (dt_taken - dt_scheduled).total_seconds() /60
+        
+        tolerance = self.PRIORITY_TOLERANCE_MAP.get(self.taken_id.priority, 5)
+
+        if diff_minutes < -tolerance:
+            self.state = 'advance'
+        elif abs(diff_minutes) <= tolerance:
+            self.state = 'taken'
+        elif diff_minutes > tolerance:
+    
+            if diff_minutes > 120:
+                self.state = 'skipped'
+            else:
+                self.state = 'late'
+        
+        self.save()
+    def __str__(self):
+       return f"{self.taken_id} - {self.when_was_taked}"
