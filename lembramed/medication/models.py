@@ -1,6 +1,7 @@
 from django.db import models
 from authentication.models import Person
 import uuid, datetime
+from datetime import date
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 
@@ -146,8 +147,39 @@ class TakeRecord(models.Model):
 
             return scheduels
         return []
-            
     
+    def calculate_stock(self):
+        if not self.taken_id.formato or self.taken_id.formato.lower() != 'pílula':
+            return None
+        
+        try:
+            total_quantity = int(self.taken_id.quantity)
+        except (ValueError, TypeError):
+            return "Erro: Quantidade total de medicamentos não é um número válido."
+
+        days_passed = (date.today() - self.begin).days
+
+        days_passed = max(0, days_passed) # if is the first day
+
+        if self.cycle_type == 'daily':
+            medications_taken = days_passed
+            week_medication = 7
+                
+        elif self.cycle_type == 'interval' and self.take_cycle:
+            medications_per_day = 24 // self.take_cycle
+            medications_taken = days_passed * medications_per_day
+            week_medication = 7*medications_per_day
+        
+        medication_left = Take.quantity - medications_taken
+        time_left = (self.end - date.today()).days
+
+
+        if medication_left <= week_medication and time_left> 7:
+            return f"Você tem {medication_left} pílulas restantes, reponha seu estoque."
+    
+    
+        
+
     def __str__(self):
         horarios = ", ".join([t.strftime('%H:%M') for t in self.calculate_schedule()])
         return f"{self.taken_id} - Horários: {horarios}"
