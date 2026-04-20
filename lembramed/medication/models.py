@@ -1,7 +1,7 @@
 from django.db import models
 from authentication.models import Person
 import uuid, datetime
-from datetime import date
+from datetime import datetime, timedelta, combine, date
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 
@@ -48,7 +48,7 @@ class Take(models.Model):
     # forma de medicacao (pilula...), ok
     # horario, OK
     # quantidade, ok
-    # lembrete de repor estoque (lembrete), !!!!!!!!!
+    # lembrete de repor estoque (lembrete) ok
     # Int de prioridade da notificacao daquele medicamento
     # inicio e final de tratamento (opcional) OK
 
@@ -110,7 +110,7 @@ class TakeRecord(models.Model):
         return ', '.join(day_dict[d] for d in self.days.split(',')) 
 
     def clean(self):
-        if self.end <self.begin:
+        if self.end < self.begin:
             raise ValidationError("Data final não pode ser menor que a inicial")
 
         if self.cycle_type == 'daily' and not self.take_at:
@@ -121,8 +121,10 @@ class TakeRecord(models.Model):
         
         if self.cycle_type == 'interval' and not self.take_at:
              raise ValidationError("Informe o horário em que o medicamento será tomado pela primeira vez")
+
     
-    def calculate_schedule(self):
+    
+    def calculate_schedule(self): # calculate when the patient is going to take the medication
         
         if not self.take_at:
             return []
@@ -148,7 +150,47 @@ class TakeRecord(models.Model):
             return scheduels
         return []
     
-    def calculate_stock(self):
+
+def define_state(self): # define the medication state based on when the medication was taken
+    
+    now = timezone.now()
+    current_now = timezone.localtime(now)
+    current_time = current_now.time()
+    current_date = current_now.date()
+
+    schedules = self.calculate_schedule()
+    if not schedules:
+        return None
+
+    # Find the closest time of the scheduel to now
+    past_schedules = [t for t in schedules if t <= current_time]
+    
+    if not past_schedules: 
+        return "waiting"
+
+    closest_scheduled_time = max(past_schedules) 
+
+    scheduled_datetime = combine(current_date, closest_scheduled_time) # convert to datetime
+    scheduled_datetime = timezone.make_aware(scheduled_datetime)
+
+    # time diference
+    time_gap = now - scheduled_datetime
+     
+    # future --> change the time limmit and atribute diferent time limits based on the medications priority 
+    if time_gap > timedelta(minutes=30):
+        self.state = "forgotten"
+    
+    if time_gap > timedelta(minutes=10) and  time_gap < timedelta(minutes=30):
+        self.state = "late"
+    else:
+        self.state = "taken" 
+
+    self.save() 
+    return self.state
+
+    
+def calculate_stock(self): # determine the amount of pills left
+        # future implementation --> other types of medications
         if not self.taken_id.formato or self.taken_id.formato.lower() != 'pílula':
             return None
         
@@ -161,7 +203,7 @@ class TakeRecord(models.Model):
 
         days_passed = max(0, days_passed) # if is the first day
 
-        if self.cycle_type == 'daily':
+        if self.cycle_type == 'daily': 
             medications_taken = days_passed
             week_medication = 7
                 
@@ -170,16 +212,16 @@ class TakeRecord(models.Model):
             medications_taken = days_passed * medications_per_day
             week_medication = 7*medications_per_day
         
-        medication_left = Take.quantity - medications_taken
+        medication_left = total_quantity - medications_taken
         time_left = (self.end - date.today()).days
 
 
-        if medication_left <= week_medication and time_left> 7:
+        if medication_left <= week_medication and time_left> 7: 
+            # if the amount of pills left are less than the amount required in a week 
+            # the amount of time left to take the medication is more than a week
             return f"Você tem {medication_left} pílulas restantes, reponha seu estoque."
-    
-    
-        
+          
 
-    def __str__(self):
+def __str__(self):
         horarios = ", ".join([t.strftime('%H:%M') for t in self.calculate_schedule()])
         return f"{self.taken_id} - Horários: {horarios}"
