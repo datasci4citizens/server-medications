@@ -61,7 +61,7 @@ You should see sucess messages on terminal.
 - Admin Panel: http://127.0.0.1:8000/admin/
 - API Testing: http://127.0.0.1:8000/api/docs/
 
-Common Errors
+# Common Errors
 
 If you already had started the docker container, it will be needed for you to end their activity before starting them again:
 
