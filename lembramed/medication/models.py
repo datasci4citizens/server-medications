@@ -14,15 +14,15 @@ class Medication(models.Model):
     medication_id = models.IntegerField(primary_key = True)
 
     # Information from Leaflets:
-    indicacoes_para_uso = models.TextField()
-    funcionamento_medicamento = models.TextField()
-    quando_nao_usar = models.TextField()
-    conhecimento_previo_necessario = models.TextField()
-    como_guardar_medicamento = models.TextField()
-    como_usar_medicamento = models.TextField()
-    esqueceu_medicamento = models.TextField()
-    efeitos_colaterais = models.TextField()
-    quantidade_a_mais = models.TextField()
+    indicacoes_para_uso = models.TextField(default="")
+    funcionamento_medicamento = models.TextField(default="")
+    quando_nao_usar = models.TextField(default="")
+    conhecimento_previo_necessario = models.TextField(default="")
+    como_guardar_medicamento = models.TextField(default="")
+    como_usar_medicamento = models.TextField(default="")
+    esqueceu_medicamento = models.TextField(default="")
+    efeitos_colaterais = models.TextField(default="")
+    quantidade_a_mais = models.TextField(default="", blank=True, null=True) # erro, cuidado!
 
     def __str__(self):
         return str(self.medication_id)
@@ -71,7 +71,7 @@ class Therapeutic_Class(models.Model):
     medication_id = models.ForeignKey(
         Medication,
         on_delete = models.CASCADE,
-        related_name = 'class',
+        related_name = 'therapeutic_class',
     )
     therapeutic_class = models.TextField()
 
