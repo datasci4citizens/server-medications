@@ -148,7 +148,7 @@ class Take(models.Model):
     ]
     
     priority = models.SmallIntegerField()
-    quantity = models.CharField(max_length= 50, null=True) # estoque
+    quantity = models.CharField(max_length= 50, null=True) # stock
 
     def __str__(self):
        return f"{self.person_id} - {self.medication_id}"
@@ -359,5 +359,5 @@ class TakeRecord(models.Model):
             
 
     def __str__(self):
-            horarios = ", ".join([t.strftime('%H:%M') for t in self.calculate_schedule()])
-            return f"{self.taken_id} - Horários: {horarios}"
+            med_schedules = ", ".join([t.strftime('%H:%M') for t in self.calculate_schedule()])
+            return f"{self.taken_id} - Horários: {med_schedules}"
