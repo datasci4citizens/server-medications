@@ -7,9 +7,9 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from authentication.models import Person
-from medication.models import Medication, Take
+from medication.models import Leaflet, Take
 from authentication.serializers import PersonSerializer
-from medication.serializers import MedicationSerializer, TakeSerializer
+from medication.serializers import LeafletSerializer, TakeSerializer
 from rest_framework import permissions,viewsets
 
 # #add user, remove user, edit user, get user
@@ -20,8 +20,8 @@ class PersonViewSet(viewsets.ModelViewSet):
 
 # add drug, remove drug, edit drug, get drug
 class MedicationViewSet(viewsets.ModelViewSet):
-    queryset = Medication.objects.all().order_by("name")
-    serializer_class = MedicationSerializer
+    queryset = Leaflet.objects.all().order_by("medication_id")
+    serializer_class = LeafletSerializer
     permission_classes = [permissions.IsAuthenticated]
 
 class TakeViewSet(viewsets.ModelViewSet):

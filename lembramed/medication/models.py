@@ -9,7 +9,7 @@ import json
 import os
 from django.conf import settings
 
-class Medication(models.Model):
+class Leaflet(models.Model):
     # RegisterNum for ANVISA, RxCUI for RxNorm:
     medication_id = models.IntegerField(primary_key = True)
 
@@ -29,7 +29,7 @@ class Medication(models.Model):
 
 class Medication_Name(models.Model):
     medication_id = models.ForeignKey(
-        Medication,
+        Leaflet,
         on_delete = models.CASCADE,
         related_name = 'name',
     )
@@ -40,7 +40,7 @@ class Medication_Name(models.Model):
 
 class Active_Ingredient(models.Model):
     medication_id = models.ForeignKey(
-        Medication,
+        Leaflet,
         on_delete = models.CASCADE,
         related_name = 'ingredient',
     )
@@ -69,7 +69,7 @@ class ingredient_Interaction(models.Model):
 
 class Therapeutic_Class(models.Model):
     medication_id = models.ForeignKey(
-        Medication,
+        Leaflet,
         on_delete = models.CASCADE,
         related_name = 'therapeutic_class',
     )
@@ -78,9 +78,20 @@ class Therapeutic_Class(models.Model):
     def __str__(self):
         return self.therapeutic_class
 
+class Category(models.Model):
+    medication_id = models.ForeignKey(
+        Leaflet,
+        on_delete = models.CASCADE,
+        related_name = 'category',
+    )
+    category = models.TextField()
+
+    def __str__(self):
+        return self.category
+
 class Brand(models.Model):
     medication_id = models.ForeignKey(
-        Medication,
+        Leaflet,
         on_delete = models.CASCADE,
         related_name = 'brand',
     )
@@ -91,7 +102,7 @@ class Brand(models.Model):
     
 class Dosage(models.Model):
     medication_id = models.ForeignKey(
-        Medication,
+        Leaflet,
         on_delete = models.CASCADE,
         related_name = 'dosage',
     )
@@ -102,7 +113,7 @@ class Dosage(models.Model):
 
 class Company(models.Model):
     medication_id = models.ForeignKey(
-        Medication,
+        Leaflet,
         on_delete = models.CASCADE,
         related_name = 'company',
     )
@@ -111,13 +122,13 @@ class Company(models.Model):
     def __str__(self):
         return self.company
 
-# class Formato(models.Model):
-#     medication_id = models.ForeignKey(
-#         Medication,
-#         on_delete = models.CASCADE,
-#         related_name = 'formato',
-#     )
-#     formato = models.CharField(max_length=50, null=True) # type
+class Formato(models.Model):
+    medication_id = models.ForeignKey(
+        Leaflet,
+        on_delete = models.CASCADE,
+        related_name = 'formato',
+    )
+    formato = models.CharField(max_length=50, null=True) # type
 
 class Take(models.Model):
     person_id = models.ForeignKey(
@@ -126,7 +137,7 @@ class Take(models.Model):
         related_name = 'takes'
     )
     medication_id = models.ForeignKey(
-        Medication,
+        Leaflet,
         on_delete = models.CASCADE,
         related_name = 'takes',
     )
