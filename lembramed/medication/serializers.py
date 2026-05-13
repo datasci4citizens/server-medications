@@ -1,11 +1,10 @@
 from rest_framework import serializers
-from .models import Medication, Take, TakeRecord
+from .models import Leaflet, Take, TakeRecord
 
-class MedicationSerializer(serializers.ModelSerializer):
+class LeafletSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Medication
+        model = Leaflet
         fields = '__all__'
-        # fields = ["medication_id", "person_id","name", "dosage", "time", "begin", "end", "quantity", "formato"]
 
 class TakeSerializer(serializers.ModelSerializer):
     class Meta:

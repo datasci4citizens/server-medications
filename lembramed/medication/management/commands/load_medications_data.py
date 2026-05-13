@@ -1,6 +1,6 @@
 import json, os
 from django.core.management.base import BaseCommand
-from medication.models import Medication, Medication_Name, Company, Active_Ingredient, Therapeutic_Class
+from medication.models import Leaflet, Medication_Name, Company, Active_Ingredient, Therapeutic_Class, Category, Brand
 from pathlib import Path
 
 class Command(BaseCommand):
@@ -21,6 +21,7 @@ class Command(BaseCommand):
                     "empresa":            elemento[8],
                     "principio_ativo":    elemento[10],
                     "classe_terapeutica": elemento[7],
+                    "categoria":          elemento[3],
                 }
         self.stdout.write(f"{len(anvisa)} medicamentos válidos.")
 
@@ -77,15 +78,10 @@ class Command(BaseCommand):
         self.stdout.write("Populando banco...")
         criados = atualizados = sem_bula = 0
         for med_id, info in anvisa.items():
-            # print(info)
-            # print(clean_text(info.get("name","")))
-            # print(clean_text(info.get("active_ingredient")))
-            # print(info.get("therapeutic_class",""))
-            # print(info.get("company",""))
             bula = bulas.get(med_id, {})
             if not bula:
                 sem_bula += 1
-            medication_object, created = Medication.objects.update_or_create( # Medication == Bula
+            medication_object, created = Leaflet.objects.update_or_create(
                 medication_id = med_id,
                 defaults = {
                     "indicacoes_para_uso":clean_text(bula.get("indicacoes_para_uso", "")),
@@ -103,17 +99,18 @@ class Command(BaseCommand):
                 criados += 1
             else:
                 atualizados += 1
-            # anvisa[med_id] = {
-            #                     "name":               elemento[1],
-            #                     "empresa":            elemento[8],
-            #                     "principio_ativo":    elemento[10],
-            #                     "classe_terapeutica": elemento[7],
-            #                 }
-            #  company, name, active_ingredients, classe_terapeutica
-            _,n = Medication_Name.objects.update_or_create(
-                medication_id = medication_object,
-                defaults = {"name":clean_text(info.get("name",""))}
-            )
+
+            if(clean_text(info.get("category",""))=="GENÉRICO"):
+                _,n = Medication_Name.objects.update_or_create(
+                    medication_id = medication_object,
+                    defaults = {"name":clean_text(info.get("name",""))}
+                )
+            else:
+                _,b = Brand.objects.update_or_create(
+                    medication_id = medication_object,
+                    defaults = {"brand":clean_text(info.get("name",""))}
+                )
+                
             _,ai = Active_Ingredient.objects.update_or_create(
                 medication_id = medication_object,
                 defaults = {'active_ingredient':clean_text(info.get('principio_ativo',""))}
@@ -122,9 +119,13 @@ class Command(BaseCommand):
                 medication_id = medication_object,
                 defaults = { 'therapeutic_class':clean_text(info.get('classe_terapeutica',""))}
             )
-            _,c = Company.objects.update_or_create(
+            _,co = Company.objects.update_or_create(
                 medication_id = medication_object,
-                defaults = {'company':clean_text(info.get('empresa',""))}
+                defaults = {'company':clean_text(info.get('empresa',"").split(" - ",1)[-1])}
+            )
+            _,ca = Category.objects.update_or_create(
+                medication_id = medication_object,
+                defaults = {'category':clean_text(info.get('categoria'))}
             )
         self.stdout.write(self.style.SUCCESS(
             f"Concluído: {criados} criados, {atualizados} atualizados, {sem_bula} sem bula."
