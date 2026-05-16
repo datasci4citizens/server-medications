@@ -9,7 +9,7 @@ class Command(BaseCommand):
     help = "Load pre defined medications data from database"
 
     def handle(self, *args, **options):
-        BASE = "/server-medications/lembramed/api/src/anvisa_data""
+        BASE = "/server-medications/lembramed/api/src/anvisa_data"
 
         self.stdout.write("Carregando anvisa_data.json...")
         anvisa = {}

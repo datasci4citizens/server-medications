@@ -55,7 +55,7 @@ class LoginView(APIView):
 
 
 class MeView(APIView):
-    """Retorna ou atualiza os dados do usuário logado."""
+    """Return the loged users."""
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):

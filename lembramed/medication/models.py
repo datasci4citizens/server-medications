@@ -1,24 +1,28 @@
 from django.db import models
 from authentication.models import Person
-import uuid, datetime, json, os
+import uuid
+import datetime
+from datetime import datetime, timedelta, date 
 from django.utils import timezone
 from django.core.exceptions import ValidationError
-from datetime import datetime, date, timedelta
+import json
+import os
+from django.conf import settings
 
 class Medication(models.Model):
     # RegisterNum for ANVISA, RxCUI for RxNorm:
     medication_id = models.IntegerField(primary_key = True)
 
     # Information from Leaflets:
-    indicacoes_para_uso = models.TextField()
-    funcionamento_medicamento = models.TextField()
-    quando_nao_usar = models.TextField()
-    conhecimento_previo_necessario = models.TextField()
-    como_guardar_medicamento = models.TextField()
-    como_usar_medicamento = models.TextField()
-    esqueceu_medicamento = models.TextField()
-    efeitos_colaterais = models.TextField()
-    quantidade_a_mais = models.TextField()
+    indicacoes_para_uso = models.TextField(default="")
+    funcionamento_medicamento = models.TextField(default="")
+    quando_nao_usar = models.TextField(default="")
+    conhecimento_previo_necessario = models.TextField(default="")
+    como_guardar_medicamento = models.TextField(default="")
+    como_usar_medicamento = models.TextField(default="")
+    esqueceu_medicamento = models.TextField(default="")
+    efeitos_colaterais = models.TextField(default="")
+    quantidade_a_mais = models.TextField(default="", blank=True, null=True) # erro, cuidado!
 
     def __str__(self):
         return str(self.medication_id)
@@ -67,7 +71,7 @@ class Therapeutic_Class(models.Model):
     medication_id = models.ForeignKey(
         Medication,
         on_delete = models.CASCADE,
-        related_name = 'class',
+        related_name = 'therapeutic_class',
     )
     therapeutic_class = models.TextField()
 
@@ -128,6 +132,14 @@ class Take(models.Model):
     )
     taken_id = models.AutoField(primary_key=True)
 
+    # comprimido/dosagem, OK
+    # forma de medicacao (pilula...), ok
+    # horario, OK
+    # quantidade, ok
+    # lembrete de repor estoque (lembrete) ok
+    # Int de prioridade da notificacao daquele medicamento
+    # inicio e final de tratamento (opcional) OK
+
     PRIOTITY_TYPES = [
         (0, 'Low'),
         (1, 'Medium'),
@@ -137,6 +149,86 @@ class Take(models.Model):
     
     priority = models.SmallIntegerField()
     quantity = models.CharField(max_length= 50, null=True) # estoque
+    formato = models.CharField(max_length=50, null=True) # type
+
+    def __str__(self):
+       return f"{self.person_id} - {self.medication_id}"
+    
+    def get_priority_display(self):
+        prio_dict = dict(self.PRIOTITY_TYPES)
+        return prio_dict[self.priority]
+
+    def check_interactions(self):
+            from django.conf import settings
+
+            json_path = os.path.join(
+                settings.BASE_DIR, 'api', 'src', 'lembramed_data', 'Interactions.json'
+            )
+
+            try:
+                with open(json_path, 'r', encoding='utf-8') as f:
+                    all_interactions = json.load(f)
+            except (FileNotFoundError, json.JSONDecodeError) as e:
+                raise ValueError(f"Erro ao carregar interactions.json: {e}")
+
+            new_ingredients = {
+                i.lower().strip()
+                for i in self.medication_id.ingredient.values_list('active_ingredient', flat=True)
+            }
+
+            current_ingredients = {
+                i.lower().strip()
+                for i in Active_Ingredient.objects.filter(
+                    medication_id__takes__person_id=self.person_id
+                ).exclude(
+                    medication_id=self.medication_id
+                ).values_list('active_ingredient', flat=True).distinct()
+            }
+
+            conflicts = []
+            for interaction in all_interactions:
+                ing1 = interaction.get('ingredient1', '').lower().strip()
+                ing2 = interaction.get('ingredient2', '').lower().strip()
+
+                match = (
+                    (ing1 in new_ingredients and ing2 in current_ingredients) or
+                    (ing2 in new_ingredients and ing1 in current_ingredients)
+                )
+
+                if match:
+                    conflicts.append({
+                        'ingredient1': interaction['ingredient1'],
+                        'ingredient2': interaction['ingredient2'],
+                        'severity':    interaction.get('severity', 'Unknown'),
+                        'description': interaction.get('description', ''),
+                    })
+            
+
+            major_conflicts = [c for c in conflicts if c['severity'] == 'Major']
+            if major_conflicts:
+                descriptions = '; '.join(
+                    f"{c['ingredient1']} × {c['ingredient2']}: {c['description']}"
+                    for c in major_conflicts
+                )
+                raise ValidationError(
+                    f"Esses medicamentos não devem ser consumidos simultaneamente. "
+                    f"Consulte um médico. Interações graves encontradas: {descriptions}"
+                )
+
+            return conflicts
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.check_interactions()
+        
+        super().save(*args,**kwargs)
+
+class TakeRecord(models.Model):
+    taken_id = models.ForeignKey(    
+        Take,
+        on_delete = models.CASCADE,
+        related_name = 'records',
+    )
 
     DAYS_OF_WEEK = [
         ('mon', 'Segunda'),
@@ -155,80 +247,33 @@ class Take(models.Model):
     ]
 
     cycle_type = models.CharField(max_length=10, choices=CYCLE_TYPE )
-    begin = models.DateField(default=datetime.date.today) 
-    end = models.DateField(default=datetime.date.today)
+    begin = models.DateField(default=datetime.today) 
+    end = models.DateField(default=datetime.today)
     days= models.CharField(max_length=50, null=True)
     take_at = models.TimeField(null=True, blank=True)  #first time you will take the medicine
-    take_cicle = models.IntegerField(null=True, blank=True) # ex: take in 8-8 hours...
+    take_cycle = models.IntegerField(null=True, blank=True) # ex: take in 8-8 hours...
+    state = models.CharField(max_length=50, null=True) # taken, forgortten, late...
 
-    def __str__(self):
-       return f"{self.person_id} - {self.medication_id}"
-    
-    def get_priority_display(self):
-        prio_dict = dict(self.PRIOTITY_TYPES)
-        return prio_dict[priority]
+    def get_days_display(self):
+        day_dict = dict(self.DAYS_OF_WEEK)
+        return ', '.join(day_dict[d] for d in self.days.split(',')) 
 
-    def check_interactions(self):
-        from django.conf import settings
-
-        json_path = os.path.join(
-            settings.BASE_DIR, 'api', 'src', 'lembramed_data', 'interactions.json'
-        )
-
-        try:
-            with open(json_path, 'r', encoding='utf-8') as f:
-                all_interactions = json.load(f)
-        except (FileNotFoundError, json.JSONDecodeError) as e:
-            raise ValueError(f"Erro ao carregar interactions.json: {e}")
-
-        new_ingredients = {
-            i.lower().strip()
-            for i in self.medication_id.ingredient.values_list('active_ingredient', flat=True)
-        }
-
-        current_ingredients = {
-            i.lower().strip()
-            for i in Active_Ingredient.objects.filter(
-                medication_id__takes__person_id=self.person_id
-            ).exclude(
-                medication_id=self.medication_id
-            ).values_list('active_ingredient', flat=True).distinct()
-        }
-
-        conflicts = []
-        for interaction in all_interactions:
-            ing1 = interaction.get('ingredient1', '').lower().strip()
-            ing2 = interaction.get('ingredient2', '').lower().strip()
-
-            match = (
-                (ing1 in new_ingredients and ing2 in current_ingredients) or
-                (ing2 in new_ingredients and ing1 in current_ingredients)
-            )
-
-            if match:
-                conflicts.append({
-                    'ingredient1': interaction['ingredient1'],
-                    'ingredient2': interaction['ingredient2'],
-                    'severity':    interaction.get('severity', 'Unknown'),
-                    'description': interaction.get('description', ''),
-                })
-
-        return conflicts
-    
     def clean(self):
-        if self.end <self.begin:
+        if self.end < self.begin:
             raise ValidationError("Data final não pode ser menor que a inicial")
 
         if self.cycle_type == 'daily' and not self.take_at:
             raise ValidationError("Informe o horário em que o medicamento será tomado")
 
-        if self.cycle_type == 'interval' and not self.take_cicle:
+        if self.cycle_type == 'interval' and not self.take_cycle:
              raise ValidationError("Informe de quanto em quanto tempo o medicamento será tomado")
         
         if self.cycle_type == 'interval' and not self.take_at:
              raise ValidationError("Informe o horário em que o medicamento será tomado pela primeira vez")
+
     
-    def calculate_schedule(self):
+    
+    def calculate_schedule(self): # calculate when the patient is going to take the medication
         
         if not self.take_at:
             return []
@@ -236,99 +281,95 @@ class Take(models.Model):
         if self.cycle_type == 'daily' :
             return [self.take_at]
         
-        if self.cycle_type == 'interval' and self.take_cicle:
+        if self.cycle_type == 'interval' and self.take_cycle:
             scheduels = []
 
-            base_date = datetime.date.today()
-            current_dt = datetime.datetime.combine(base_date, self.take_at)
+            base_date = date.today()
+            current_dt = datetime.combine(base_date, self.take_at)
 
             total_hours = 0
             while total_hours < 24:
                 scheduels.append(current_dt.time())
-                current_dt += datetime.timedelta(hours=self.take_cicle)
-                total_hours += self.take_cicle
+                current_dt += timedelta(hours=self.take_cycle)
+                total_hours += self.take_cycle
 
                 if current_dt.date() > base_date:
                     break
 
             return scheduels
         return []
+    
 
-    def get_days_display(self):
-        day_dict = dict(self.DAYS_OF_WEEK)
-        return ', '.join(day_dict[d] for d in self.days.split(',')) 
+    def define_state(self): # define the medication state based on when the medication was taken
+    
+        now = timezone.now() # review the when_was_taken 
+        current_now = timezone.localtime(now)
+        current_time = current_now.time()
+        current_date = current_now.date()
+
+        schedules = self.calculate_schedule()
+        if not schedules:
+            return None
+
+        # Find the closest time of the scheduel to now
+        past_schedules = [t for t in schedules if t <= current_time]
+        
+        if not past_schedules: 
+            return "waiting"
+
+        closest_scheduled_time = max(past_schedules) 
+
+        scheduled_datetime = datetime.combine(current_date, closest_scheduled_time) # convert to datetime
+        scheduled_datetime = timezone.make_aware(scheduled_datetime)
+
+        # time diference
+        time_gap = now - scheduled_datetime
+        
+        # future --> change the time limmit and atribute diferent time limits based on the medications priority 
+        if time_gap > timedelta(minutes=30):
+            self.state = "forgotten"
+        elif time_gap > timedelta(minutes=10):
+            self.state = "late"
+        else:
+            self.state = "taken"
+
+        self.save() 
+        return self.state
+
+        
+    def calculate_stock(self): # determine the amount of pills left
+            # future implementation --> other types of medications
+            if not self.taken_id.formato or self.taken_id.formato.lower() != 'pílula':
+                return None
             
+            try:
+                total_quantity = int(self.taken_id.quantity)
+            except (ValueError, TypeError):
+                return "Erro: Quantidade total de medicamentos não é um número válido."
+
+            days_passed = (date.today() - self.begin).days
+
+            days_passed = max(0, days_passed) # if is the first day
+
+            if self.cycle_type == 'daily': 
+                medications_taken = days_passed
+                week_medication = 7
+                    
+            elif self.cycle_type == 'interval' and self.take_cycle:
+                medications_per_day = 24 // self.take_cycle
+                medications_taken = days_passed * medications_per_day
+                week_medication = 7*medications_per_day
+            
+            medication_left = total_quantity - medications_taken
+            time_left = (self.end - date.today()).days
+
+
+            if medication_left <= week_medication and time_left> 7: 
+                # if the amount of pills left are less than the amount required in a week 
+                # the amount of time left to take the medication is more than a week
+                return f"Você tem {medication_left} pílulas restantes, reponha seu estoque."
+            
+
     def __str__(self):
-        horarios = ", ".join([t.strftime('%H:%M') for t in self.calculate_schedule()])
-        return f"{self.taken_id} - Horários: {horarios}"
-    
-
-
-class TakeRecord(models.Model):
-    taken_id = models.ForeignKey(    
-        Take,
-        on_delete = models.CASCADE,
-        related_name = 'records',
-    )
-
-    when_was_taked = models.TimeField(null=True, blank=True) 
-
-    STATE_CHOICES = [
-        ('taken', 'Tomado'),
-        ('late', 'Atrasado'),
-        ('skipped', 'Esquecido'),
-        ('advance', 'Adiantado')
-    ]
-    state = models.CharField(max_length=50, choices=STATE_CHOICES, null=True)
-    
-    PRIORITY_TOLERANCE_MAP = {
-        0: 60,
-        1: 30,
-        2: 10,
-        3: 5
-    }
-
-    
-    def mark_medication_as_taken(take_instance, time_now): # para multiplos horarios de um remedio
-        # 1. Pega todos os horários previstos 
-        schedules = take_instance.calculate_schedule()
-        
-        # 2. Encontra o horário mais próximo do agora
-        closest_schedule = min(schedules, key=lambda x: abs(
-            datetime.combine(date.today(), x) - datetime.combine(date.today(), time_now)
-        ))
-
-    
-        record = TakeRecord.objects.create(
-            taken_id=take_instance,
-            when_was_taked=time_now
-        )
-        record.determine_state(closest_schedule)
-    
-    def determine_state(self, scheduled_time):
-
-        if not self.when_was_taked:
-            self.state = 'skipped'
-            return
-        today = date.today()
-        dt_scheduled = datetime.combine(today, scheduled_time)
-        dt_taken = datetime.combine(today, self.when_was_taked)
-
-        diff_minutes = (dt_taken - dt_scheduled).total_seconds() /60
-        
-        tolerance = self.PRIORITY_TOLERANCE_MAP.get(self.taken_id.priority, 5)
-
-        if diff_minutes < -tolerance:
-            self.state = 'advance'
-        elif abs(diff_minutes) <= tolerance:
-            self.state = 'taken'
-        elif diff_minutes > tolerance:
-    
-            if diff_minutes > 120:
-                self.state = 'skipped'
-            else:
-                self.state = 'late'
-        
-        self.save()
-    def __str__(self):
-       return f"{self.taken_id} - {self.when_was_taked}"
+            horarios = ", ".join([t.strftime('%H:%M') for t in self.calculate_schedule()])
+            return f"{self.taken_id} - Horários: {horarios}"
