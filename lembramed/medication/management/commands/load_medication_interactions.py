@@ -36,9 +36,9 @@ class Command(BaseCommand):
             _, was_created = ingredient_Interaction.objects.get_or_create(
                 active_ingredient1=ing1,
                 active_ingredient2=ing2,
-                defaults={"severity": severity, "description": desc};
+                defaults={"severity": severity, "description": desc},
             )
-
+            
             if was_created:
                 creates += 1
             
