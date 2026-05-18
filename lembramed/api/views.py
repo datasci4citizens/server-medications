@@ -20,6 +20,34 @@ class PersonViewSet(viewsets.ModelViewSet):
     queryset = Person.objects.all().order_by("person_id")
     serializer_class = PersonSerializer
     permission_classes = [permissions.IsAuthenticated]
+    
+    def get_object(self):
+        """Override get_object to enforce user isolation"""
+        person = super().get_object()
+        
+        # Allow users to access only their own person data
+        if person.user != self.request.user:
+            from rest_framework.exceptions import PermissionDenied
+            raise PermissionDenied('Você não pode acessar dados de outro usuário')
+        
+        return person
+    
+    def perform_update(self, serializer):
+        """Only allow users to update their own person data"""
+        person = self.get_object()
+        if person.user != self.request.user:
+            from rest_framework.exceptions import PermissionDenied
+            raise PermissionDenied('Você não pode editar dados de outro usuário')
+        
+        serializer.save()
+    
+    def perform_destroy(self, instance):
+        """Only allow users to delete their own person data"""
+        if instance.user != self.request.user:
+            from rest_framework.exceptions import PermissionDenied
+            raise PermissionDenied('Você não pode deletar dados de outro usuário')
+        
+        instance.delete()
 
 # anvisa medications become read-only
 class MedicationViewSet(viewsets.ReadOnlyModelViewSet):
@@ -44,7 +72,7 @@ class MedicationViewSet(viewsets.ReadOnlyModelViewSet):
 class TakeViewSet(viewsets.ModelViewSet):
     """ Create, edit, and delete user medications
     """
-    queryset = Take.objects.all()  # QuerySet padrão (sobrescrito em get_queryset)
+    queryset = Take.objects.all()
     serializer_class = TakeSerializer
     permission_classes = [permissions.IsAuthenticated]
     
