@@ -8,5 +8,5 @@ from .views import PersonViewSet, MedicationViewSet, TakeViewSet
 router = DefaultRouter()
 router.register(r'users', PersonViewSet)
 router.register(r'medications', MedicationViewSet)
-router.register(r'take', TakeViewSet)
+router.register(r'take', TakeViewSet, basename='take')
 urlpatterns = router.urls

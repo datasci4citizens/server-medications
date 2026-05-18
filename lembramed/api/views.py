@@ -4,13 +4,16 @@ from django.shortcuts import render
 from django.contrib.auth.models import Group, User
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.decorators import api_view
+from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework import status
+from django.db.models import Q
 
 from authentication.models import Person
 from medication.models import Medication, Take
 from authentication.serializers import PersonSerializer
 from medication.serializers import MedicationSerializer, TakeSerializer
-from rest_framework import permissions,viewsets
+from rest_framework import permissions, viewsets
 
 # #add user, remove user, edit user, get user
 class PersonViewSet(viewsets.ModelViewSet):
@@ -18,16 +21,108 @@ class PersonViewSet(viewsets.ModelViewSet):
     serializer_class = PersonSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-# add drug, remove drug, edit drug, get drug
-class MedicationViewSet(viewsets.ModelViewSet):
-    queryset = Medication.objects.all().order_by("name")
+# anvisa medications become read-only
+class MedicationViewSet(viewsets.ReadOnlyModelViewSet):
+    """ Determine Anvisa medications as read-only,
+        Adition, edition and deletion are made with the command 'manage.py load_medications_data'
+    """
+    queryset = Medication.objects.all()
     serializer_class = MedicationSerializer
     permission_classes = [permissions.IsAuthenticated]
+    
+    def get_queryset(self):
+        """filter medications"""
+        queryset = Medication.objects.all()
+        search = self.request.query_params.get('search')
+        if search:
+            queryset = queryset.filter(
+                Q(medication_id__icontains=search) |
+                Q(name__name__icontains=search)
+            ).distinct()
+        return queryset
 
 class TakeViewSet(viewsets.ModelViewSet):
-    queryset = Take.objects.all().order_by("medication_id")
+    """ Create, edit, and delete user medications
+    """
+    queryset = Take.objects.all()  # QuerySet padrão (sobrescrito em get_queryset)
     serializer_class = TakeSerializer
     permission_classes = [permissions.IsAuthenticated]
+    
+    def get_queryset(self):
+        """Retorna apenas os Takes do usuário autenticado"""
+        person = Person.objects.filter(user=self.request.user).first()
+        if person:
+            return Take.objects.filter(person_id=person).order_by("medication_id")
+        return Take.objects.none()
+    
+    def create(self, request, *args, **kwargs):
+        """duplicated medications"""
+        person = Person.objects.filter(user=request.user).first()
+        if not person:
+            return Response(
+                {'error': 'Usuário não tem registro de Person'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        medication_id = request.data.get('medication_id')
+        
+        # check if the medication already exists
+        existing_take = Take.objects.filter(
+            person_id=person,
+            medication_id=medication_id
+        ).exists()
+        
+        if existing_take:
+            return Response(
+                {'error': f'Você já está registrado como tomando este medicamento'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        # check if the medication exist in the database
+        if not Medication.objects.filter(medication_id=medication_id).exists():
+            return Response(
+                {'error': 'Medicamento não encontrado'},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        
+        return super().create(request, *args, **kwargs)
+    
+    def perform_create(self, serializer):
+        """Associates take and user"""
+        person = Person.objects.filter(user=self.request.user).first()
+        serializer.save(person_id=person)
+    
+    def perform_update(self, serializer):
+        """edit only the user medication"""
+        person = Person.objects.filter(user=self.request.user).first()
+        take = self.get_object()
+        
+        if take.person_id != person:
+            raise PermissionError('Você não pode editar medicamentos de outro usuário')
+        
+        serializer.save()
+    
+    def perform_destroy(self, instance):
+        """delete only the user medication"""
+        person = Person.objects.filter(user=self.request.user).first()
+        
+        if instance.person_id != person:
+            raise PermissionError('Você não pode deletar medicamentos de outro usuário')
+        
+        instance.delete()
+      
+    @action(detail=False, methods=['get'])
+    def medications_with_leaflets(self, request):
+        """return the user medications and their leaflet"""
+        person = Person.objects.filter(user=request.user).first()
+        if not person:
+            return Response({'error': 'Usuário não tem registro de Person'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        takes = Take.objects.filter(person_id=person).select_related('medication_id')
+        medications = [take.medication_id for take in takes]
+        
+        serializer = MedicationSerializer(medications, many=True)
+        return Response(serializer.data)
 
 # @api_view(['GET'])
 # def index(request):
