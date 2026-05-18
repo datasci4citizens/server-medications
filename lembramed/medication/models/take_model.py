@@ -1,143 +1,21 @@
 from django.db import models
 from authentication.models import Person
-import uuid
-import datetime
-from datetime import datetime, timedelta, date 
+import os,json
+from datetime import datetime, timedelta, date
 from django.utils import timezone
 from django.core.exceptions import ValidationError
-import json
-import os
 from django.conf import settings
+from .leaflet_model import Medication
+from .time_stamped_model import TimeStampedModel
 
-class Leaflet(models.Model):
-    # RegisterNum for ANVISA, RxCUI for RxNorm:
-    medication_id = models.IntegerField(primary_key = True)
-
-    # Information from Leaflets:
-    indicacoes_para_uso = models.TextField(default="")
-    funcionamento_medicamento = models.TextField(default="")
-    quando_nao_usar = models.TextField(default="")
-    conhecimento_previo_necessario = models.TextField(default="")
-    como_guardar_medicamento = models.TextField(default="")
-    como_usar_medicamento = models.TextField(default="")
-    esqueceu_medicamento = models.TextField(default="")
-    efeitos_colaterais = models.TextField(default="")
-    quantidade_a_mais = models.TextField(default="", blank=True, null=True) # erro, cuidado!
-
-    def __str__(self):
-        return str(self.medication_id)
-
-class Medication_Name(models.Model):
-    medication_id = models.ForeignKey(
-        Leaflet,
-        on_delete = models.CASCADE,
-        related_name = 'name',
-    )
-    name = models.TextField()
-
-    def __str__(self):
-        return self.name
-
-class Active_Ingredient(models.Model):
-    medication_id = models.ForeignKey(
-        Leaflet,
-        on_delete = models.CASCADE,
-        related_name = 'ingredient',
-    )
-    active_ingredient = models.TextField()
-
-    def __str__(self):
-        return self.active_ingredient
-
-class ingredient_Interaction(models.Model):
-    active_ingredient1 = models.ForeignKey(
-        Active_Ingredient,
-        on_delete = models.CASCADE,
-        related_name = 'ingredient1'
-    )
-    active_ingredient2 = models.ForeignKey(
-        Active_Ingredient,
-        on_delete = models.CASCADE,
-        related_name = 'ingredient2'
-    )
-    # Major, Moderate, Minor, Unknown
-    severity = models.CharField(max_length=10)
-    description = models.TextField()
-
-    def __str__(self):
-        return self.severity
-
-class Therapeutic_Class(models.Model):
-    medication_id = models.ForeignKey(
-        Leaflet,
-        on_delete = models.CASCADE,
-        related_name = 'therapeutic_class',
-    )
-    therapeutic_class = models.TextField()
-
-    def __str__(self):
-        return self.therapeutic_class
-
-class Category(models.Model):
-    medication_id = models.ForeignKey(
-        Leaflet,
-        on_delete = models.CASCADE,
-        related_name = 'category',
-    )
-    category = models.TextField()
-
-    def __str__(self):
-        return self.category
-
-class Brand(models.Model):
-    medication_id = models.ForeignKey(
-        Leaflet,
-        on_delete = models.CASCADE,
-        related_name = 'brand',
-    )
-    brand = models.TextField()
-
-    def __str__(self):
-        return self.brand
-    
-class Dosage(models.Model):
-    medication_id = models.ForeignKey(
-        Leaflet,
-        on_delete = models.CASCADE,
-        related_name = 'dosage',
-    )
-    dosage = models.CharField(max_length=50, null=True)
-
-    def __str__(self):
-        return self.dosage
-
-class Company(models.Model):
-    medication_id = models.ForeignKey(
-        Leaflet,
-        on_delete = models.CASCADE,
-        related_name = 'company',
-    )
-    company = models.TextField()
-
-    def __str__(self):
-        return self.company
-
-class Formato(models.Model):
-    medication_id = models.ForeignKey(
-        Leaflet,
-        on_delete = models.CASCADE,
-        related_name = 'formato',
-    )
-    formato = models.CharField(max_length=50, null=True) # type
-
-class Take(models.Model):
+class Take(TimeStampedModel):
     person_id = models.ForeignKey(
         'authentication.Person',
         on_delete = models.CASCADE,
         related_name = 'takes'
     )
     medication_id = models.ForeignKey(
-        Leaflet,
+        Medication,
         on_delete = models.CASCADE,
         related_name = 'takes',
     )
@@ -220,9 +98,7 @@ class Take(models.Model):
 
         return conflicts
 
-
-
-class TakeRecord(models.Model):
+class TakeRecord(TimeStampedModel):
     taken_id = models.ForeignKey(    
         Take,
         on_delete = models.CASCADE,

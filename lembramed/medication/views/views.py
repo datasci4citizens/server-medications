@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect,get_object_or_404
-from .models import Leaflet
-from .forms import MedicationForm
-from accounts.models import New_Person
+# from django.shortcuts import render, redirect,get_object_or_404
+# from .models import Leaflet
+# from .forms import MedicationForm
+# from accounts.models import New_Person
 
 # def medication_list(request):
 #     person_id = request.session.get('person_id')

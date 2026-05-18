@@ -1,33 +1,38 @@
-from django.shortcuts import render
-# from django.http import HttpRequest, JsonResponse
-# from django.views.decorators.http import require_POST, require_GET
-from django.contrib.auth.models import Group, User
-from django.core.exceptions import ObjectDoesNotExist
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
+# from django.shortcuts import render
+# # from django.http import HttpRequest, JsonResponse
+# # from django.views.decorators.http import require_POST, require_GET
+# from django.contrib.auth.models import Group, User
+# from django.core.exceptions import ObjectDoesNotExist
+# from rest_framework.decorators import api_view
+# from rest_framework.response import Response
 
 from authentication.models import Person
-from medication.models import Leaflet, Take
+from medication.models import Leaflet,Medication
 from authentication.serializers import PersonSerializer
-from medication.serializers import LeafletSerializer, TakeSerializer
+from medication.serializers import LeafletSerializer,MedicationSerializer
 from rest_framework import permissions,viewsets
 
-# #add user, remove user, edit user, get user
+# add user, remove user, edit user, get user
 class PersonViewSet(viewsets.ModelViewSet):
     queryset = Person.objects.all().order_by("person_id")
     serializer_class = PersonSerializer
     permission_classes = [permissions.IsAuthenticated]
 
 # add drug, remove drug, edit drug, get drug
-class MedicationViewSet(viewsets.ModelViewSet):
+class LeafletViewSet(viewsets.ModelViewSet):
     queryset = Leaflet.objects.all().order_by("medication_id")
     serializer_class = LeafletSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-class TakeViewSet(viewsets.ModelViewSet):
-    queryset = Take.objects.all().order_by("medication_id")
-    serializer_class = TakeSerializer
+class MedicationViewSet(viewsets.ModelViewSet):
+    queryset = Medication.objects.all().order_by("medication_id")
+    serializer_class = MedicationSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+# class TakeViewSet(viewsets.ModelViewSet):
+#     queryset = Take.objects.all().order_by("medication_id")
+#     serializer_class = TakeSerializer
+#     permission_classes = [permissions.IsAuthenticated]
 
 # @api_view(['GET'])
 # def index(request):

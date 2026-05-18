@@ -12,7 +12,7 @@ Go to the directory where the database will settle:
 
 Start the docker container:
 
-    sudo docker-compose -f docker-compose-model.yml up -d
+    docker compose -f docker-compose.yml up -d
 
 (Optional to check if docker service is running)
 
@@ -45,7 +45,7 @@ Initiates the service:
 
 # Utilities
 
-To have acess to our pre established medication and leaflets data, first enter the directory with 'manage.py' file:
+To have acess to our pre established 10745 medication and 7730 leaflets data, first enter the directory with 'manage.py' file:
 
     cd server-medications/lembramed
 
@@ -53,7 +53,11 @@ And then, after running "makemigrations" and "migrate" run this commands:
 
     python manage.py load_medications_data
 
-You should see sucess messages on terminal.
+For accessing the beta database, with 60 medications/leaflets, run:
+
+    python manage.py load_beta
+
+You should see success messages on ther terminal.
 
 # Quick Web Links to Test Server
 
@@ -65,7 +69,7 @@ You should see sucess messages on terminal.
 
 If you already had started the docker container, it will be needed for you to end their activity before starting them again:
 
-    cd server-medications/dbms
+cd server-medications/dbms
     sudo docker compose -f docker-compose-model.yml down -v
 
 If there`s data conflict locally, located in server-medications/dbms/data, it will be needed to restart that database:

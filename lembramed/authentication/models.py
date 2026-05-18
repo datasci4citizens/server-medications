@@ -15,9 +15,8 @@ class Person(models.Model):
     )
     person_id = models.UUIDField(
         default = uuid.uuid4,
-        editable = False,
         primary_key=True,
-        unique=True
+        unique=True,
     )
 
     birth = models.DateField(blank=True, null=True) # YYYY-MM-DD
@@ -29,7 +28,5 @@ class Person(models.Model):
     
 @receiver(post_save, sender=User)
 def create_or_update_person(sender, instance, created, **kwargs):
-    if created:
-        Person.objects.create(user=instance)
-    else:
-        instance.person.save()
+    person,_  = Person.objects.get_or_create(user=instance)
+    person.save()
