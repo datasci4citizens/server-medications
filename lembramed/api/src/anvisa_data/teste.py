@@ -84,24 +84,63 @@ from django.core.management.base import BaseCommand
 #         print(f"classe_terapeutica={classe_terapeutica}\n\n")
 # print(int(102351059.0))
 
-ids = [
-        "183260353", "178170028", "143810218", "100431203", "183260248",
-        "155370012", "183260002", "183260318", "183260145", "178170047",
-        "186200020", "167730576", "183260101", "167730407", "167730405",
-        "167730536", "183260422", "155370009", "167730590", "183260028",
-        "104070111", "104070112", "162410018", "116180106", "186200018",
-        "162410009", "186100006", "167730552", "167730278", "183260260",
-        "183260129", "167730639", "183260289", "183260503", "105730780",
-        "183260366", "106460207", "183260293", "170560048", "104971323",
-        "103670160", "183260487", "183260472", "155370057", "104070105",
-        "183260048", "183260155", "154230266", "183260430", "155840500",
-        "105710158", "183260136", "183260294", "141070059", "183260126",
-        "135690015", "103900182", "167730440", "183260035", "138410004",
-    ]
-
-
+# ids = [
+#         "183260353", "178170028", "143810218", "100431203", "183260248",
+#         "155370012", "183260002", "183260318", "183260145", "178170047",
+#         "186200020", "167730576", "183260101", "167730407", "167730405",
+#         "167730536", "183260422", "155370009", "167730590", "183260028",
+#         "104070111", "104070112", "162410018", "116180106", "186200018",
+#         "162410009", "186100006", "167730552", "167730278", "183260260",
+#         "183260129", "167730639", "183260289", "183260503", "105730780",
+#         "183260366", "106460207", "183260293", "170560048", "104971323",
+#         "103670160", "183260487", "183260472", "155370057", "104070105",
+#         "183260048", "183260155", "154230266", "183260430", "155840500",
+#         "105710158", "183260136", "183260294", "141070059", "183260126",
+#         "135690015", "103900182", "167730440", "183260035", "138410004",
+#     ]
 
 # if (str(183260353) not in ids):
 #     print("erro")
 # else:
 #     print("ta funfando")
+
+# with open("teste.json", "r+") as f:
+#     data = json.load(f)
+#     content.json.update("teste")
+#     file.seek(0)
+#     json.dump(data, f, indent=4)
+
+# with open('Bulario_medicamentos_iniciais0.json') as f0, open('Bulario_medicamentos_iniciais1.json') as f1, open('Bulario_medicamentos_iniciais2.json') as f2, open('Bulario_medicamentos_iniciais3.json') as f3, open('Bulario_medicamentos_iniciais4.json') as f4:
+#     data0 = json.load(f0)
+#     data1 = json.load(f1)
+#     data2 = json.load(f2)
+#     data3 = json.load(f3)
+#     data4 = json.load(f4)
+
+# merged = {**data0, **data1, **data2, **data3, **data4}
+# with open('Leaflets.json', 'w') as out:
+#     json.dump(merged, out, indent=4)
+
+# DUMPS THE CONTENTS OF THE JSON FILES INTO A SINGLE ONE AS ELEMENTS OF A LIST #
+
+# with open('Leaflets.json', 'w') as out:
+#     json.dump([data0, data1, data2, data3, data4], out, indent=4,ensure_ascii=False)
+
+# _,med = Medication.objects.update_or_create(
+#             medication_id = 144930011,
+#             process_num = 253510001840168
+#         )
+# TESTE = "BETAÍNA +  CITRATO DE COLINA +  DL-METIONINA +  LEVOMETIONINA"
+# active_ingredients = TESTE.split(" + ")
+# for i in active_ingredients:
+#     _,ai = Active_Ingredient.objects.update_or_create(
+#         medication_id = 144930011,
+#         active_ingredient = i.strip()
+#     )
+
+s = "A INDICADA DESTE MEDICAMENTO?  A dose segura para o ferro é de 65 mg/dia para pacientes adultos e, para crianças, 2,0  mg/kg de peso corpóreo até o limite de 50 mg/dia. Acima destes valores, recomenda-se  utilizar o produto somente sob prescrição médica.         Em caso de superdosagem, recomenda-se "
+g = "MEDICAMENTO?  Caso haja esquecimento da ingestão de uma dose deste medicamento, retomar a  posologias sem a necessidade de suplementação."
+teste = g.split("?")
+print(teste)
+print()
+print(teste[-1].strip())

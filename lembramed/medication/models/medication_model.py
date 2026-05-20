@@ -9,7 +9,7 @@ class Medication(TimeStampedModel):
         return str(self.medication_id)
 
 class Medication_Name(TimeStampedModel):
-    medication_id = models.ForeignKey(
+    medication = models.ForeignKey(
         Medication,
         on_delete = models.CASCADE,
         related_name = 'name',
@@ -20,7 +20,7 @@ class Medication_Name(TimeStampedModel):
         return self.name
 
 class Active_Ingredient(TimeStampedModel):
-    medication_id = models.ForeignKey(
+    medication = models.ForeignKey(
         Medication,
         on_delete = models.CASCADE,
         related_name = 'ingredient',
@@ -31,7 +31,7 @@ class Active_Ingredient(TimeStampedModel):
         return self.active_ingredient
 
 class Therapeutic_Class(TimeStampedModel):
-    medication_id = models.ForeignKey(
+    medication = models.ForeignKey(
         Medication,
         on_delete = models.CASCADE,
         related_name = 'therapeutic_class',
@@ -42,7 +42,7 @@ class Therapeutic_Class(TimeStampedModel):
         return self.therapeutic_class
 
 class Category(TimeStampedModel):
-    medication_id = models.ForeignKey(
+    medication = models.ForeignKey(
         Medication,
         on_delete = models.CASCADE,
         related_name = 'category',
@@ -53,7 +53,7 @@ class Category(TimeStampedModel):
         return self.category
 
 class Brand(TimeStampedModel):
-    medication_id = models.ForeignKey(
+    medication = models.ForeignKey(
         Medication,
         on_delete = models.CASCADE,
         related_name = 'brand',
@@ -64,7 +64,7 @@ class Brand(TimeStampedModel):
         return self.brand
     
 class Dosage(TimeStampedModel):
-    medication_id = models.ForeignKey(
+    medication = models.ForeignKey(
         Medication,
         on_delete = models.CASCADE,
         related_name = 'dosage',
@@ -75,7 +75,7 @@ class Dosage(TimeStampedModel):
         return self.dosage
 
 class Company(TimeStampedModel):
-    medication_id = models.ForeignKey(
+    medication = models.ForeignKey(
         Medication,
         on_delete = models.CASCADE,
         related_name = 'company',
@@ -86,7 +86,7 @@ class Company(TimeStampedModel):
         return self.company
 
 class Formato(TimeStampedModel):
-    medication_id = models.ForeignKey(
+    medication = models.ForeignKey(
         Medication,
         on_delete = models.CASCADE,
         related_name = 'formato',

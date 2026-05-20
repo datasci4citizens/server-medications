@@ -3,9 +3,11 @@ docker-compose.yml
 venv
 .idea/
 .env
+.log
 dbms/data/
 **/**/migrations/*
 !**/migrations/__init__.py
 lembramed/api/src/anvisa_data/data
 /server_medications
 login/
+lembramed/api/src/anvisa_data/data_sample

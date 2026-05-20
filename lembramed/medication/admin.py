@@ -33,11 +33,18 @@ class MedicationNameAdmin(admin.ModelAdmin):
     search_fields = [ 'medication_id', 'name']
     list_filter = ['medication_id']
 
+# @admin.register(Active_Ingredient)
+# class ActiveIngredientAdmin(admin.ModelAdmin):
+#     readonly_fields = ['created_at', 'updated_at']
+#     search_fields = [ 'medication_id', 'active_ingredient']
+#     list_filter = [ 'medication_id', 'active_ingredient']
+
 @admin.register(Active_Ingredient)
 class ActiveIngredientAdmin(admin.ModelAdmin):
     readonly_fields = ['created_at', 'updated_at']
-    search_fields = [ 'medication_id', 'active_ingredient']
-    list_filter = [ 'medication_id', 'active_ingredient']
+    search_fields = ['medication__medication_id', 'active_ingredient']
+    list_display = ['active_ingredient', 'medication', 'created_at']
+    list_filter = ['medication']
 
 @admin.register(ingredient_Interaction)
 class IngredientInteractionAdmin(admin.ModelAdmin):

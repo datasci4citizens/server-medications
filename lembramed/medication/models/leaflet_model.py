@@ -3,7 +3,7 @@ from .medication_model import Medication
 from .time_stamped_model import TimeStampedModel
 
 class Leaflet(TimeStampedModel):
-    medication_id = models.OneToOneField(
+    medication = models.OneToOneField(
         Medication,
         on_delete = models.CASCADE,
         related_name = 'leaflet',

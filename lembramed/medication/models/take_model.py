@@ -14,7 +14,7 @@ class Take(TimeStampedModel):
         on_delete = models.CASCADE,
         related_name = 'takes'
     )
-    medication_id = models.ForeignKey(
+    medication = models.ForeignKey(
         Medication,
         on_delete = models.CASCADE,
         related_name = 'takes',

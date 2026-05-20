@@ -1,35 +1,35 @@
 from medication.models import Leaflet, Medication_Name, Company, Active_Ingredient, Therapeutic_Class, Category, Brand, Medication, Dosage, Formato
 from django.core.management.base import BaseCommand
 from pathlib import Path
-from groq import Groq
+# from groq import Groq
 import json,os
 
 ### YOU MIGHT HAVE TO "pip install groq" ON TERMINAL TO RUN THIS ###
 ### MIGHT AS WELL CREATE AND USE A GROQ_API_KEY FOR FREE ONLINE  ###
 ### USE: https://console.groq.com/keys TO CREATE A PROJECT & KEY ###
 
-client = Groq(api_key=os.environ["GROQ_API_KEY"])
+# client = Groq(api_key=os.environ["GROQ_API_KEY"])
 
-def extract_dosage_formato(conteudo: str, med_name: str) -> dict:
-    response = client.chat.completions.create(
-        model="llama-3.1-8b-instant",
-        messages=[{
-            "role": "user",
-            "content": f"""Leia o texto abaixo e retorne SOMENTE um JSON com:
-            - "dosages": lista de dosagens encontradas (ex: ["500mg", "1g"])
-            - "formatos": lista de formas farmacêuticas (ex: ["Comprimido", "Solução oral"])
+# def extract_dosage_formato(conteudo: str, med_name: str) -> dict:
+#     response = client.chat.completions.create(
+#         model="llama-3.1-8b-instant",
+#         messages=[{
+#             "role": "user",
+#             "content": f"""Leia o texto abaixo e retorne SOMENTE um JSON com:
+#             - "dosages": lista de dosagens encontradas (ex: ["500mg", "1g"])
+#             - "formatos": lista de formas farmacêuticas (ex: ["Comprimido", "Solução oral"])
 
-            Texto:
-            {conteudo}
-            Retorne apenas o JSON, sem texto adicional."""
-        }]
-    )
-    try:
-        text = response.choices[0].message.content.strip()
-        text = text.replace("```json","").replace("```","")
-        return json.loads(text)
-    except json.JSONDecodeError:
-        return {"dosages": [], "formatos": []}
+#             Texto:
+#             {conteudo}
+#             Retorne apenas o JSON, sem texto adicional."""
+#         }]
+#     )
+#     try:
+#         text = response.choices[0].message.content.strip()
+#         text = text.replace("```json","").replace("```","")
+#         return json.loads(text)
+#     except json.JSONDecodeError:
+#         return {"dosages": [], "formatos": []}
 
 class Command(BaseCommand):
     help = "Load beta medications and related data into the initial databse"
@@ -69,11 +69,14 @@ class Command(BaseCommand):
             }
         self.stdout.write(f"{len(medicamentos)} medicamentos validos registrados.")
         bula = {}
-        for i in range(5):
-            path = os.path.join(BASE, f"Bulario_medicamentos_iniciais{i}.json")
-            with open(path, "r",encoding="utf-8") as f:
-                data = json.load(f)
-            bula.update(data)
+        # for i in range(5):
+        #     path = os.path.join(BASE, f"Bulario_medicamentos_iniciais{i}.json")
+        #     with open(path, "r",encoding="utf-8") as f:
+        #         data = json.load(f)
+        #     bula.update(data)
+        with open(os.path.join(BASE, "leaflets.json"),"r",encoding="utf-8") as f:
+            data = json.load(f)
+        bula.update(data)
         bulas = {}
         for mid in self.ids:
             bula_data = bula.get(str(mid),"")
@@ -97,16 +100,24 @@ class Command(BaseCommand):
                     campos["funcionamento_medicamento"] = conteudo
                 elif titulo.startswith("QUANDO NÃO DEVO USAR"):
                     campos["quando_nao_usar"] = conteudo
-                elif titulo.startswith("O QUE DEVO SABER ANTES DE USAR"):
+                elif titulo.startswith("O QUE DEVO SABER ANTES DE USAR"): # PRECAUÇÕES E ADVERTÊNCIAS
                     campos["conhecimento_previo_necessario"] = conteudo
                 elif titulo.startswith("COMO DEVO USAR"):
                     campos["como_usar_medicamento"] = conteudo
-                elif titulo.startswith("O QUE DEVO FAZER QUANDO EU ME ESQUECER"):
-                    campos["esqueceu_medicamento"] = conteudo
+                elif titulo.startswith("O QUE DEVO FAZER QUANDO EU ME ESQUECER"): # MEDICAMENTO, split("?")
+                    if conteudo.startswith("MEDICAMENTO?"):
+                        t = conteudo.split("?")
+                        campos["esqueceu_medicamento"] = t[-1].strip()
+                    else:
+                        campos["esqueceu_medicamento"] = conteudo
                 elif titulo.startswith("QUAIS OS MALES"):
                     campos["efeitos_colaterais"] = conteudo
-                elif titulo.startswith("O QUE FAZER SE ALGUÉM USAR UMA QUANTIDADE MAIOR"):
-                    campos["quantidade_a_mais"] = conteudo
+                elif titulo.startswith(("O QUE FAZER SE ALGUÉM USAR UMA QUANTIDADE MAIOR", "O QUE FAZER SE ALGUÉM USAR UMA QUANTIDADE MAIOR DESTE MEDICAMENTO?", "O QUE FAZER SE ALGUÉM USAR UMA QUANTIDADE MAIOR MEDICAMENTO")):
+                    if conteudo.startswith(("DESTE MEDICAMENTO?", "INDICADA DESTE MEDICAMENTO?", "MEDICAMENTO", "A INDICADA DESTE MEDICAMENTO?")):
+                        t = conteudo.split("?")
+                        campos["quantidade_a_mais"] = t[-1].strip()
+                    else:
+                        campos["quantidade_a_mais"] = conteudo
                 elif titulo.startswith("ONDE COMO E POR QUANTO TEMPO POSSO GUARDAR"):
                     campos["como_guardar_medicamento"] = conteudo
             bulas[mid] = campos
@@ -120,18 +131,18 @@ class Command(BaseCommand):
         criados = atualizados = sem_bula = 0
 
         for mid, info in medicamentos.items():
-            _medication_object,_ = Medication.objects.update_or_create(
+            __,_ = Medication.objects.update_or_create(
                 medication_id = mid,
                 defaults = {"process_num":clean_text(info.get("processo",""))}
             )
             if(clean_text(info.get("categoria",""))=="GENÉRICO"):
                 _,n = Medication_Name.objects.update_or_create(
-                    medication_id =_medication_object,
+                    medication_id = mid,
                     defaults = {"name":clean_text(info.get("name",""))}
                 )
             else:
                 _,b = Brand.objects.update_or_create(
-                    medication_id =_medication_object,
+                    medication_id = mid,
                     defaults = {"brand":clean_text(info.get("name",""))}
                 )
                 
@@ -140,7 +151,7 @@ class Command(BaseCommand):
                 sem_bula += 1
             else:
                 _, created = Leaflet.objects.update_or_create(
-                    medication_id = _medication_object,
+                    medication_id =  mid,
                     defaults = {
                         "indicacoes_para_uso":clean_text(bul.get("indicacoes_para_uso", "")),
                         "funcionamento_medicamento":clean_text(bul.get("funcionamento_medicamento", "")),
@@ -158,37 +169,37 @@ class Command(BaseCommand):
                 else:
                     atualizados += 1
 
-                dosage_formato = clean_text(bul.get("como_usar_medicamento", ""))
-                if dosage_formato:
-                    extracted = extract_dosage_formato(dosage_formato, info.get("name", ""))
+                # dosage_formato = clean_text(bul.get("como_usar_medicamento", ""))
+                # if dosage_formato:
+                #     extracted = extract_dosage_formato(dosage_formato, info.get("name", ""))
                     
-                    for dosage in extracted.get("dosages", []):
-                        Dosage.objects.update_or_create(
-                            medication_id=_medication_object,
-                            defaults={"dosage": dosage}
-                        )
-                    for formato in extracted.get("formatos", []):
-                        Formato.objects.update_or_create(
-                            medication_id=_medication_object,
-                            defaults={"formato": formato}
-                        )
+                #     for dosage in extracted.get("dosages", []):
+                #         Dosage.objects.update_or_create(
+                #             medication_id= mid,
+                #             defaults={"dosage": dosage}
+                #         )
+                #     for formato in extracted.get("formatos", []):
+                #         Formato.objects.update_or_create(
+                #             medication_id= mid,
+                #             defaults={"formato": formato}
+                #         )
         
             active_ingredients = clean_text(info.get('principio_ativo',"")).split(" + ")
             for principio_ativo in active_ingredients:
                 _,ai = Active_Ingredient.objects.update_or_create(
-                    medication_id =_medication_object,
-                    defaults = {'active_ingredient':clean_text(principio_ativo)}
+                    medication_id = mid,
+                    active_ingredient = clean_text(principio_ativo)
                 )
             _,tc = Therapeutic_Class.objects.update_or_create(
-                medication_id =_medication_object,
+                medication_id = mid,
                 defaults = { 'therapeutic_class':clean_text(info.get('classe_terapeutica',""))}
             )
             _,co = Company.objects.update_or_create(
-                medication_id =_medication_object,
+                medication_id = mid,
                 defaults = {'company':clean_text(info.get('empresa',"").split(" - ",1)[-1])}
             )
             _,ca = Category.objects.update_or_create(
-                medication_id =_medication_object,
+                medication_id = mid,
                 defaults = {'category':clean_text(info.get('categoria'))}
             )
         self.stdout.write(self.style.SUCCESS(

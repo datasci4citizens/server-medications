@@ -203,7 +203,6 @@ def _restart_driver(driver: webdriver.Firefox, download_dir: str) -> webdriver.F
     log.info("Driver reiniciado com sucesso.")
     return new_driver
 
-
 def run_batch(
     register_nums: list[str],
     download_dir: str,
