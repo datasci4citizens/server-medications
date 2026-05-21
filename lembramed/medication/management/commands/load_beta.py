@@ -67,7 +67,7 @@ class Command(BaseCommand):
                 "empresa":elemento[8],
                 "principio_ativo":elemento[10],
             }
-        self.stdout.write(f"{len(medicamentos)} medicamentos validos registrados.")
+        self.stdout.write(f"Medicamentos validos registrados: {len(medicamentos)} ")
         bula = {}
         # for i in range(5):
         #     path = os.path.join(BASE, f"Bulario_medicamentos_iniciais{i}.json")
@@ -131,22 +131,32 @@ class Command(BaseCommand):
         criados = atualizados = sem_bula = 0
 
         for mid, info in medicamentos.items():
-            __,_ = Medication.objects.update_or_create(
+
+            medication,created = Medication.objects.update_or_create( # Brand/Name and multiple pointers to active ingredients
                 medication_id = mid,
-                defaults = {"process_num":clean_text(info.get("processo",""))}
+                process_num = clean_text(info.get('processo',""))
             )
-            if(clean_text(info.get("categoria",""))=="GENÉRICO"):
-                _,n = Medication_Name.objects.update_or_create(
-                    medication_id = mid,
-                    defaults = {"name":clean_text(info.get("name",""))}
-                )
-            else:
-                _,b = Brand.objects.update_or_create(
-                    medication_id = mid,
-                    defaults = {"brand":clean_text(info.get("name",""))}
-                )
-                
+
+            if(created == False):
+                continue
+
+            tc,_ = Therapeutic_Class.objects.get_or_create(
+                therapeutic_class = clean_text(info.get('classe_terapeutica',""))
+            )
+            medication.therapeutic_class = tc
+            co,_ = Company.objects.get_or_create(
+                company = clean_text(info.get('empresa',"").split(" - ",1)[-1])
+            )
+            medication.company = co
+            ca,_ = Category.objects.get_or_create(
+                category = clean_text(info.get('categoria'))
+            )
+            medication.category = ca
+
+            medication.save()
+
             bul = bulas.get(str(mid), {})
+            print(bul)
             if not bul:
                 sem_bula += 1
             else:
@@ -169,39 +179,41 @@ class Command(BaseCommand):
                 else:
                     atualizados += 1
 
-                # dosage_formato = clean_text(bul.get("como_usar_medicamento", ""))
-                # if dosage_formato:
-                #     extracted = extract_dosage_formato(dosage_formato, info.get("name", ""))
-                    
-                #     for dosage in extracted.get("dosages", []):
-                #         Dosage.objects.update_or_create(
-                #             medication_id= mid,
-                #             defaults={"dosage": dosage}
-                #         )
-                #     for formato in extracted.get("formatos", []):
-                #         Formato.objects.update_or_create(
-                #             medication_id= mid,
-                #             defaults={"formato": formato}
-                #         )
-        
+            if(clean_text(info.get("categoria",""))=="GENÉRICO"):
+                medication_name,_ = Medication_Name.objects.update_or_create(
+                    name = clean_text(info.get("name",""))
+                )
+                medication.name = medication_name
+            else:
+                medication_brand,_ = Brand.objects.update_or_create(
+                    brand = clean_text(info.get("name",""))
+                )
+                medication.brand = medication_brand
+                
             active_ingredients = clean_text(info.get('principio_ativo',"")).split(" + ")
             for principio_ativo in active_ingredients:
-                _,ai = Active_Ingredient.objects.update_or_create(
-                    medication_id = mid,
+                ai,_ = Active_Ingredient.objects.get_or_create(
                     active_ingredient = clean_text(principio_ativo)
                 )
-            _,tc = Therapeutic_Class.objects.update_or_create(
-                medication_id = mid,
-                defaults = { 'therapeutic_class':clean_text(info.get('classe_terapeutica',""))}
-            )
-            _,co = Company.objects.update_or_create(
-                medication_id = mid,
-                defaults = {'company':clean_text(info.get('empresa',"").split(" - ",1)[-1])}
-            )
-            _,ca = Category.objects.update_or_create(
-                medication_id = mid,
-                defaults = {'category':clean_text(info.get('categoria'))}
-            )
+                medication.active_ingredients.add(ai)
+
+            # dosage_formato = clean_text(bul.get("como_usar_medicamento", ""))
+            # if dosage_formato:
+            #     extracted = extract_dosage_formato(dosage_formato, info.get("name", ""))
+                
+            #     for dosage in extracted.get("dosages", []):
+            #         Dosage.objects.update_or_create(
+            #             medication_id= mid,
+            #             defaults={"dosage": dosage}
+            #         )
+            #     for formato in extracted.get("formatos", []):
+            #         Formato.objects.update_or_create(
+            #             medication_id= mid,
+            #             defaults={"formato": formato}
+            #         )
+
+            medication.save()
+
         self.stdout.write(self.style.SUCCESS(
-            f"Concluído: {criados} criados, {atualizados} atualizados, {sem_bula} sem bula."
+            f"Leaflets: {criados} criados, {atualizados} atualizados, {sem_bula} sem bula."
         ))
