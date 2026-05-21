@@ -36,7 +36,7 @@ def make_person(person_id=1):
     return person
 
 
-def make_take(person, medication, priority=1, quantity="30", formato="pílula"):
+def make_take(person, medication, priority=1, quantity="30", med_format="pílula"):
     """
     Cria uma instância de Take sem tocar no banco.
 
@@ -52,12 +52,12 @@ def make_take(person, medication, priority=1, quantity="30", formato="pílula"):
     from medication.models import Take
 
     take = Take.__new__(Take)
-    take._state = ModelState()          # inicializa _state com fields_cache vazio
+    take._state = ModelState()          
 
     take.pk       = None
     take.priority = priority
     take.quantity = quantity
-    take.formato  = formato
+    take.med_format  = med_format
 
     # Guarda os objetos relacionados no fields_cache do _state
     # (é exatamente onde o descriptor de FK procura ao fazer get_cached_value)
@@ -68,8 +68,7 @@ def make_take(person, medication, priority=1, quantity="30", formato="pílula"):
 
 
 
-def make_take_record(take, cycle_type='daily', begin=None, end=None,
-                     take_at=None, take_cycle=None, state=None, formato="pílula"):
+def make_take_record(take, cycle_type='daily', begin=None, end=None, take_at=None, take_cycle=None, state=None, med_format="pílula"):
     """
     Cria TakeRecord fake sem banco.
 
@@ -259,7 +258,7 @@ class TestCalculateSchedule(unittest.TestCase):
     def _make_record(self, **kwargs):
         take = MagicMock()
         take.quantity = "30"
-        take.formato  = "pílula"
+        take.med_format  = "pílula"
         return make_take_record(take, **kwargs)
 
     def test_daily_single_time(self):
@@ -337,7 +336,7 @@ class TestDefineState(unittest.TestCase):
     def _make_record(self, take_at, cycle_type='daily', take_cycle=None):
         take = MagicMock()
         take.quantity = "30"
-        take.formato  = "pílula"
+        take.med_format  = "pílula"
         rec = make_take_record(take, cycle_type=cycle_type,
                                take_at=take_at, take_cycle=take_cycle)
         rec.save = MagicMock()       # evita chamada ao banco
@@ -417,10 +416,10 @@ class TestCalculateStock(unittest.TestCase):
     """
 
     def _make_record(self, quantity, cycle_type='daily', take_cycle=None,
-                     begin=None, end=None, days_passed=0, formato="pílula"):
+                     begin=None, end=None, days_passed=0, med_format="pílula"):
         take = MagicMock()
         take.quantity = str(quantity)
-        take.formato  = formato
+        take.med_format  = med_format
 
         today = date.today()
         rec = make_take_record(
@@ -430,7 +429,7 @@ class TestCalculateStock(unittest.TestCase):
             end=end or (today + timedelta(days=60)),
             take_at=time(8, 0),
             take_cycle=take_cycle,
-            formato=formato,
+            med_format= med_format,
         )
         return rec
 
@@ -470,7 +469,7 @@ class TestCalculateStock(unittest.TestCase):
     def test_non_pill_format_returns_none(self):
         """Formato diferente de 'pílula' → retorna None (não implementado)."""
         rec = self._make_record(quantity=5, cycle_type='daily',
-                                days_passed=0, formato="xarope")
+                                days_passed=0, med_format="xarope")
         result = rec.calculate_stock()
         self.assertIsNone(result)
 
@@ -489,7 +488,7 @@ class TestCalculateStock(unittest.TestCase):
         today = date.today()
         take = MagicMock()
         take.quantity = "3"
-        take.formato  = "pílula"
+        take.med_format  = "pílula"
 
         rec = make_take_record(
             take,

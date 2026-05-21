@@ -15,19 +15,19 @@ class Command(BaseCommand):
         anvisa = {}
         with open(os.path.join(BASE, "anvisa_data.json"), "r") as f:
             json_data = json.load(f)
-        for elemento in json_data.get("data", []):
-            if elemento[0] == "MEDICAMENTO" and elemento[9] == "VÁLIDO":
-                med_id = int(elemento[4])
+        for element in json_data.get("data", []):
+            if element[0] == "MEDICAMENTO" and element[9] == "VÁLIDO":
+                med_id = int(element[4])
                 anvisa[med_id] = {
-                    "name":               elemento[1],
-                    "empresa":            elemento[8],
-                    "principio_ativo":    elemento[10],
-                    "classe_terapeutica": elemento[7],
+                    "name":               element[1],
+                    "company":            element[8],
+                    "active_ingridient":  element[10],
+                    "therapeutic_class":  element[7],
                 }
         self.stdout.write(f"  {len(anvisa)} medicamentos válidos.")
 
         self.stdout.write("Carregando bulas...")
-        bulas = {}
+        leaflets = {}
         for i in range(5):
             path = os.path.join(BASE, f"Bulario_medicamentos_iniciais{i}.json")
             if not os.path.exists(path):
@@ -37,7 +37,7 @@ class Command(BaseCommand):
                 data = json.load(f)
             for key, var in data.items():
                 med_id = int(key)
-                campos = {
+                camps = {
                     "indicacoes_para_uso": "",
                     "funcionamento_medicamento": "",
                     "quando_nao_usar": "",
@@ -48,40 +48,40 @@ class Command(BaseCommand):
                     "quantidade_a_mais": "",
                     "como_guardar_medicamento": "",
                 }
-                for pares in var:
-                    titulo  = pares["titulo"]
-                    conteudo = pares["conteudo"]
-                    if titulo.startswith("PARA QUE ESTE MEDICAMENTO"):
-                        campos["indicacoes_para_uso"] = conteudo
-                    elif titulo.startswith("COMO ESTE MEDICAMENTO FUNCIONA"):
-                        campos["funcionamento_medicamento"] = conteudo
-                    elif titulo.startswith("QUANDO NÃO DEVO USAR"):
-                        campos["quando_nao_usar"] = conteudo
-                    elif titulo.startswith("O QUE DEVO SABER ANTES DE USAR"):
-                        campos["conhecimento_previo_necessario"] = conteudo
-                    elif titulo.startswith("COMO DEVO USAR"):
-                        campos["como_usar_medicamento"] = conteudo
-                    elif titulo.startswith("O QUE DEVO FAZER QUANDO EU ME ESQUECER"):
-                        campos["esqueceu_medicamento"] = conteudo
-                    elif titulo.startswith("QUAIS OS MALES"):
-                        campos["efeitos_colaterais"] = conteudo
-                    elif titulo.startswith("O QUE FAZER SE ALGUÉM USAR UMA QUANTIDADE MAIOR"):
-                        campos["quantidade_a_mais"] = conteudo
-                    elif titulo.startswith("ONDE COMO E POR QUANTO TEMPO POSSO GUARDAR"):
-                        campos["como_guardar_medicamento"] = conteudo
-                bulas[med_id] = campos
+                for pairs in var:
+                    title  = pairs["titulo"]
+                    content = pairs["conteudo"]
+                    if title.startswith("PARA QUE ESTE MEDICAMENTO"):
+                        camps["indicacoes_para_uso"] = content
+                    elif title.startswith("COMO ESTE MEDICAMENTO FUNCIONA"):
+                        camps["funcionamento_medicamento"] = content
+                    elif title.startswith("QUANDO NÃO DEVO USAR"):
+                        camps["quando_nao_usar"] = content
+                    elif title.startswith("O QUE DEVO SABER ANTES DE USAR"):
+                        camps["conhecimento_previo_necessario"] = content
+                    elif title.startswith("COMO DEVO USAR"):
+                        camps["como_usar_medicamento"] = content
+                    elif title.startswith("O QUE DEVO FAZER QUANDO EU ME ESQUECER"):
+                        camps["esqueceu_medicamento"] = content
+                    elif title.startswith("QUAIS OS MALES"):
+                        camps["efeitos_colaterais"] = content
+                    elif title.startswith("O QUE FAZER SE ALGUÉM USAR UMA QUANTIDADE MAIOR"):
+                        camps["quantidade_a_mais"] = content
+                    elif title.startswith("ONDE COMO E POR QUANTO TEMPO POSSO GUARDAR"):
+                        camps["como_guardar_medicamento"] = content
+                leaflets[med_id] = camps
             self.stdout.write(f"  Bulario{i}: {len(data)} bulas")
-        self.stdout.write(f"  Total bulas: {len(bulas)}")
+        self.stdout.write(f"  Total bulas: {len(leaflets)}")
 
         self.stdout.write("Populando banco...")
-        criados = atualizados = sem_bula = 0
+        created = updated = no_leaflet = 0
         for med_id, info in anvisa.items():
-            bula = bulas.get(med_id, {})
-            if not bula:
-                sem_bula += 1
+            leaflet = leaflets.get(med_id, {})
+            if not leaflet:
+                no_leaflet += 1
             med, created = Medication.objects.update_or_create(
                 medication_id=med_id,
-                defaults={**info, **bula},
+                defaults={**info, **leaflet},
             )
 
             Medication_Name.objects.get_or_create(
@@ -91,27 +91,27 @@ class Command(BaseCommand):
 
             Company.objects.get_or_create(
                 medication_id=med,
-                company=info["empresa"]
+                company=info["company"]
             )
 
-            for principio in info["principio_ativo"].split("+"):
-                principio =principio.strip()
-                if principio:
+            for principle in info["active_ingridient"].split("+"):
+                principle =principle.strip()
+                if principle:
                     Active_Ingredient.objecst.get_or_create(
                         medication_id=med,
-                        active_ingredient=principio
+                        active_ingredient=principle
                     )
 
             Therapeutic_Class.objects.get_or_create(
                 medication_id=med,
-                therapeutic_class=info["classe_terapeutica"]
+                therapeutic_class=info["therapeutic_class"]
             )
 
             if created:
-                criados += 1
+                created += 1
             else:
-                atualizados += 1
+                updated += 1
 
         self.stdout.write(self.style.SUCCESS(
-            f"Concluído: {criados} criados, {atualizados} atualizados, {sem_bula} sem bula."
+            f"Concluído: {created} criados, {updated} atualizados, {no_leaflet} sem bula."
         ))

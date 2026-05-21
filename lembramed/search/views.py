@@ -21,11 +21,11 @@ def buscar_medicamento(nome):
         if nome.lower() in product_name.lower():
             if med[9] == "VÁLIDO":
                 results.append({
-                    "nome": med[1],
-                    "registro": med[4],
-                    "empresa": med[8],
-                    "classe": med[7],
-                    "principio_ativo": med[10],
+                    "name": med[1],
+                    "register": med[4],
+                    "company": med[8],
+                    "class": med[7],
+                    "active_ingridient": med[10],
 
             })
     
@@ -57,6 +57,6 @@ def search_med(request):
         result = buscar_medicamento(name)
 
     return render(request, "medication/search_results.html", {
-        "resultados": result,
-        "nome": name
+        "results": result,
+        "name": name
     })
