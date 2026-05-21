@@ -51,9 +51,10 @@ class LoginView(APIView):
                 'user':   PersonSerializer(user.person).data,
                 'tokens': _tokens_for_user(user),
             })
+
+        if 'non_field_errors' in serializer.errors:
+            return Response(serializer.errors, status=status.HTTP_401_UNAUTHORIZED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
 class MeView(APIView):
     """Retorna ou atualiza os dados do usuário logado."""
     permission_classes = [permissions.IsAuthenticated]

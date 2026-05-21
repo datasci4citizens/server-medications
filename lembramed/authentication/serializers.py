@@ -36,14 +36,22 @@ class LoginSerializer(serializers.Serializer):
     password = serializers.CharField(write_only=True)
 
     def validate(self, data):
-        user = authenticate(username=data['email'], password=data['password'])
+        email = data['email']
+        password = data['password']
+        
+        try:
+            user_obj = User.objects.get(email=email)
+        except User.DoesNotExist:
+            raise serializers.ValidationError("Email ou senha incorretos.")
+        
+        user = authenticate(username=user_obj.username, password=password)
         if not user:
             raise serializers.ValidationError("Email ou senha incorretos.")
         if not user.is_active:
             raise serializers.ValidationError("Conta desativada.")
+        
         data['user'] = user
         return data
-
 
 class PersonSerializer(serializers.ModelSerializer):
     email      = serializers.EmailField(source='user.email',       read_only=True)
@@ -52,4 +60,4 @@ class PersonSerializer(serializers.ModelSerializer):
 
     class Meta:
         model  = Person
-        fields = ['person_id', 'email', 'first_name', 'last_name', 'birth']
+        fields = ['person_id', 'email', 'first_name', 'last_name', 'birth', 'google_id']

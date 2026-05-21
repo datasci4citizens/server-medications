@@ -148,52 +148,59 @@ class Take(models.Model):
     ]
     
     priority = models.SmallIntegerField()
-    quantity = models.CharField(max_length= 50, null=True) # stock
+    quantity = models.CharField(max_length= 50, null=True) # estoque
+    formato = models.CharField(max_length=50, null=True) # type
 
     def __str__(self):
        return f"{self.person_id} - {self.medication_id}"
     
     def get_priority_display(self):
         prio_dict = dict(self.PRIOTITY_TYPES)
-        return prio_dict[priority]
+        return prio_dict[self.priority]
 
-    def check_interactions(person, new_medication):
+    def check_interactions(self):
+        from django.conf import settings
+
         json_path = os.path.join(
-            settings.BASE_DIR, 'api', 'src', 'lembramed_data', 'interactions.json'
+            settings.BASE_DIR, 'api', 'src', 'lembramed_data', 'Interactions.json'
         )
 
-        try: # open json
+        try:
             with open(json_path, 'r', encoding='utf-8') as f:
                 all_interactions = json.load(f)
         except (FileNotFoundError, json.JSONDecodeError) as e:
             raise ValueError(f"Erro ao carregar interactions.json: {e}")
 
-        new_ingredients = set(
-            self.medication_id.ingredient
-                .values_list('active_ingredient', flat=True)
-        )
+        # O arquivo real do projeto pode vir como uma tabela com
+        # {'columns': [...], 'data': [...]}. Nesse caso, ele não contém
+        # pares ingredient1/ingredient2 e não deve quebrar o salvamento.
+        if isinstance(all_interactions, dict):
+            all_interactions = all_interactions.get('data', [])
+        if not isinstance(all_interactions, list):
+            return []
 
-        # active ingridient of the new medication
-        new_ingredients = {i.lower().strip() for i in new_ingredients}
+        new_ingredients = {
+            i.lower().strip()
+            for i in self.medication_id.ingredient.values_list('active_ingredient', flat=True)
+        }
 
-        #active ingridient of the patient medications
-        current_ingredients = set(
-            Active_Ingredient.objects.filter(
+        current_ingredients = {
+            i.lower().strip()
+            for i in Active_Ingredient.objects.filter(
                 medication_id__takes__person_id=self.person_id
-            )
-            .exclude(medication_id=self.medication_id)
-            .values_list('active_ingredient', flat=True)
-            .distinct()
-        )
-        current_ingredients = {i.lower().strip() for i in current_ingredients}
+            ).exclude(
+                medication_id=self.medication_id
+            ).values_list('active_ingredient', flat=True).distinct()
+        }
 
-        # check conflicts
         conflicts = []
         for interaction in all_interactions:
+            if not isinstance(interaction, dict):
+                continue
+
             ing1 = interaction.get('ingredient1', '').lower().strip()
             ing2 = interaction.get('ingredient2', '').lower().strip()
 
-            # Verifica nos dois sentidos (A→B ou B→A)
             match = (
                 (ing1 in new_ingredients and ing2 in current_ingredients) or
                 (ing2 in new_ingredients and ing1 in current_ingredients)
@@ -203,13 +210,29 @@ class Take(models.Model):
                 conflicts.append({
                     'ingredient1': interaction['ingredient1'],
                     'ingredient2': interaction['ingredient2'],
-                    'severity': interaction.get('severity', 'Unknown'),
+                    'severity':    interaction.get('severity', 'Unknown'),
                     'description': interaction.get('description', ''),
                 })
+            
+
+        major_conflicts = [c for c in conflicts if c['severity'] == 'Major']
+        if major_conflicts:
+            descriptions = '; '.join(
+                f"{c['ingredient1']} × {c['ingredient2']}: {c['description']}"
+                for c in major_conflicts
+            )
+            raise ValidationError(
+                f"Esses medicamentos não devem ser consumidos simultaneamente. "
+                f"Consulte um médico. Interações graves encontradas: {descriptions}"
+            )
 
         return conflicts
 
-
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.check_interactions()
+        
+        super().save(*args,**kwargs)
 
 class TakeRecord(models.Model):
     taken_id = models.ForeignKey(    
@@ -234,7 +257,7 @@ class TakeRecord(models.Model):
 
     ]
 
-    cycle_type = models.CharField(max_length=10, choices=CYCLE_TYPE )
+    cycle_type = models.CharField(max_length=10, choices=CYCLE_TYPE, default='daily')
     begin = models.DateField(default=datetime.today) 
     end = models.DateField(default=datetime.today)
     days= models.CharField(max_length=50, null=True)
