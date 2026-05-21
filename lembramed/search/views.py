@@ -8,19 +8,19 @@ import os
 def buscar_medicamento(nome):
 
     Base_dir = os. path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    caminho = os.path.join(Base_dir, "api","src","anvisa_data", "anvisa_data.json")
+    main_path = os.path.join(Base_dir, "api","src","anvisa_data", "anvisa_data.json")
 
-    with open(caminho,  "r", encoding= "utf-8") as f:
-        dados = json.load(f)
+    with open(main_path,  "r", encoding= "utf-8") as f:
+        datas = json.load(f)
     
-    resultados = []
+    results = []
 
-    for med in dados["data"]:
-        nome_produto = med[1]
+    for med in datas["data"]:
+        product_name = med[1]
 
-        if nome.lower() in nome_produto.lower():
+        if nome.lower() in product_name.lower():
             if med[9] == "VÁLIDO":
-                resultados.append({
+                results.append({
                     "nome": med[1],
                     "registro": med[4],
                     "empresa": med[8],
@@ -31,32 +31,32 @@ def buscar_medicamento(nome):
     
     
     #informaçoes extras do remedio
-    caminho_ext = os.path.join(Base_dir, "api","src","anvisa_data", "Bulario_data_teste.json")
-    with open(caminho_ext,  "r", encoding= "utf-8") as f:
-        dados_ext = json.load(f)
-        for med in resultados:
-            codigo = med["registro"]
-            if codigo in dados_ext:
-               return resultados
+    path_ext = os.path.join(Base_dir, "api","src","anvisa_data", "Bulario_data_teste.json")
+    with open(path_ext,  "r", encoding= "utf-8") as f:
+        data_ext = json.load(f)
+        for med in results:
+            code = med["registro"]
+            if code in data_ext:
+               return results
             
 
             
-    if len(resultados) == 0:
+    if len(results) == 0:
         print(" Medication not found")
         return []
     
-    return resultados
+    return results
 
         
 
 def search_med(request):
-    nome = request.GET.get("nome")
-    resultado = []
+    name = request.GET.get("nome")
+    result = []
 
-    if nome:
-        resultado = buscar_medicamento(nome)
+    if name:
+        result = buscar_medicamento(name)
 
     return render(request, "medication/search_results.html", {
-        "resultados": resultado,
-        "nome": nome
+        "resultados": result,
+        "nome": name
     })

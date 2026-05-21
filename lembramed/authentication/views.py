@@ -56,7 +56,7 @@ class LoginView(APIView):
             return Response(serializer.errors, status=status.HTTP_401_UNAUTHORIZED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 class MeView(APIView):
-    """Retorna ou atualiza os dados do usuário logado."""
+    """Return the loged users."""
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):

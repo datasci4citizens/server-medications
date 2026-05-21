@@ -159,6 +159,7 @@ class Take(models.Model):
         return prio_dict[self.priority]
 
     def check_interactions(self):
+<<<<<<< HEAD
         from django.conf import settings
 
         json_path = os.path.join(
@@ -227,6 +228,65 @@ class Take(models.Model):
             )
 
         return conflicts
+=======
+            from django.conf import settings
+
+            json_path = os.path.join(
+                settings.BASE_DIR, 'api', 'src', 'lembramed_data', 'Interactions.json'
+            )
+
+            try:
+                with open(json_path, 'r', encoding='utf-8') as f:
+                    all_interactions = json.load(f)
+            except (FileNotFoundError, json.JSONDecodeError) as e:
+                raise ValueError(f"Erro ao carregar interactions.json: {e}")
+
+            new_ingredients = {
+                i.lower().strip()
+                for i in self.medication_id.ingredient.values_list('active_ingredient', flat=True)
+            }
+
+            current_ingredients = {
+                i.lower().strip()
+                for i in Active_Ingredient.objects.filter(
+                    medication_id__takes__person_id=self.person_id
+                ).exclude(
+                    medication_id=self.medication_id
+                ).values_list('active_ingredient', flat=True).distinct()
+            }
+
+            conflicts = []
+            for interaction in all_interactions:
+                ing1 = interaction.get('ingredient1', '').lower().strip()
+                ing2 = interaction.get('ingredient2', '').lower().strip()
+
+                match = (
+                    (ing1 in new_ingredients and ing2 in current_ingredients) or
+                    (ing2 in new_ingredients and ing1 in current_ingredients)
+                )
+
+                if match:
+                    conflicts.append({
+                        'ingredient1': interaction['ingredient1'],
+                        'ingredient2': interaction['ingredient2'],
+                        'severity':    interaction.get('severity', 'Unknown'),
+                        'description': interaction.get('description', ''),
+                    })
+            
+
+            major_conflicts = [c for c in conflicts if c['severity'] == 'Major']
+            if major_conflicts:
+                descriptions = '; '.join(
+                    f"{c['ingredient1']} × {c['ingredient2']}: {c['description']}"
+                    for c in major_conflicts
+                )
+                raise ValidationError(
+                    f"Esses medicamentos não devem ser consumidos simultaneamente. "
+                    f"Consulte um médico. Interações graves encontradas: {descriptions}"
+                )
+
+            return conflicts
+>>>>>>> 45-database-remodel
 
     def save(self, *args, **kwargs):
         if not self.pk:
@@ -257,7 +317,11 @@ class TakeRecord(models.Model):
 
     ]
 
+<<<<<<< HEAD
     cycle_type = models.CharField(max_length=10, choices=CYCLE_TYPE, default='daily')
+=======
+    cycle_type = models.CharField(max_length=10, choices=CYCLE_TYPE )
+>>>>>>> 45-database-remodel
     begin = models.DateField(default=datetime.today) 
     end = models.DateField(default=datetime.today)
     days= models.CharField(max_length=50, null=True)
@@ -382,5 +446,10 @@ class TakeRecord(models.Model):
             
 
     def __str__(self):
+<<<<<<< HEAD
             med_schedules = ", ".join([t.strftime('%H:%M') for t in self.calculate_schedule()])
             return f"{self.taken_id} - Horários: {med_schedules}"
+=======
+            horarios = ", ".join([t.strftime('%H:%M') for t in self.calculate_schedule()])
+            return f"{self.taken_id} - Horários: {horarios}"
+>>>>>>> 45-database-remodel
