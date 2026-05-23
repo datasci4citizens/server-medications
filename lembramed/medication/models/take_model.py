@@ -5,7 +5,7 @@ from datetime import datetime, timedelta, date
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 from django.conf import settings
-from .leaflet_model import Medication
+from .anvisa_model import Medication
 from .time_stamped_model import TimeStampedModel
 
 class Take(TimeStampedModel):
