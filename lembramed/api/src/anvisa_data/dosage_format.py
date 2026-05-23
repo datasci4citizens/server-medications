@@ -94,7 +94,8 @@ def open_dosage_format(process_num:str, driver:webdriver.Firefox):
         return NOT_FOUND, None
 
     except (WebDriverException, ReadTimeoutError) as e:
-        log.error(f"Erro no driver para: {process_num}]\nWebDriverException: {e.msg.splitlines()[0]}")
+        msg = e.msg.splitlines()[0] if hasattr(e, 'msg') else str(e).splitlines()[0]
+        log.error(f"Erro no driver para: {process_num}]\n{msg}")
         return DRIVER_ERROR, None
 
 def get_register(driver:webdriver.Firefox):
@@ -177,6 +178,14 @@ def get_dosage_formato(driver:webdriver.Firefox):
             registro = ""
 
         try:
+            bloco = trs[0].find_element(By.TAG_NAME, "td")
+            active_ingredients = bloco.find_elements(By.CSS_SELECTOR, 'div[ng-repeat="pa in apresentacao.principiosAtivos track by $index"]')
+            order = [ai.get_attribute("textContent").strip() for ai in active_ingredients]
+            sub["concentration_order"] = order
+        except NoSuchElementException:
+            sub["concentration_order"] = ""
+
+        try:
             embalagens = {}
             list_container = trs[2].find_element(By.TAG_NAME, "td")
             unordered_list = list_container.find_element(By.TAG_NAME, "ul")
@@ -247,8 +256,9 @@ def run_scraper(process_nums: list[str],restart_every: int = RESTART_EVERY):
 
     FIRST_ITERATION = True
 
-    success_count      = 0
+    success_count = 0
     consecutive_errors = 0
+    dumped_json_instances = 0
 
     try:
         for pn in remaining:
@@ -305,8 +315,10 @@ def run_scraper(process_nums: list[str],restart_every: int = RESTART_EVERY):
                 cur.update({str(pn): local_dict})
                 f.seek(0)
                 json.dump(cur, f, indent=4, ensure_ascii=False)
+                dumped_json_instances += 1
 
     except KeyboardInterrupt:
         log.info("Interrompido pelo user, progresso salvo em checkpoint.json.")
     finally:
+        print(f"Process finished, {dumped_json_instances} medications parsed written to 'dosage_formato.json'")
         quit_driver(driver)

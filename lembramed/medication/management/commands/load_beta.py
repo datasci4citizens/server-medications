@@ -156,7 +156,6 @@ class Command(BaseCommand):
             medication.save()
 
             bul = bulas.get(str(mid), {})
-            print(bul)
             if not bul:
                 sem_bula += 1
             else:
@@ -196,7 +195,7 @@ class Command(BaseCommand):
                     active_ingredient = clean_text(principio_ativo)
                 )
                 medication.active_ingredients.add(ai)
-
+            
             # dosage_formato = clean_text(bul.get("como_usar_medicamento", ""))
             # if dosage_formato:
             #     extracted = extract_dosage_formato(dosage_formato, info.get("name", ""))

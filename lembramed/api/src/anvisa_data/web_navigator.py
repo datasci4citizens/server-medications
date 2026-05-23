@@ -11,8 +11,11 @@ from selenium.common.exceptions import (
     NoSuchElementException, TimeoutException, WebDriverException,
     ElementClickInterceptedException,
 )
-
 from selenium.webdriver.support import expected_conditions as EC
+
+###############                            ##############
+############### MAKES THE LEAFLET SCRAPING ##############
+###############                            ##############
 
 logging.basicConfig(
     level=logging.INFO,
@@ -55,6 +58,7 @@ def _build_options(download_dir: str) -> Options:
 def initialize_driver(download_dir: str) -> webdriver.Firefox:
     """Create and return a fresh Firefox driver."""
     driver = webdriver.Firefox(options=_build_options(download_dir))
+    driver.set_page_load_timeout(30)
     log.info("Driver initialised.")
     return driver
 

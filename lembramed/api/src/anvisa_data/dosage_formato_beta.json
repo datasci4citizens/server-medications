@@ -1,10 +1,17 @@
 {
+    "25351162018201424": {},
+    "25351344662200710": {},
+    "25351351960201170": {},
+    "25351349629201830": {},
     "25351415294201930": {
         "expiration_date": "08/2029",
         "regulation_num": "104070111",
         "presentations": {
             "1040701110011": {
                 "dosage": "100 UI/ML SOL INJ CT FA X 10 ML  Ativo",
+                "concentration_order": [
+                    "INSULINA HUMANA"
+                ],
                 "embalagem": {
                     "Primária": "FRASCO AMPOLA DE VIDRO INCOLOR",
                     "Secundária": "CARTUCHO DE CARTOLINA"
@@ -18,6 +25,9 @@
             },
             "1040701110028": {
                 "dosage": "100 UI/ML SOL INJ CT 5 FA X 10 ML Ativo",
+                "concentration_order": [
+                    "INSULINA HUMANA"
+                ],
                 "embalagem": {
                     "Primária": "FRASCO AMPOLA DE VIDRO INCOLOR",
                     "Secundária": "CARTUCHO DE CARTOLINA"
@@ -31,6 +41,9 @@
             },
             "1040701110036": {
                 "dosage": "100 UI/ML SOL INJ CT 20 FA X 10 ML Ativo",
+                "concentration_order": [
+                    "INSULINA HUMANA"
+                ],
                 "embalagem": {
                     "Primária": "FRASCO AMPOLA DE VIDRO INCOLOR",
                     "Secundária": "CARTUCHO DE CARTOLINA"
@@ -44,6 +57,9 @@
             },
             "1040701110044": {
                 "dosage": "100 UI/ML SOL INJ CT 10 FA X 10 ML  Ativo",
+                "concentration_order": [
+                    "INSULINA HUMANA"
+                ],
                 "embalagem": {
                     "Primária": "FRASCO AMPOLA DE VIDRO INCOLOR",
                     "Secundária": "CARTUCHO DE CARTOLINA"
@@ -57,6 +73,9 @@
             },
             "1040701110052": {
                 "dosage": "100 UI/ML SOL INJ CT 50 FA X 10 ML  Ativo",
+                "concentration_order": [
+                    "INSULINA HUMANA"
+                ],
                 "embalagem": {
                     "Primária": "FRASCO AMPOLA DE VIDRO INCOLOR",
                     "Secundária": "CARTUCHO DE CARTOLINA"
@@ -70,830 +89,170 @@
             }
         }
     },
-    "25351627021201936": {
-        "expiration_date": "10/2027",
-        "regulation_num": "183260422",
+    "25351415329201932": {},
+    "25351214058200500": {},
+    "25351111856202012": {},
+    "25351764538201824": {
+        "expiration_date": "08/2031",
+        "regulation_num": "105730780",
         "presentations": {
-            "1832604220019": {
-                "dosage": "100 MG COM CT BL AL PLAS TRANS X 10 Ativo",
+            "1057307800015": {
+                "dosage": "9 MG ADES TRANSD CT ENV PAP/PLAS PET/AL/PAN X 7 Ativo",
+                "concentration_order": [
+                    "RIVASTIGMINA"
+                ],
                 "embalagem": {
-                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
-                    "Secundária": "CARTUCHO DE CARTOLINA"
-                },
-                "administration": "ORAL",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob Prescrição Médica",
-                "usage_restriction": "Adulto",
-                "label": "Vermelha",
-                "can_be_fractioned": false
-            },
-            "1832604220027": {
-                "dosage": "100 MG COM CT BL AL PLAS TRANS X 30 Ativo",
-                "embalagem": {
-                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
-                    "Secundária": "CARTUCHO DE CARTOLINA"
-                },
-                "administration": "ORAL",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob Prescrição Médica",
-                "usage_restriction": "Adulto",
-                "label": "Vermelha",
-                "can_be_fractioned": false
-            },
-            "1832604220035": {
-                "dosage": "100 MG COM CT BL AL PLAS TRANS X 60 Ativo",
-                "embalagem": {
-                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
-                    "Secundária": "CARTUCHO DE CARTOLINA"
-                },
-                "administration": "ORAL",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob Prescrição Médica",
-                "usage_restriction": "Adulto",
-                "label": "Vermelha",
-                "can_be_fractioned": false
-            }
-        }
-    },
-    "25351419782200600": {
-        "expiration_date": "10/2028",
-        "regulation_num": "155370012",
-        "presentations": {
-            "1553700120015": {
-                "dosage": "20 MG COM REV LIB RETARD CT BL AL/AL X 7 Ativo",
-                "embalagem": {
-                    "Primária": "BLISTER DE ALUMINIO/ALUMINIO",
-                    "Secundária": "CARTUCHO DE CARTOLINA"
-                },
-                "administration": "ORAL",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob Prescrição Médica",
-                "usage_restriction": "Adulto e Pediátrico acima de  5 ANOS",
-                "label": "Vermelha",
-                "can_be_fractioned": false
-            },
-            "1553700120023": {
-                "dosage": "20 MG COM REV LIB RETARD CT BL AL/AL X 14 Ativo",
-                "embalagem": {
-                    "Primária": "BLISTER DE ALUMINIO/ALUMINIO",
-                    "Secundária": "CARTUCHO DE CARTOLINA"
-                },
-                "administration": "ORAL",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob Prescrição Médica",
-                "usage_restriction": "Adulto e Pediátrico acima de  5 ANOS",
-                "label": "Vermelha",
-                "can_be_fractioned": false
-            },
-            "1553700120031": {
-                "dosage": "20 MG COM REV LIB RETARD CT BL AL/AL X 28 Ativo",
-                "embalagem": {
-                    "Primária": "BLISTER DE ALUMINIO/ALUMINIO",
-                    "Secundária": "CARTUCHO DE CARTOLINA"
-                },
-                "administration": "ORAL",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob Prescrição Médica",
-                "usage_restriction": "Adulto e Pediátrico acima de  5 ANOS",
-                "label": "Vermelha",
-                "can_be_fractioned": false
-            },
-            "1553700120041": {
-                "dosage": "20 MG COM REV LIB RETARD CT BL AL/AL X 280 Ativo",
-                "embalagem": {
-                    "Primária": "BLISTER DE ALUMINIO/ALUMINIO",
-                    "Secundária": "CARTUCHO DE CARTOLINA"
-                },
-                "administration": "ORAL",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob Prescrição Médica",
-                "usage_restriction": "Adulto e Pediátrico acima de  5 ANOS",
-                "label": "Vermelha",
-                "can_be_fractioned": false
-            },
-            "1553700120058": {
-                "dosage": "40 MG COM REV LIB RETARD CT BL AL/AL X 7 Ativo",
-                "embalagem": {
-                    "Primária": "BLISTER DE ALUMINIO/ALUMINIO",
-                    "Secundária": "CARTUCHO DE CARTOLINA"
-                },
-                "administration": "ORAL",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob Prescrição Médica",
-                "usage_restriction": "Adulto e Pediátrico acima de  5 anos",
-                "label": "Vermelha",
-                "can_be_fractioned": false
-            },
-            "1553700120066": {
-                "dosage": "40 MG COM REV LIB RETARD CT BL AL/AL X 14 Ativo",
-                "embalagem": {
-                    "Primária": "BLISTER DE ALUMINIO/ALUMINIO",
-                    "Secundária": "CARTUCHO DE CARTOLINA"
-                },
-                "administration": "ORAL",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob Prescrição Médica",
-                "usage_restriction": "Adulto e Pediátrico acima de  5 anos",
-                "label": "Vermelha",
-                "can_be_fractioned": false
-            },
-            "1553700120074": {
-                "dosage": "40 MG COM REV LIB RETARD CT BL AL/AL X 28 Ativo",
-                "embalagem": {
-                    "Primária": "BLISTER DE ALUMINIO/ALUMINIO",
-                    "Secundária": "CARTUCHO DE CARTOLINA"
-                },
-                "administration": "ORAL",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob Prescrição Médica",
-                "usage_restriction": "Adulto e Pediátrico acima de  5 anos",
-                "label": "Vermelha",
-                "can_be_fractioned": false
-            },
-            "1553700120082": {
-                "dosage": "40 MG COM REV LIB RETARD CT BL AL/AL X 280 Ativo",
-                "embalagem": {
-                    "Primária": "BLISTER DE ALUMINIO/ALUMINIO",
-                    "Secundária": "CARTUCHO DE CARTOLINA"
-                },
-                "administration": "ORAL",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob Prescrição Médica",
-                "usage_restriction": "Adulto e Pediátrico acima de  5 anos",
-                "label": "Vermelha",
-                "can_be_fractioned": false
-            }
-        }
-    },
-    "25351653008201932": {
-        "expiration_date": "01/2030",
-        "regulation_num": "167730639",
-        "presentations": {
-            "1677306390010": {
-                "dosage": "30 MG CAP DURA LIB RETARD CT BL AL AL X 7  Ativo",
-                "embalagem": {
-                    "Primária": "Blister de alumínio e alumínio",
+                    "Primária": "Envelope de papel/plástico/alumínio/plástico",
                     "Secundária": "Cartucho"
                 },
-                "administration": "ORAL",
+                "administration": "TRANSDÉRMICA",
                 "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob prescrição médica com retenção de receita",
+                "prescription_restriction": "Venda Sob Receita de Controle Especial",
                 "usage_restriction": "Adulto",
                 "label": "Vermelha sob restrição",
                 "can_be_fractioned": false
             },
-            "1677306390029": {
-                "dosage": "30 MG CAP DURA LIB RETARD CT BL AL AL X 15 Ativo",
+            "1057307800023": {
+                "dosage": "9 MG ADES TRANSD CT ENV PAP/PLAS PET/AL/PAN X 15 Ativo",
+                "concentration_order": [
+                    "RIVASTIGMINA"
+                ],
                 "embalagem": {
-                    "Primária": "Blister de alumínio e alumínio",
+                    "Primária": "Envelope de papel/plástico/alumínio/plástico",
                     "Secundária": "Cartucho"
                 },
-                "administration": "ORAL",
+                "administration": "TRANSDÉRMICA",
                 "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob prescrição médica com retenção de receita",
+                "prescription_restriction": "Venda Sob Receita de Controle Especial",
                 "usage_restriction": "Adulto",
                 "label": "Vermelha sob restrição",
                 "can_be_fractioned": false
             },
-            "1677306390037": {
-                "dosage": "30 MG CAP DURA LIB RETARD CT BL AL AL X 30  Ativo",
+            "1057307800031": {
+                "dosage": "9 MG ADES TRANSD CT ENV PAP/PLAS PET/AL/PAN X 30 Ativo",
+                "concentration_order": [
+                    "RIVASTIGMINA"
+                ],
                 "embalagem": {
-                    "Primária": "Blister de alumínio e alumínio",
+                    "Primária": "Envelope de papel/plástico/alumínio/plástico",
                     "Secundária": "Cartucho"
                 },
-                "administration": "ORAL",
+                "administration": "TRANSDÉRMICA",
                 "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob prescrição médica com retenção de receita",
+                "prescription_restriction": "Venda Sob Receita de Controle Especial",
                 "usage_restriction": "Adulto",
                 "label": "Vermelha sob restrição",
                 "can_be_fractioned": false
             },
-            "1677306390045": {
-                "dosage": "30 MG CAP DURA LIB RETARD CT BL AL AL X 60 Ativo",
+            "1057307800041": {
+                "dosage": "18 MG ADES TRANSD CT ENV PAP/PLAS PET/AL/PAN X 7 Ativo",
+                "concentration_order": [
+                    "RIVASTIGMINA"
+                ],
                 "embalagem": {
-                    "Primária": "Blister de alumínio e alumínio",
+                    "Primária": "Envelope de papel/plástico/alumínio/plástico",
                     "Secundária": "Cartucho"
                 },
-                "administration": "ORAL",
+                "administration": "TRANSDÉRMICA",
                 "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob prescrição médica com retenção de receita",
+                "prescription_restriction": "Venda Sob Receita de Controle Especial",
                 "usage_restriction": "Adulto",
                 "label": "Vermelha sob restrição",
                 "can_be_fractioned": false
             },
-            "1677306390053": {
-                "dosage": "30 MG CAP DURA LIB RETARD CT BL AL AL X 100 Ativo",
+            "1057307800058": {
+                "dosage": "18 MG ADES TRANSD CT ENV PAP/PLAS PET/AL/PAN X 15 Ativo",
+                "concentration_order": [
+                    "RIVASTIGMINA"
+                ],
                 "embalagem": {
-                    "Primária": "Blister de alumínio e alumínio",
+                    "Primária": "Envelope de papel/plástico/alumínio/plástico",
                     "Secundária": "Cartucho"
                 },
-                "administration": "ORAL",
+                "administration": "TRANSDÉRMICA",
                 "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob prescrição médica com retenção de receita",
+                "prescription_restriction": "Venda Sob Receita de Controle Especial",
                 "usage_restriction": "Adulto",
                 "label": "Vermelha sob restrição",
                 "can_be_fractioned": false
             },
-            "1677306390061": {
-                "dosage": "60 MG CAP DURA LIB RETARD CT BL AL AL X 7  Ativo",
+            "1057307800066": {
+                "dosage": "18 MG ADES TRANSD CT ENV PAP/PLAS PET/AL/PAN X 30 Ativo",
+                "concentration_order": [
+                    "RIVASTIGMINA"
+                ],
                 "embalagem": {
-                    "Primária": "Blister de alumínio e alumínio",
+                    "Primária": "Envelope de papel/plástico/alumínio/plástico",
                     "Secundária": "Cartucho"
                 },
-                "administration": "ORAL",
+                "administration": "TRANSDÉRMICA",
                 "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob prescrição médica com retenção de receita",
+                "prescription_restriction": "Venda Sob Receita de Controle Especial",
                 "usage_restriction": "Adulto",
                 "label": "Vermelha sob restrição",
                 "can_be_fractioned": false
             },
-            "1677306390071": {
-                "dosage": "60 MG CAP DURA LIB RETARD CT BL AL AL X 15 Ativo",
+            "1057307800074": {
+                "dosage": "27 MG ADES TRANSD CT ENV PAP/PLAS PET/AL/PAN X 7 Ativo",
+                "concentration_order": [
+                    "RIVASTIGMINA"
+                ],
                 "embalagem": {
-                    "Primária": "Blister de alumínio e alumínio",
+                    "Primária": "Envelope de papel/plástico/alumínio/plástico",
                     "Secundária": "Cartucho"
                 },
-                "administration": "ORAL",
+                "administration": "TRANSDÉRMICA",
                 "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob prescrição médica com retenção de receita",
+                "prescription_restriction": "Venda Sob Receita de Controle Especial",
                 "usage_restriction": "Adulto",
                 "label": "Vermelha sob restrição",
                 "can_be_fractioned": false
             },
-            "1677306390088": {
-                "dosage": "60 MG CAP DURA LIB RETARD CT BL AL AL X 30 Ativo",
+            "1057307800082": {
+                "dosage": "27 MG ADES TRANSD CT ENV PAP/PLAS PET/AL/PAN X 15 Ativo",
+                "concentration_order": [
+                    "RIVASTIGMINA"
+                ],
                 "embalagem": {
-                    "Primária": "Blister de alumínio e alumínio",
+                    "Primária": "Envelope de papel/plástico/alumínio/plástico",
                     "Secundária": "Cartucho"
                 },
-                "administration": "ORAL",
+                "administration": "TRANSDÉRMICA",
                 "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob prescrição médica com retenção de receita",
+                "prescription_restriction": "Venda Sob Receita de Controle Especial",
                 "usage_restriction": "Adulto",
                 "label": "Vermelha sob restrição",
                 "can_be_fractioned": false
             },
-            "1677306390096": {
-                "dosage": "60 MG CAP DURA LIB RETARD CT BL AL AL X 60 Ativo",
+            "1057307800090": {
+                "dosage": "27 MG ADES TRANSD CT ENV PAP/PLAS PET/AL/PAN X 30 Ativo",
+                "concentration_order": [
+                    "RIVASTIGMINA"
+                ],
                 "embalagem": {
-                    "Primária": "Blister de alumínio e alumínio",
+                    "Primária": "Envelope de papel/plástico/alumínio/plástico",
                     "Secundária": "Cartucho"
                 },
-                "administration": "ORAL",
+                "administration": "TRANSDÉRMICA",
                 "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob prescrição médica com retenção de receita",
-                "usage_restriction": "Adulto",
-                "label": "Vermelha sob restrição",
-                "can_be_fractioned": false
-            },
-            "1677306390101": {
-                "dosage": "60 MG CAP DURA LIB RETARD CT BL AL AL X 100 Ativo",
-                "embalagem": {
-                    "Primária": "Blister de alumínio e alumínio",
-                    "Secundária": "Cartucho"
-                },
-                "administration": "ORAL",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob prescrição médica com retenção de receita",
-                "usage_restriction": "Adulto",
-                "label": "Vermelha sob restrição",
-                "can_be_fractioned": false
-            },
-            "1677306390118": {
-                "dosage": "30 MG CAP DURA LIB RETARD CT BL AL AL X 14 Ativo",
-                "embalagem": {
-                    "Primária": "Blister de alumínio e alumínio",
-                    "Secundária": "Cartucho"
-                },
-                "administration": "ORAL",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob prescrição médica com retenção de receita",
-                "usage_restriction": "Adulto",
-                "label": "Vermelha sob restrição",
-                "can_be_fractioned": false
-            },
-            "1677306390126": {
-                "dosage": "30 MG CAP DURA LIB RETARD CT BL AL AL X 28 Ativo",
-                "embalagem": {
-                    "Primária": "Blister de alumínio e alumínio",
-                    "Secundária": "Cartucho"
-                },
-                "administration": "ORAL",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob prescrição médica com retenção de receita",
-                "usage_restriction": "Adulto",
-                "label": "Vermelha sob restrição",
-                "can_be_fractioned": false
-            },
-            "1677306390134": {
-                "dosage": "60 MG CAP DURA LIB RETARD CT BL AL AL X 14 Ativo",
-                "embalagem": {
-                    "Primária": "Blister de alumínio e alumínio",
-                    "Secundária": "Cartucho"
-                },
-                "administration": "ORAL",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob prescrição médica com retenção de receita",
-                "usage_restriction": "Adulto",
-                "label": "Vermelha sob restrição",
-                "can_be_fractioned": false
-            },
-            "1677306390142": {
-                "dosage": "60 MG CAP DURA LIB RETARD CT BL AL AL X 28 Ativo",
-                "embalagem": {
-                    "Primária": "Blister de alumínio e alumínio",
-                    "Secundária": "Cartucho"
-                },
-                "administration": "ORAL",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob prescrição médica com retenção de receita",
+                "prescription_restriction": "Venda Sob Receita de Controle Especial",
                 "usage_restriction": "Adulto",
                 "label": "Vermelha sob restrição",
                 "can_be_fractioned": false
             }
         }
     },
-    "25351651785200910": {
-        "expiration_date": "04/2029",
-        "regulation_num": "178170047",
-        "presentations": {
-            "1781700470014": {
-                "dosage": "667 MG/ML XPE CT FR VD AMB X 120 ML Ativo",
-                "embalagem": {
-                    "Primária": "FRASCO DE VIDRO AMBAR",
-                    "Secundária": "CARTUCHO DE CARTOLINA"
-                },
-                "administration": "IMPLANTE OSSEO",
-                "conservation": "",
-                "prescription_restriction": "Venda sem Prescrição Médica",
-                "usage_restriction": "",
-                "label": "",
-                "can_be_fractioned": false
-            }
-        }
-    },
-    "25351680651201456": {
-        "expiration_date": "07/2028",
-        "regulation_num": "183260002",
-        "presentations": {
-            "1832600020015": {
-                "dosage": "10 MG CAP DURA CT BL AL PLAS TRANS X 10 Ativo",
-                "embalagem": {},
-                "administration": "ORAL 1",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "",
-                "usage_restriction": "",
-                "label": "",
-                "can_be_fractioned": false
-            },
-            "1832600020023": {
-                "dosage": "10 MG CAP DURA CT BL AL PLAS TRANS X 20  Ativo",
-                "embalagem": {},
-                "administration": "ORAL 1",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "",
-                "usage_restriction": "",
-                "label": "",
-                "can_be_fractioned": false
-            },
-            "1832600020031": {
-                "dosage": "10 MG CAP DURA CT BL AL PLAS TRANS X 100 Ativo",
-                "embalagem": {},
-                "administration": "ORAL 1",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "",
-                "usage_restriction": "",
-                "label": "",
-                "can_be_fractioned": false
-            }
-        }
-    },
-    "25351696761201476": {
-        "expiration_date": "03/2030",
-        "regulation_num": "183260028",
-        "presentations": {
-            "1832600280017": {
-                "dosage": "5 MG COM CT BL AL PLAS TRANS X 7 Ativo",
-                "embalagem": {
-                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
-                    "Secundária": "CARTUCHO DE CARTOLINA"
-                },
-                "administration": "ORAL",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob Prescrição Médica",
-                "usage_restriction": "Adulto",
-                "label": "Vermelha",
-                "can_be_fractioned": false
-            },
-            "1832600280025": {
-                "dosage": "5 MG COM CT BL AL PLAS TRANS X 15 Ativo",
-                "embalagem": {
-                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
-                    "Secundária": "CARTUCHO DE CARTOLINA"
-                },
-                "administration": "ORAL",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob Prescrição Médica",
-                "usage_restriction": "Adulto",
-                "label": "Vermelha",
-                "can_be_fractioned": false
-            },
-            "1832600280033": {
-                "dosage": "5 MG COM CT BL AL PLAS TRANS X 30 Ativo",
-                "embalagem": {
-                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
-                    "Secundária": "CARTUCHO DE CARTOLINA"
-                },
-                "administration": "ORAL",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob Prescrição Médica",
-                "usage_restriction": "Adulto",
-                "label": "Vermelha",
-                "can_be_fractioned": false
-            },
-            "1832600280051": {
-                "dosage": "5 MG COM CT BL AL PLAS TRANS X 90 Ativo",
-                "embalagem": {
-                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
-                    "Secundária": "CARTUCHO DE CARTOLINA"
-                },
-                "administration": "ORAL",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob Prescrição Médica",
-                "usage_restriction": "Adulto",
-                "label": "Vermelha",
-                "can_be_fractioned": false
-            },
-            "1832600280068": {
-                "dosage": "5 MG COM CT BL AL PLAS TRANS X 120 Ativo",
-                "embalagem": {
-                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
-                    "Secundária": "CARTUCHO DE CARTOLINA"
-                },
-                "administration": "ORAL",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob Prescrição Médica",
-                "usage_restriction": "Adulto",
-                "label": "Vermelha",
-                "can_be_fractioned": false
-            }
-        }
-    },
-    "25351688742201476": {
-        "expiration_date": "08/2028",
-        "regulation_num": "183260035",
-        "presentations": {
-            "1832600350015": {
-                "dosage": "100 MG COM CT BL AL PLAS TRANS X 30 Ativo",
-                "embalagem": {
-                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
-                    "Secundária": "CARTUCHO DE CARTOLINA"
-                },
-                "administration": "ORAL",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob Prescrição Médica",
-                "usage_restriction": "Adulto e Pediátrico acima de  10 anos",
-                "label": "Vermelha",
-                "can_be_fractioned": false
-            },
-            "1832600350023": {
-                "dosage": "300 MG COM CT BL AL PLAS TRANS X 30 Ativo",
-                "embalagem": {
-                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
-                    "Secundária": "CARTUCHO DE CARTOLINA"
-                },
-                "administration": "ORAL",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob Prescrição Médica",
-                "usage_restriction": "Adulto e Pediátrico acima de  10 anos",
-                "label": "Vermelha",
-                "can_be_fractioned": false
-            }
-        }
-    },
-    "25351693624201470": {
-        "expiration_date": "10/2029",
-        "regulation_num": "183260126",
-        "presentations": {
-            "1832601260011": {
-                "dosage": "6,25 MG COM CT BL AL/AL X 15  Ativo",
-                "embalagem": {
-                    "Primária": "Blister de alumínio e alumínio",
-                    "Secundária": "CARTUCHO DE CARTOLINA"
-                },
-                "administration": "ORAL",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob Prescrição Médica",
-                "usage_restriction": "Adulto",
-                "label": "Vermelha",
-                "can_be_fractioned": false
-            },
-            "1832601260028": {
-                "dosage": "6,25 MG COM CT BL AL/AL X 30 Ativo",
-                "embalagem": {
-                    "Primária": "Blister de alumínio e alumínio",
-                    "Secundária": "CARTUCHO DE CARTOLINA"
-                },
-                "administration": "ORAL",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob Prescrição Médica",
-                "usage_restriction": "Adulto",
-                "label": "Vermelha",
-                "can_be_fractioned": false
-            },
-            "1832601260036": {
-                "dosage": "12,5 MG COM CT BL AL/AL X 15  Ativo",
-                "embalagem": {
-                    "Primária": "Blister de alumínio e alumínio",
-                    "Secundária": "CARTUCHO DE CARTOLINA"
-                },
-                "administration": "ORAL",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob Prescrição Médica",
-                "usage_restriction": "Adulto",
-                "label": "Vermelha",
-                "can_be_fractioned": false
-            },
-            "1832601260044": {
-                "dosage": "12,5 MG COM CT BL AL/AL X 30 Ativo",
-                "embalagem": {
-                    "Primária": "Blister de alumínio e alumínio",
-                    "Secundária": "CARTUCHO DE CARTOLINA"
-                },
-                "administration": "ORAL",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob Prescrição Médica",
-                "usage_restriction": "Adulto",
-                "label": "Vermelha",
-                "can_be_fractioned": false
-            },
-            "1832601260052": {
-                "dosage": "25 MG COM CT BL AL/AL X 15 Ativo",
-                "embalagem": {
-                    "Primária": "Blister de alumínio e alumínio",
-                    "Secundária": "CARTUCHO DE CARTOLINA"
-                },
-                "administration": "ORAL",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob Prescrição Médica",
-                "usage_restriction": "Adulto",
-                "label": "Vermelha",
-                "can_be_fractioned": false
-            },
-            "1832601260060": {
-                "dosage": "25 MG COM CT BL AL/AL X 30 Ativo",
-                "embalagem": {
-                    "Primária": "Blister de alumínio e alumínio",
-                    "Secundária": "CARTUCHO DE CARTOLINA"
-                },
-                "administration": "ORAL",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob Prescrição Médica",
-                "usage_restriction": "Adulto",
-                "label": "Vermelha",
-                "can_be_fractioned": false
-            },
-            "1832601260079": {
-                "dosage": "25 MG COM CT BL AL/AL X 60 Ativo",
-                "embalagem": {
-                    "Primária": "Blister de alumínio e alumínio",
-                    "Secundária": "CARTUCHO DE CARTOLINA"
-                },
-                "administration": "ORAL",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob Prescrição Médica",
-                "usage_restriction": "Adulto",
-                "label": "Vermelha",
-                "can_be_fractioned": false
-            },
-            "1832601260125": {
-                "dosage": "6,25 MG COM CT BL AL/AL X 60 Ativo",
-                "embalagem": {
-                    "Primária": "Blister de alumínio e alumínio",
-                    "Secundária": "CARTUCHO DE CARTOLINA"
-                },
-                "administration": "ORAL",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob Prescrição Médica",
-                "usage_restriction": "Adulto",
-                "label": "Vermelha",
-                "can_be_fractioned": false
-            },
-            "1832601260133": {
-                "dosage": "12,5 MG COM CT BL AL/AL X 60 Ativo",
-                "embalagem": {
-                    "Primária": "Blister de alumínio e alumínio",
-                    "Secundária": "CARTUCHO DE CARTOLINA"
-                },
-                "administration": "ORAL",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob Prescrição Médica",
-                "usage_restriction": "Adulto",
-                "label": "Vermelha",
-                "can_be_fractioned": false
-            }
-        }
-    },
-    "25351693344201480": {
-        "expiration_date": "10/2035",
-        "regulation_num": "183260248",
-        "presentations": {
-            "1832602480013": {
-                "dosage": "10 MG CAP DURA LIB RETARD CT BL AL PLAS TRANS X 14 Ativo",
-                "embalagem": {
-                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
-                    "Secundária": "CARTUCHO DE CARTOLINA"
-                },
-                "administration": "ORAL",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob Prescrição Médica",
-                "usage_restriction": "Adulto e Pediátrico",
-                "label": "Vermelha",
-                "can_be_fractioned": false
-            },
-            "1832602480021": {
-                "dosage": "20 MG CAP DURA LIB RETARD CT BL AL PLAS TRANS X 7 Ativo",
-                "embalagem": {
-                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
-                    "Secundária": "CARTUCHO DE CARTOLINA"
-                },
-                "administration": "ORAL",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob Prescrição Médica",
-                "usage_restriction": "Adulto e Pediátrico",
-                "label": "Vermelha",
-                "can_be_fractioned": false
-            },
-            "1832602480031": {
-                "dosage": "20 MG CAP DURA LIB RETARD CT BL AL PLAS TRANS X 14 Ativo",
-                "embalagem": {
-                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
-                    "Secundária": "CARTUCHO DE CARTOLINA"
-                },
-                "administration": "ORAL",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob Prescrição Médica",
-                "usage_restriction": "Adulto e Pediátrico",
-                "label": "Vermelha",
-                "can_be_fractioned": false
-            },
-            "1832602480048": {
-                "dosage": "10 MG CAP DURA LIB RETARD CT BL AL PLAS TRANS X 196 Ativo",
-                "embalagem": {
-                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
-                    "Secundária": "CARTUCHO DE CARTOLINA"
-                },
-                "administration": "ORAL",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob Prescrição Médica",
-                "usage_restriction": "Adulto e Pediátrico",
-                "label": "Vermelha",
-                "can_be_fractioned": false
-            },
-            "1832602480056": {
-                "dosage": "20 MG CAP DURA LIB RETARD CT BL AL PLAS TRANS X 28 Ativo",
-                "embalagem": {
-                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
-                    "Secundária": "CARTUCHO DE CARTOLINA"
-                },
-                "administration": "ORAL",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob Prescrição Médica",
-                "usage_restriction": "Adulto e Pediátrico",
-                "label": "Vermelha",
-                "can_be_fractioned": false
-            },
-            "1832602480064": {
-                "dosage": "20 MG CAP DURA LIB RETARD CT BL AL PLAS TRANS X 196 Ativo",
-                "embalagem": {
-                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
-                    "Secundária": "CARTUCHO DE CARTOLINA"
-                },
-                "administration": "ORAL",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob Prescrição Médica",
-                "usage_restriction": "Adulto e Pediátrico",
-                "label": "Vermelha",
-                "can_be_fractioned": false
-            },
-            "1832602480072": {
-                "dosage": "40 MG CAP DURA LIB RETARD CT BL AL PLAS TRANS X 7 Ativo",
-                "embalagem": {
-                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
-                    "Secundária": "CARTUCHO DE CARTOLINA"
-                },
-                "administration": "ORAL",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob Prescrição Médica",
-                "usage_restriction": "Adulto e Pediátrico",
-                "label": "Vermelha",
-                "can_be_fractioned": false
-            },
-            "1832602480080": {
-                "dosage": "40 MG CAP DURA LIB RETARD CT BL AL PLAS TRANS X 196 Ativo",
-                "embalagem": {
-                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
-                    "Secundária": "CARTUCHO DE CARTOLINA"
-                },
-                "administration": "ORAL",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob Prescrição Médica",
-                "usage_restriction": "Adulto e Pediátrico",
-                "label": "Vermelha",
-                "can_be_fractioned": false
-            },
-            "1832602480102": {
-                "dosage": "20 MG CAP DURA LIB RETARD CT BL AL PLAS TRANS X 42 Ativo",
-                "embalagem": {
-                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
-                    "Secundária": "CARTUCHO DE CARTOLINA"
-                },
-                "administration": "ORAL",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob Prescrição Médica",
-                "usage_restriction": "Adulto e Pediátrico",
-                "label": "Vermelha",
-                "can_be_fractioned": false
-            },
-            "1832602480110": {
-                "dosage": "40 MG CAP DURA LIB RETARD CT BL AL PLAS TRANS X 42 Ativo",
-                "embalagem": {
-                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
-                    "Secundária": "CARTUCHO DE CARTOLINA"
-                },
-                "administration": "ORAL",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob Prescrição Médica",
-                "usage_restriction": "Adulto e Pediátrico",
-                "label": "Vermelha",
-                "can_be_fractioned": false
-            },
-            "1832602480129": {
-                "dosage": "20 MG CAP DURA LIB RETARD CT BL AL PLAS TRANS X 56 Ativo",
-                "embalagem": {
-                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
-                    "Secundária": "CARTUCHO DE CARTOLINA"
-                },
-                "administration": "ORAL",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob Prescrição Médica",
-                "usage_restriction": "Adulto e Pediátrico",
-                "label": "Vermelha",
-                "can_be_fractioned": false
-            },
-            "1832602480137": {
-                "dosage": "40 MG CAP DURA LIB RETARD CT BL AL PLAS TRANS X 28 Ativo",
-                "embalagem": {
-                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
-                    "Secundária": "CARTUCHO DE CARTOLINA"
-                },
-                "administration": "ORAL",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob Prescrição Médica",
-                "usage_restriction": "Adulto e Pediátrico",
-                "label": "Vermelha",
-                "can_be_fractioned": false
-            },
-            "1832602480145": {
-                "dosage": "40 MG CAP DURA LIB RETARD CT BL AL PLAS TRANS X 56 Ativo",
-                "embalagem": {
-                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
-                    "Secundária": "CARTUCHO DE CARTOLINA"
-                },
-                "administration": "ORAL",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob Prescrição Médica",
-                "usage_restriction": "Adulto e Pediátrico",
-                "label": "Vermelha",
-                "can_be_fractioned": false
-            }
-        }
-    },
-    "25351190092201970": {
-        "expiration_date": "06/2026",
-        "regulation_num": "183260318",
-        "presentations": {
-            "1832603180013": {
-                "dosage": "10 MG COM CT BL AL PLAS TRANS X 20 Ativo",
-                "embalagem": {
-                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
-                    "Secundária": "CARTUCHO DE CARTOLINA"
-                },
-                "administration": "ORAL",
-                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
-                "prescription_restriction": "Venda sob Prescrição Médica",
-                "usage_restriction": "Adulto",
-                "label": "Vermelha",
-                "can_be_fractioned": false
-            }
-        }
-    },
+    "25351471650201536": {},
     "253510244410011": {
         "expiration_date": "01/2036",
         "regulation_num": "116180106",
         "presentations": {
             "1161801060013": {
                 "dosage": "6 MCG/INAL + 100 MCG/INAL PO INAL CT TB PLAS 60 DOSES Ativo",
+                "concentration_order": [
+                    "FUMARATO DE FORMOTEROL",
+                    "BUDESONIDA"
+                ],
                 "embalagem": {
                     "Primária": "TUBO PLASTICO",
                     "Secundária": "CARTUCHO DE CARTOLINA"
@@ -907,6 +266,10 @@
             },
             "1161801060031": {
                 "dosage": "6 MCG/INAL + 100 MCG/INAL PO INAL CT TB PLAS 120 DOSES Ativo",
+                "concentration_order": [
+                    "FUMARATO DE FORMOTEROL",
+                    "BUDESONIDA"
+                ],
                 "embalagem": {
                     "Primária": "TUBO PLASTICO",
                     "Secundária": "CARTUCHO DE CARTOLINA"
@@ -920,6 +283,10 @@
             },
             "1161801060048": {
                 "dosage": "6 MCG/INAL + 200 MCG/INAL PO INAL CT TB PLAS 60 DOSES Ativo",
+                "concentration_order": [
+                    "FUMARATO DE FORMOTEROL",
+                    "BUDESONIDA"
+                ],
                 "embalagem": {
                     "Primária": "TUBO PLASTICO",
                     "Secundária": "CARTUCHO DE CARTOLINA"
@@ -933,6 +300,10 @@
             },
             "1161801060064": {
                 "dosage": "6 MCG/INAL + 200 MCG/INAL PO INAL CT TB PLAS 120 DOSES Ativo",
+                "concentration_order": [
+                    "FUMARATO DE FORMOTEROL",
+                    "BUDESONIDA"
+                ],
                 "embalagem": {
                     "Primária": "TUBO PLASTICO",
                     "Secundária": "CARTUCHO DE CARTOLINA"
@@ -946,6 +317,10 @@
             },
             "1161801060072": {
                 "dosage": "12 MCG/INAL + 400 MCG/INAL PO INAL CT TB PLAS 60 DOSES Ativo",
+                "concentration_order": [
+                    "FUMARATO DE FORMOTEROL",
+                    "BUDESONIDA"
+                ],
                 "embalagem": {
                     "Primária": "TUBO PLASTICO",
                     "Secundária": "CARTUCHO DE CARTOLINA"
@@ -965,6 +340,9 @@
         "presentations": {
             "1356900150025": {
                 "dosage": "10 MG COM CT BL AL PLAS TRANS X 30 Ativo",
+                "concentration_order": [
+                    "DINITRATO DE ISOSSORBIDA"
+                ],
                 "embalagem": {
                     "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
                     "Secundária": "CARTUCHO DE CARTOLINA"
@@ -978,6 +356,9 @@
             },
             "1356900150041": {
                 "dosage": "5 MG COM SUBL CT BL AL PLAS TRANS X 30 Ativo",
+                "concentration_order": [
+                    "DINITRATO DE ISOSSORBIDA"
+                ],
                 "embalagem": {
                     "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
                     "Secundária": "CARTUCHO DE CARTOLINA"
@@ -991,6 +372,9 @@
             },
             "1356900150092": {
                 "dosage": "5 MG COM SUBL CT BL AL PLAS TRANS X 90 (EMB FRAC) Ativo",
+                "concentration_order": [
+                    "DINITRATO DE ISOSSORBIDA"
+                ],
                 "embalagem": {
                     "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
                     "Secundária": "CARTUCHO DE CARTOLINA"
@@ -1004,6 +388,9 @@
             },
             "1356900150106": {
                 "dosage": "5 MG COM SUBL CT BL AL PLAS TRANS X 120 (EMB FRAC) Ativo",
+                "concentration_order": [
+                    "DINITRATO DE ISOSSORBIDA"
+                ],
                 "embalagem": {
                     "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
                     "Secundária": "CARTUCHO DE CARTOLINA"
@@ -1017,6 +404,9 @@
             },
             "1356900150122": {
                 "dosage": "10 MG COM CT BL AL PLAS TRANS X 100 (EMB FRAC) Ativo",
+                "concentration_order": [
+                    "DINITRATO DE ISOSSORBIDA"
+                ],
                 "embalagem": {
                     "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
                     "Secundária": "CARTUCHO DE CARTOLINA"
@@ -1030,6 +420,9 @@
             },
             "1356900150130": {
                 "dosage": "10 MG COM CT BL AL PLAS TRANS X 120 (EMB FRAC) Ativo",
+                "concentration_order": [
+                    "DINITRATO DE ISOSSORBIDA"
+                ],
                 "embalagem": {
                     "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
                     "Secundária": "CARTUCHO DE CARTOLINA"
@@ -1043,6 +436,9 @@
             },
             "1356900150165": {
                 "dosage": "5 MG COM SUBL CT BL AL PLAS TRANS X 450 (EMB HOSP) Ativo",
+                "concentration_order": [
+                    "DINITRATO DE ISOSSORBIDA"
+                ],
                 "embalagem": {
                     "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
                     "Secundária": "CARTUCHO DE CARTOLINA"
@@ -1056,6 +452,9 @@
             },
             "1356900150173": {
                 "dosage": "5 MG COM SUBL CT BL AL PLAS TRANS X 500 (EMB HOSP) Ativo",
+                "concentration_order": [
+                    "DINITRATO DE ISOSSORBIDA"
+                ],
                 "embalagem": {
                     "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
                     "Secundária": "CARTUCHO DE CARTOLINA"
@@ -1075,6 +474,9 @@
         "presentations": {
             "1384100040026": {
                 "dosage": "68 MG/ML SOL OR CT FR PLAS OPC GOT X 30 ML Ativo",
+                "concentration_order": [
+                    "SULFATO FERROSO HEPTAIDRATADO"
+                ],
                 "embalagem": {
                     "Primária": "FRASCO DE PLASTICO OPACO GOTEJADOR",
                     "Secundária": "CARTUCHO DE CARTOLINA"
@@ -1088,6 +490,9 @@
             },
             "1384100040069": {
                 "dosage": "25 MG/ML XPE CT FR PLAS PET AMB X 500 ML Ativo",
+                "concentration_order": [
+                    "SULFATO FERROSO HEPTAIDRATADO"
+                ],
                 "embalagem": {
                     "Primária": "FRASCO DE PLASTICO AMBAR",
                     "Secundária": "CARTUCHO DE CARTOLINA"
@@ -1101,6 +506,9 @@
             },
             "1384100040085": {
                 "dosage": "25 MG/ML XPE FR VD AMB X 100 ML Ativo",
+                "concentration_order": [
+                    "SULFATO FERROSO HEPTAIDRATADO"
+                ],
                 "embalagem": {
                     "Primária": "FRASCO DE VIDRO AMBAR"
                 },
@@ -1113,6 +521,9 @@
             },
             "1384100040107": {
                 "dosage": "68 MG/ML SOL OR CX 50 FR PLAS OPC GOT X 30 ML Ativo",
+                "concentration_order": [
+                    "SULFATO FERROSO HEPTAIDRATADO"
+                ],
                 "embalagem": {
                     "Primária": "FRASCO DE PLASTICO OPACO GOTEJADOR",
                     "Secundária": "CAIXA DE PAPELAO SEM COLMEIA"
@@ -1126,6 +537,9 @@
             },
             "1384100040123": {
                 "dosage": "25 MG/ML XPE FR PLAS PET TRANS X 400 ML Ativo",
+                "concentration_order": [
+                    "SULFATO FERROSO HEPTAIDRATADO"
+                ],
                 "embalagem": {
                     "Primária": "FRASCO DE PLASTICO TRANSPARENTE"
                 },
@@ -1138,6 +552,9 @@
             },
             "1384100040166": {
                 "dosage": "25 MG/ML XPE CT FR PLAS PET AMB X 100ML  Ativo",
+                "concentration_order": [
+                    "SULFATO FERROSO HEPTAIDRATADO"
+                ],
                 "embalagem": {
                     "Primária": "FRASCO DE PLASTICO AMBAR",
                     "Secundária": "CARTUCHO DE CARTOLINA"
@@ -1151,6 +568,9 @@
             },
             "1384100040182": {
                 "dosage": "25 MG/ML XPE CX 50 FR PLAS PET AMB X 100 ML  Ativo",
+                "concentration_order": [
+                    "SULFATO FERROSO HEPTAIDRATADO"
+                ],
                 "embalagem": {
                     "Primária": "FRASCO DE PLASTICO AMBAR",
                     "Secundária": "CAIXA DE PAPELAO SEM COLMEIA"
@@ -1160,6 +580,144 @@
                 "prescription_restriction": "Venda sem Prescrição Médica",
                 "usage_restriction": "Adulto e Pediátrico acima de  1 ANO",
                 "label": "Sem Tarja",
+                "can_be_fractioned": false
+            }
+        }
+    },
+    "25351066435200660": {},
+    "25351595444201810": {},
+    "25351089711201630": {},
+    "25351312642200600": {},
+    "25351419782200600": {
+        "expiration_date": "10/2028",
+        "regulation_num": "155370012",
+        "presentations": {
+            "1553700120015": {
+                "dosage": "20 MG COM REV LIB RETARD CT BL AL/AL X 7 Ativo",
+                "concentration_order": [
+                    "PANTOPRAZOL"
+                ],
+                "embalagem": {
+                    "Primária": "BLISTER DE ALUMINIO/ALUMINIO",
+                    "Secundária": "CARTUCHO DE CARTOLINA"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob Prescrição Médica",
+                "usage_restriction": "Adulto e Pediátrico acima de  5 ANOS",
+                "label": "Vermelha",
+                "can_be_fractioned": false
+            },
+            "1553700120023": {
+                "dosage": "20 MG COM REV LIB RETARD CT BL AL/AL X 14 Ativo",
+                "concentration_order": [
+                    "PANTOPRAZOL"
+                ],
+                "embalagem": {
+                    "Primária": "BLISTER DE ALUMINIO/ALUMINIO",
+                    "Secundária": "CARTUCHO DE CARTOLINA"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob Prescrição Médica",
+                "usage_restriction": "Adulto e Pediátrico acima de  5 ANOS",
+                "label": "Vermelha",
+                "can_be_fractioned": false
+            },
+            "1553700120031": {
+                "dosage": "20 MG COM REV LIB RETARD CT BL AL/AL X 28 Ativo",
+                "concentration_order": [
+                    "PANTOPRAZOL"
+                ],
+                "embalagem": {
+                    "Primária": "BLISTER DE ALUMINIO/ALUMINIO",
+                    "Secundária": "CARTUCHO DE CARTOLINA"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob Prescrição Médica",
+                "usage_restriction": "Adulto e Pediátrico acima de  5 ANOS",
+                "label": "Vermelha",
+                "can_be_fractioned": false
+            },
+            "1553700120041": {
+                "dosage": "20 MG COM REV LIB RETARD CT BL AL/AL X 280 Ativo",
+                "concentration_order": [
+                    "PANTOPRAZOL"
+                ],
+                "embalagem": {
+                    "Primária": "BLISTER DE ALUMINIO/ALUMINIO",
+                    "Secundária": "CARTUCHO DE CARTOLINA"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob Prescrição Médica",
+                "usage_restriction": "Adulto e Pediátrico acima de  5 ANOS",
+                "label": "Vermelha",
+                "can_be_fractioned": false
+            },
+            "1553700120058": {
+                "dosage": "40 MG COM REV LIB RETARD CT BL AL/AL X 7 Ativo",
+                "concentration_order": [
+                    "PANTOPRAZOL"
+                ],
+                "embalagem": {
+                    "Primária": "BLISTER DE ALUMINIO/ALUMINIO",
+                    "Secundária": "CARTUCHO DE CARTOLINA"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob Prescrição Médica",
+                "usage_restriction": "Adulto e Pediátrico acima de  5 anos",
+                "label": "Vermelha",
+                "can_be_fractioned": false
+            },
+            "1553700120066": {
+                "dosage": "40 MG COM REV LIB RETARD CT BL AL/AL X 14 Ativo",
+                "concentration_order": [
+                    "PANTOPRAZOL"
+                ],
+                "embalagem": {
+                    "Primária": "BLISTER DE ALUMINIO/ALUMINIO",
+                    "Secundária": "CARTUCHO DE CARTOLINA"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob Prescrição Médica",
+                "usage_restriction": "Adulto e Pediátrico acima de  5 anos",
+                "label": "Vermelha",
+                "can_be_fractioned": false
+            },
+            "1553700120074": {
+                "dosage": "40 MG COM REV LIB RETARD CT BL AL/AL X 28 Ativo",
+                "concentration_order": [
+                    "PANTOPRAZOL"
+                ],
+                "embalagem": {
+                    "Primária": "BLISTER DE ALUMINIO/ALUMINIO",
+                    "Secundária": "CARTUCHO DE CARTOLINA"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob Prescrição Médica",
+                "usage_restriction": "Adulto e Pediátrico acima de  5 anos",
+                "label": "Vermelha",
+                "can_be_fractioned": false
+            },
+            "1553700120082": {
+                "dosage": "40 MG COM REV LIB RETARD CT BL AL/AL X 280 Ativo",
+                "concentration_order": [
+                    "PANTOPRAZOL"
+                ],
+                "embalagem": {
+                    "Primária": "BLISTER DE ALUMINIO/ALUMINIO",
+                    "Secundária": "CARTUCHO DE CARTOLINA"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob Prescrição Médica",
+                "usage_restriction": "Adulto e Pediátrico acima de  5 anos",
+                "label": "Vermelha",
                 "can_be_fractioned": false
             }
         }
@@ -1176,20 +734,881 @@
     "25351407580201690": {},
     "25351674052201710": {},
     "25351097593201550": {},
+    "25351653008201932": {
+        "expiration_date": "01/2030",
+        "regulation_num": "167730639",
+        "presentations": {
+            "1677306390010": {
+                "dosage": "30 MG CAP DURA LIB RETARD CT BL AL AL X 7  Ativo",
+                "concentration_order": [
+                    "CLORIDRATO DE DULOXETINA"
+                ],
+                "embalagem": {
+                    "Primária": "Blister de alumínio e alumínio",
+                    "Secundária": "Cartucho"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob prescrição médica com retenção de receita",
+                "usage_restriction": "Adulto",
+                "label": "Vermelha sob restrição",
+                "can_be_fractioned": false
+            },
+            "1677306390029": {
+                "dosage": "30 MG CAP DURA LIB RETARD CT BL AL AL X 15 Ativo",
+                "concentration_order": [
+                    "CLORIDRATO DE DULOXETINA"
+                ],
+                "embalagem": {
+                    "Primária": "Blister de alumínio e alumínio",
+                    "Secundária": "Cartucho"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob prescrição médica com retenção de receita",
+                "usage_restriction": "Adulto",
+                "label": "Vermelha sob restrição",
+                "can_be_fractioned": false
+            },
+            "1677306390037": {
+                "dosage": "30 MG CAP DURA LIB RETARD CT BL AL AL X 30  Ativo",
+                "concentration_order": [
+                    "CLORIDRATO DE DULOXETINA"
+                ],
+                "embalagem": {
+                    "Primária": "Blister de alumínio e alumínio",
+                    "Secundária": "Cartucho"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob prescrição médica com retenção de receita",
+                "usage_restriction": "Adulto",
+                "label": "Vermelha sob restrição",
+                "can_be_fractioned": false
+            },
+            "1677306390045": {
+                "dosage": "30 MG CAP DURA LIB RETARD CT BL AL AL X 60 Ativo",
+                "concentration_order": [
+                    "CLORIDRATO DE DULOXETINA"
+                ],
+                "embalagem": {
+                    "Primária": "Blister de alumínio e alumínio",
+                    "Secundária": "Cartucho"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob prescrição médica com retenção de receita",
+                "usage_restriction": "Adulto",
+                "label": "Vermelha sob restrição",
+                "can_be_fractioned": false
+            },
+            "1677306390053": {
+                "dosage": "30 MG CAP DURA LIB RETARD CT BL AL AL X 100 Ativo",
+                "concentration_order": [
+                    "CLORIDRATO DE DULOXETINA"
+                ],
+                "embalagem": {
+                    "Primária": "Blister de alumínio e alumínio",
+                    "Secundária": "Cartucho"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob prescrição médica com retenção de receita",
+                "usage_restriction": "Adulto",
+                "label": "Vermelha sob restrição",
+                "can_be_fractioned": false
+            },
+            "1677306390061": {
+                "dosage": "60 MG CAP DURA LIB RETARD CT BL AL AL X 7  Ativo",
+                "concentration_order": [
+                    "CLORIDRATO DE DULOXETINA"
+                ],
+                "embalagem": {
+                    "Primária": "Blister de alumínio e alumínio",
+                    "Secundária": "Cartucho"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob prescrição médica com retenção de receita",
+                "usage_restriction": "Adulto",
+                "label": "Vermelha sob restrição",
+                "can_be_fractioned": false
+            },
+            "1677306390071": {
+                "dosage": "60 MG CAP DURA LIB RETARD CT BL AL AL X 15 Ativo",
+                "concentration_order": [
+                    "CLORIDRATO DE DULOXETINA"
+                ],
+                "embalagem": {
+                    "Primária": "Blister de alumínio e alumínio",
+                    "Secundária": "Cartucho"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob prescrição médica com retenção de receita",
+                "usage_restriction": "Adulto",
+                "label": "Vermelha sob restrição",
+                "can_be_fractioned": false
+            },
+            "1677306390088": {
+                "dosage": "60 MG CAP DURA LIB RETARD CT BL AL AL X 30 Ativo",
+                "concentration_order": [
+                    "CLORIDRATO DE DULOXETINA"
+                ],
+                "embalagem": {
+                    "Primária": "Blister de alumínio e alumínio",
+                    "Secundária": "Cartucho"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob prescrição médica com retenção de receita",
+                "usage_restriction": "Adulto",
+                "label": "Vermelha sob restrição",
+                "can_be_fractioned": false
+            },
+            "1677306390096": {
+                "dosage": "60 MG CAP DURA LIB RETARD CT BL AL AL X 60 Ativo",
+                "concentration_order": [
+                    "CLORIDRATO DE DULOXETINA"
+                ],
+                "embalagem": {
+                    "Primária": "Blister de alumínio e alumínio",
+                    "Secundária": "Cartucho"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob prescrição médica com retenção de receita",
+                "usage_restriction": "Adulto",
+                "label": "Vermelha sob restrição",
+                "can_be_fractioned": false
+            },
+            "1677306390101": {
+                "dosage": "60 MG CAP DURA LIB RETARD CT BL AL AL X 100 Ativo",
+                "concentration_order": [
+                    "CLORIDRATO DE DULOXETINA"
+                ],
+                "embalagem": {
+                    "Primária": "Blister de alumínio e alumínio",
+                    "Secundária": "Cartucho"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob prescrição médica com retenção de receita",
+                "usage_restriction": "Adulto",
+                "label": "Vermelha sob restrição",
+                "can_be_fractioned": false
+            },
+            "1677306390118": {
+                "dosage": "30 MG CAP DURA LIB RETARD CT BL AL AL X 14 Ativo",
+                "concentration_order": [
+                    "CLORIDRATO DE DULOXETINA"
+                ],
+                "embalagem": {
+                    "Primária": "Blister de alumínio e alumínio",
+                    "Secundária": "Cartucho"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob prescrição médica com retenção de receita",
+                "usage_restriction": "Adulto",
+                "label": "Vermelha sob restrição",
+                "can_be_fractioned": false
+            },
+            "1677306390126": {
+                "dosage": "30 MG CAP DURA LIB RETARD CT BL AL AL X 28 Ativo",
+                "concentration_order": [
+                    "CLORIDRATO DE DULOXETINA"
+                ],
+                "embalagem": {
+                    "Primária": "Blister de alumínio e alumínio",
+                    "Secundária": "Cartucho"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob prescrição médica com retenção de receita",
+                "usage_restriction": "Adulto",
+                "label": "Vermelha sob restrição",
+                "can_be_fractioned": false
+            },
+            "1677306390134": {
+                "dosage": "60 MG CAP DURA LIB RETARD CT BL AL AL X 14 Ativo",
+                "concentration_order": [
+                    "CLORIDRATO DE DULOXETINA"
+                ],
+                "embalagem": {
+                    "Primária": "Blister de alumínio e alumínio",
+                    "Secundária": "Cartucho"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob prescrição médica com retenção de receita",
+                "usage_restriction": "Adulto",
+                "label": "Vermelha sob restrição",
+                "can_be_fractioned": false
+            },
+            "1677306390142": {
+                "dosage": "60 MG CAP DURA LIB RETARD CT BL AL AL X 28 Ativo",
+                "concentration_order": [
+                    "CLORIDRATO DE DULOXETINA"
+                ],
+                "embalagem": {
+                    "Primária": "Blister de alumínio e alumínio",
+                    "Secundária": "Cartucho"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob prescrição médica com retenção de receita",
+                "usage_restriction": "Adulto",
+                "label": "Vermelha sob restrição",
+                "can_be_fractioned": false
+            }
+        }
+    },
     "25351040441200852": {},
     "25351651342200930": {},
+    "25351651785200910": {
+        "expiration_date": "04/2029",
+        "regulation_num": "178170047",
+        "presentations": {
+            "1781700470014": {
+                "dosage": "667 MG/ML XPE CT FR VD AMB X 120 ML Ativo",
+                "concentration_order": [
+                    "LACTULOSE"
+                ],
+                "embalagem": {
+                    "Primária": "FRASCO DE VIDRO AMBAR",
+                    "Secundária": "CARTUCHO DE CARTOLINA"
+                },
+                "administration": "IMPLANTE OSSEO",
+                "conservation": "",
+                "prescription_restriction": "Venda sem Prescrição Médica",
+                "usage_restriction": "",
+                "label": "",
+                "can_be_fractioned": false
+            }
+        }
+    },
+    "25351680651201456": {
+        "expiration_date": "07/2028",
+        "regulation_num": "183260002",
+        "presentations": {
+            "1832600020015": {
+                "dosage": "10 MG CAP DURA CT BL AL PLAS TRANS X 10 Ativo",
+                "concentration_order": [
+                    "BROMOPRIDA"
+                ],
+                "embalagem": {},
+                "administration": "ORAL 1",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "",
+                "usage_restriction": "",
+                "label": "",
+                "can_be_fractioned": false
+            },
+            "1832600020023": {
+                "dosage": "10 MG CAP DURA CT BL AL PLAS TRANS X 20  Ativo",
+                "concentration_order": [
+                    "BROMOPRIDA"
+                ],
+                "embalagem": {},
+                "administration": "ORAL 1",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "",
+                "usage_restriction": "",
+                "label": "",
+                "can_be_fractioned": false
+            },
+            "1832600020031": {
+                "dosage": "10 MG CAP DURA CT BL AL PLAS TRANS X 100 Ativo",
+                "concentration_order": [
+                    "BROMOPRIDA"
+                ],
+                "embalagem": {},
+                "administration": "ORAL 1",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "",
+                "usage_restriction": "",
+                "label": "",
+                "can_be_fractioned": false
+            }
+        }
+    },
+    "25351696761201476": {
+        "expiration_date": "03/2030",
+        "regulation_num": "183260028",
+        "presentations": {
+            "1832600280017": {
+                "dosage": "5 MG COM CT BL AL PLAS TRANS X 7 Ativo",
+                "concentration_order": [
+                    "GLIBENCLAMIDA"
+                ],
+                "embalagem": {
+                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
+                    "Secundária": "CARTUCHO DE CARTOLINA"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob Prescrição Médica",
+                "usage_restriction": "Adulto",
+                "label": "Vermelha",
+                "can_be_fractioned": false
+            },
+            "1832600280025": {
+                "dosage": "5 MG COM CT BL AL PLAS TRANS X 15 Ativo",
+                "concentration_order": [
+                    "GLIBENCLAMIDA"
+                ],
+                "embalagem": {
+                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
+                    "Secundária": "CARTUCHO DE CARTOLINA"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob Prescrição Médica",
+                "usage_restriction": "Adulto",
+                "label": "Vermelha",
+                "can_be_fractioned": false
+            },
+            "1832600280033": {
+                "dosage": "5 MG COM CT BL AL PLAS TRANS X 30 Ativo",
+                "concentration_order": [
+                    "GLIBENCLAMIDA"
+                ],
+                "embalagem": {
+                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
+                    "Secundária": "CARTUCHO DE CARTOLINA"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob Prescrição Médica",
+                "usage_restriction": "Adulto",
+                "label": "Vermelha",
+                "can_be_fractioned": false
+            },
+            "1832600280051": {
+                "dosage": "5 MG COM CT BL AL PLAS TRANS X 90 Ativo",
+                "concentration_order": [
+                    "GLIBENCLAMIDA"
+                ],
+                "embalagem": {
+                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
+                    "Secundária": "CARTUCHO DE CARTOLINA"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob Prescrição Médica",
+                "usage_restriction": "Adulto",
+                "label": "Vermelha",
+                "can_be_fractioned": false
+            },
+            "1832600280068": {
+                "dosage": "5 MG COM CT BL AL PLAS TRANS X 120 Ativo",
+                "concentration_order": [
+                    "GLIBENCLAMIDA"
+                ],
+                "embalagem": {
+                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
+                    "Secundária": "CARTUCHO DE CARTOLINA"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob Prescrição Médica",
+                "usage_restriction": "Adulto",
+                "label": "Vermelha",
+                "can_be_fractioned": false
+            }
+        }
+    },
+    "25351688742201476": {
+        "expiration_date": "08/2028",
+        "regulation_num": "183260035",
+        "presentations": {
+            "1832600350015": {
+                "dosage": "100 MG COM CT BL AL PLAS TRANS X 30 Ativo",
+                "concentration_order": [
+                    "ALOPURINOL"
+                ],
+                "embalagem": {
+                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
+                    "Secundária": "CARTUCHO DE CARTOLINA"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob Prescrição Médica",
+                "usage_restriction": "Adulto e Pediátrico acima de  10 anos",
+                "label": "Vermelha",
+                "can_be_fractioned": false
+            },
+            "1832600350023": {
+                "dosage": "300 MG COM CT BL AL PLAS TRANS X 30 Ativo",
+                "concentration_order": [
+                    "ALOPURINOL"
+                ],
+                "embalagem": {
+                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
+                    "Secundária": "CARTUCHO DE CARTOLINA"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob Prescrição Médica",
+                "usage_restriction": "Adulto e Pediátrico acima de  10 anos",
+                "label": "Vermelha",
+                "can_be_fractioned": false
+            }
+        }
+    },
     "25351697819201416": {},
     "25351688499201424": {},
+    "25351693624201470": {
+        "expiration_date": "10/2029",
+        "regulation_num": "183260126",
+        "presentations": {
+            "1832601260011": {
+                "dosage": "6,25 MG COM CT BL AL/AL X 15  Ativo",
+                "concentration_order": [
+                    "CARVEDILOL"
+                ],
+                "embalagem": {
+                    "Primária": "Blister de alumínio e alumínio",
+                    "Secundária": "CARTUCHO DE CARTOLINA"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob Prescrição Médica",
+                "usage_restriction": "Adulto",
+                "label": "Vermelha",
+                "can_be_fractioned": false
+            },
+            "1832601260028": {
+                "dosage": "6,25 MG COM CT BL AL/AL X 30 Ativo",
+                "concentration_order": [
+                    "CARVEDILOL"
+                ],
+                "embalagem": {
+                    "Primária": "Blister de alumínio e alumínio",
+                    "Secundária": "CARTUCHO DE CARTOLINA"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob Prescrição Médica",
+                "usage_restriction": "Adulto",
+                "label": "Vermelha",
+                "can_be_fractioned": false
+            },
+            "1832601260036": {
+                "dosage": "12,5 MG COM CT BL AL/AL X 15  Ativo",
+                "concentration_order": [
+                    "CARVEDILOL"
+                ],
+                "embalagem": {
+                    "Primária": "Blister de alumínio e alumínio",
+                    "Secundária": "CARTUCHO DE CARTOLINA"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob Prescrição Médica",
+                "usage_restriction": "Adulto",
+                "label": "Vermelha",
+                "can_be_fractioned": false
+            },
+            "1832601260044": {
+                "dosage": "12,5 MG COM CT BL AL/AL X 30 Ativo",
+                "concentration_order": [
+                    "CARVEDILOL"
+                ],
+                "embalagem": {
+                    "Primária": "Blister de alumínio e alumínio",
+                    "Secundária": "CARTUCHO DE CARTOLINA"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob Prescrição Médica",
+                "usage_restriction": "Adulto",
+                "label": "Vermelha",
+                "can_be_fractioned": false
+            },
+            "1832601260052": {
+                "dosage": "25 MG COM CT BL AL/AL X 15 Ativo",
+                "concentration_order": [
+                    "CARVEDILOL"
+                ],
+                "embalagem": {
+                    "Primária": "Blister de alumínio e alumínio",
+                    "Secundária": "CARTUCHO DE CARTOLINA"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob Prescrição Médica",
+                "usage_restriction": "Adulto",
+                "label": "Vermelha",
+                "can_be_fractioned": false
+            },
+            "1832601260060": {
+                "dosage": "25 MG COM CT BL AL/AL X 30 Ativo",
+                "concentration_order": [
+                    "CARVEDILOL"
+                ],
+                "embalagem": {
+                    "Primária": "Blister de alumínio e alumínio",
+                    "Secundária": "CARTUCHO DE CARTOLINA"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob Prescrição Médica",
+                "usage_restriction": "Adulto",
+                "label": "Vermelha",
+                "can_be_fractioned": false
+            },
+            "1832601260079": {
+                "dosage": "25 MG COM CT BL AL/AL X 60 Ativo",
+                "concentration_order": [
+                    "CARVEDILOL"
+                ],
+                "embalagem": {
+                    "Primária": "Blister de alumínio e alumínio",
+                    "Secundária": "CARTUCHO DE CARTOLINA"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob Prescrição Médica",
+                "usage_restriction": "Adulto",
+                "label": "Vermelha",
+                "can_be_fractioned": false
+            },
+            "1832601260125": {
+                "dosage": "6,25 MG COM CT BL AL/AL X 60 Ativo",
+                "concentration_order": [
+                    "CARVEDILOL"
+                ],
+                "embalagem": {
+                    "Primária": "Blister de alumínio e alumínio",
+                    "Secundária": "CARTUCHO DE CARTOLINA"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob Prescrição Médica",
+                "usage_restriction": "Adulto",
+                "label": "Vermelha",
+                "can_be_fractioned": false
+            },
+            "1832601260133": {
+                "dosage": "12,5 MG COM CT BL AL/AL X 60 Ativo",
+                "concentration_order": [
+                    "CARVEDILOL"
+                ],
+                "embalagem": {
+                    "Primária": "Blister de alumínio e alumínio",
+                    "Secundária": "CARTUCHO DE CARTOLINA"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob Prescrição Médica",
+                "usage_restriction": "Adulto",
+                "label": "Vermelha",
+                "can_be_fractioned": false
+            }
+        }
+    },
     "25351664159201444": {},
     "25351688564201450": {},
     "25351696307201492": {},
     "25351699151201404": {},
+    "25351693344201480": {
+        "expiration_date": "10/2035",
+        "regulation_num": "183260248",
+        "presentations": {
+            "1832602480013": {
+                "dosage": "10 MG CAP DURA LIB RETARD CT BL AL PLAS TRANS X 14 Ativo",
+                "concentration_order": [
+                    "OMEPRAZOL"
+                ],
+                "embalagem": {
+                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
+                    "Secundária": "CARTUCHO DE CARTOLINA"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob Prescrição Médica",
+                "usage_restriction": "Adulto e Pediátrico",
+                "label": "Vermelha",
+                "can_be_fractioned": false
+            },
+            "1832602480021": {
+                "dosage": "20 MG CAP DURA LIB RETARD CT BL AL PLAS TRANS X 7 Ativo",
+                "concentration_order": [
+                    "OMEPRAZOL"
+                ],
+                "embalagem": {
+                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
+                    "Secundária": "CARTUCHO DE CARTOLINA"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob Prescrição Médica",
+                "usage_restriction": "Adulto e Pediátrico",
+                "label": "Vermelha",
+                "can_be_fractioned": false
+            },
+            "1832602480031": {
+                "dosage": "20 MG CAP DURA LIB RETARD CT BL AL PLAS TRANS X 14 Ativo",
+                "concentration_order": [
+                    "OMEPRAZOL"
+                ],
+                "embalagem": {
+                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
+                    "Secundária": "CARTUCHO DE CARTOLINA"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob Prescrição Médica",
+                "usage_restriction": "Adulto e Pediátrico",
+                "label": "Vermelha",
+                "can_be_fractioned": false
+            },
+            "1832602480048": {
+                "dosage": "10 MG CAP DURA LIB RETARD CT BL AL PLAS TRANS X 196 Ativo",
+                "concentration_order": [
+                    "OMEPRAZOL"
+                ],
+                "embalagem": {
+                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
+                    "Secundária": "CARTUCHO DE CARTOLINA"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob Prescrição Médica",
+                "usage_restriction": "Adulto e Pediátrico",
+                "label": "Vermelha",
+                "can_be_fractioned": false
+            },
+            "1832602480056": {
+                "dosage": "20 MG CAP DURA LIB RETARD CT BL AL PLAS TRANS X 28 Ativo",
+                "concentration_order": [
+                    "OMEPRAZOL"
+                ],
+                "embalagem": {
+                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
+                    "Secundária": "CARTUCHO DE CARTOLINA"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob Prescrição Médica",
+                "usage_restriction": "Adulto e Pediátrico",
+                "label": "Vermelha",
+                "can_be_fractioned": false
+            },
+            "1832602480064": {
+                "dosage": "20 MG CAP DURA LIB RETARD CT BL AL PLAS TRANS X 196 Ativo",
+                "concentration_order": [
+                    "OMEPRAZOL"
+                ],
+                "embalagem": {
+                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
+                    "Secundária": "CARTUCHO DE CARTOLINA"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob Prescrição Médica",
+                "usage_restriction": "Adulto e Pediátrico",
+                "label": "Vermelha",
+                "can_be_fractioned": false
+            },
+            "1832602480072": {
+                "dosage": "40 MG CAP DURA LIB RETARD CT BL AL PLAS TRANS X 7 Ativo",
+                "concentration_order": [
+                    "OMEPRAZOL"
+                ],
+                "embalagem": {
+                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
+                    "Secundária": "CARTUCHO DE CARTOLINA"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob Prescrição Médica",
+                "usage_restriction": "Adulto e Pediátrico",
+                "label": "Vermelha",
+                "can_be_fractioned": false
+            },
+            "1832602480080": {
+                "dosage": "40 MG CAP DURA LIB RETARD CT BL AL PLAS TRANS X 196 Ativo",
+                "concentration_order": [
+                    "OMEPRAZOL"
+                ],
+                "embalagem": {
+                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
+                    "Secundária": "CARTUCHO DE CARTOLINA"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob Prescrição Médica",
+                "usage_restriction": "Adulto e Pediátrico",
+                "label": "Vermelha",
+                "can_be_fractioned": false
+            },
+            "1832602480102": {
+                "dosage": "20 MG CAP DURA LIB RETARD CT BL AL PLAS TRANS X 42 Ativo",
+                "concentration_order": [
+                    "OMEPRAZOL"
+                ],
+                "embalagem": {
+                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
+                    "Secundária": "CARTUCHO DE CARTOLINA"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob Prescrição Médica",
+                "usage_restriction": "Adulto e Pediátrico",
+                "label": "Vermelha",
+                "can_be_fractioned": false
+            },
+            "1832602480110": {
+                "dosage": "40 MG CAP DURA LIB RETARD CT BL AL PLAS TRANS X 42 Ativo",
+                "concentration_order": [
+                    "OMEPRAZOL"
+                ],
+                "embalagem": {
+                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
+                    "Secundária": "CARTUCHO DE CARTOLINA"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob Prescrição Médica",
+                "usage_restriction": "Adulto e Pediátrico",
+                "label": "Vermelha",
+                "can_be_fractioned": false
+            },
+            "1832602480129": {
+                "dosage": "20 MG CAP DURA LIB RETARD CT BL AL PLAS TRANS X 56 Ativo",
+                "concentration_order": [
+                    "OMEPRAZOL"
+                ],
+                "embalagem": {
+                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
+                    "Secundária": "CARTUCHO DE CARTOLINA"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob Prescrição Médica",
+                "usage_restriction": "Adulto e Pediátrico",
+                "label": "Vermelha",
+                "can_be_fractioned": false
+            },
+            "1832602480137": {
+                "dosage": "40 MG CAP DURA LIB RETARD CT BL AL PLAS TRANS X 28 Ativo",
+                "concentration_order": [
+                    "OMEPRAZOL"
+                ],
+                "embalagem": {
+                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
+                    "Secundária": "CARTUCHO DE CARTOLINA"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob Prescrição Médica",
+                "usage_restriction": "Adulto e Pediátrico",
+                "label": "Vermelha",
+                "can_be_fractioned": false
+            },
+            "1832602480145": {
+                "dosage": "40 MG CAP DURA LIB RETARD CT BL AL PLAS TRANS X 56 Ativo",
+                "concentration_order": [
+                    "OMEPRAZOL"
+                ],
+                "embalagem": {
+                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
+                    "Secundária": "CARTUCHO DE CARTOLINA"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob Prescrição Médica",
+                "usage_restriction": "Adulto e Pediátrico",
+                "label": "Vermelha",
+                "can_be_fractioned": false
+            }
+        }
+    },
     "25351589163201336": {},
     "25351101205201716": {},
     "25351045797201810": {},
     "25351110114201844": {},
+    "25351190092201970": {
+        "expiration_date": "06/2026",
+        "regulation_num": "183260318",
+        "presentations": {
+            "1832603180013": {
+                "dosage": "10 MG COM CT BL AL PLAS TRANS X 20 Ativo",
+                "concentration_order": [
+                    "CLORIDRATO DE METOCLOPRAMIDA monoidratado"
+                ],
+                "embalagem": {
+                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
+                    "Secundária": "CARTUCHO DE CARTOLINA"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob Prescrição Médica",
+                "usage_restriction": "Adulto",
+                "label": "Vermelha",
+                "can_be_fractioned": false
+            }
+        }
+    },
     "25351190236202000": {},
     "25351838728201896": {},
+    "25351627021201936": {
+        "expiration_date": "10/2027",
+        "regulation_num": "183260422",
+        "presentations": {
+            "1832604220019": {
+                "dosage": "100 MG COM CT BL AL PLAS TRANS X 10 Ativo",
+                "concentration_order": [
+                    "CIPROFIBRATO"
+                ],
+                "embalagem": {
+                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
+                    "Secundária": "CARTUCHO DE CARTOLINA"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob Prescrição Médica",
+                "usage_restriction": "Adulto",
+                "label": "Vermelha",
+                "can_be_fractioned": false
+            },
+            "1832604220027": {
+                "dosage": "100 MG COM CT BL AL PLAS TRANS X 30 Ativo",
+                "concentration_order": [
+                    "CIPROFIBRATO"
+                ],
+                "embalagem": {
+                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
+                    "Secundária": "CARTUCHO DE CARTOLINA"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob Prescrição Médica",
+                "usage_restriction": "Adulto",
+                "label": "Vermelha",
+                "can_be_fractioned": false
+            },
+            "1832604220035": {
+                "dosage": "100 MG COM CT BL AL PLAS TRANS X 60 Ativo",
+                "concentration_order": [
+                    "CIPROFIBRATO"
+                ],
+                "embalagem": {
+                    "Primária": "BLISTER DE ALUMINIO/PLASTICO TRANSPARENTE",
+                    "Secundária": "CARTUCHO DE CARTOLINA"
+                },
+                "administration": "ORAL",
+                "conservation": "CONSERVAR EM  TEMPERATURA AMBIENTE ( AMBIENTE COM TEMPERATURA ENTRE 15 E 30ºC)",
+                "prescription_restriction": "Venda sob Prescrição Médica",
+                "usage_restriction": "Adulto",
+                "label": "Vermelha",
+                "can_be_fractioned": false
+            }
+        }
+    },
     "25351627163201900": {},
     "25351803928201828": {},
     "25351035604202150": {},
