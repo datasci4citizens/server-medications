@@ -361,20 +361,8 @@ class TestDefineState(unittest.TestCase):
 
         self.assertEqual(state, "taken")
 
-    def test_late_between_10_and_30_min(self):
-        """Entre 10 e 30 min de atraso → estado 'late'."""
-        scheduled = time(8, 0)
-        now_time  = time(8, 20)
-
-        rec = self._make_record(scheduled)
-        with patch("medication.models.timezone.now",
-                   return_value=self._fake_now(now_time)):
-            state = rec.define_state()
-
-        self.assertEqual(state, "late")
-
-    def test_forgotten_after_30_min(self):
-        """Mais de 30 min de atraso → estado 'forgotten'."""
+    def test_forgotten_after_10_min(self):
+        """Mais de 10 min de atraso → estado 'forgotten'."""
         scheduled = time(8, 0)
         now_time  = time(9, 0)
 

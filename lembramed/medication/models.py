@@ -263,7 +263,7 @@ class TakeRecord(models.Model):
     days= models.CharField(max_length=50, null=True)
     take_at = models.TimeField(null=True, blank=True)  #first time you will take the medicine
     take_cycle = models.IntegerField(null=True, blank=True) # ex: take in 8-8 hours...
-    state = models.CharField(max_length=50, null=True) # taken, forgortten, late...
+    state = models.CharField(max_length=50, null=True) # taken, forgortten
 
     def get_days_display(self):
         day_dict = dict(self.DAYS_OF_WEEK)
@@ -336,11 +336,9 @@ class TakeRecord(models.Model):
         # time diference
         time_gap = now - scheduled_datetime
         
-        # future --> change the time limmit and atribute diferent time limits based on the medications priority 
-        if time_gap > timedelta(minutes=30):
+        # change: removed the latte state
+        if time_gap > timedelta(minutes=10):
             self.state = "forgotten"
-        elif time_gap > timedelta(minutes=10):
-            self.state = "late"
         else:
             self.state = "taken"
 
