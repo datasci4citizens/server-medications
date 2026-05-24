@@ -39,7 +39,6 @@ class TakeAPITest(TestCase):
         """ add medication"""
         data = {
             'medication_id': self.medication1.medication_id,
-            'priority': 1,
             'quantity': '30'
         }
         
@@ -53,13 +52,11 @@ class TakeAPITest(TestCase):
         Take.objects.create(
             person_id=self.user.person,
             medication_id=self.medication1,
-            priority=1,
             quantity='30'
         )
         
         data = {
             'medication_id': self.medication1.medication_id,
-            'priority': 1,
             'quantity': '30'
         }
         
@@ -72,7 +69,6 @@ class TakeAPITest(TestCase):
         """add a medication that is not in the bank"""
         data = {
             'medication_id': 9999,  # Não existe
-            'priority': 1,
             'quantity': '30'
         }
         
@@ -88,12 +84,10 @@ class TakeAPITest(TestCase):
         take = Take.objects.create(
             person_id=self.user.person,
             medication_id=self.medication1,
-            priority=1,
             quantity='30'
         )
         
         data = {
-            'priority': 3,
             'quantity': '60'
         }
         
@@ -115,7 +109,6 @@ class TakeAPITest(TestCase):
         take = Take.objects.create(
             person_id=other_user.person,
             medication_id=self.medication1,
-            priority=1,
             quantity='30'
         )
         
@@ -131,7 +124,6 @@ class TakeAPITest(TestCase):
         take = Take.objects.create(
             person_id=self.user.person,
             medication_id=self.medication1,
-            priority=1,
             quantity='30'
         )
         
@@ -152,7 +144,6 @@ class TakeAPITest(TestCase):
         take = Take.objects.create(
             person_id=other_user.person,
             medication_id=self.medication1,
-            priority=1,
             quantity='30'
         )
         
@@ -174,7 +165,6 @@ class TakeAPITest(TestCase):
         Take.objects.create(
             person_id=other_user.person,
             medication_id=self.medication1,
-            priority=1,
             quantity='30'
         )
         
@@ -182,7 +172,6 @@ class TakeAPITest(TestCase):
         Take.objects.create(
             person_id=self.user.person,
             medication_id=self.medication2,
-            priority=2,
             quantity='20'
         )
         
@@ -197,7 +186,6 @@ class TakeAPITest(TestCase):
         Take.objects.create(
             person_id=self.user.person,
             medication_id=self.medication1,
-            priority=1,
             quantity='30'
         )
         

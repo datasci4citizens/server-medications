@@ -36,7 +36,7 @@ def make_person(person_id=1):
     return person
 
 
-def make_take(person, medication, priority=1, quantity="30", med_format="pílula"):
+def make_take(person, medication, quantity="30", med_format="pílula"):
     """
     Cria uma instância de Take sem tocar no banco.
 
@@ -55,7 +55,6 @@ def make_take(person, medication, priority=1, quantity="30", med_format="pílula
     take._state = ModelState()          
 
     take.pk       = None
-    take.priority = priority
     take.quantity = quantity
     take.med_format  = med_format
 

@@ -48,8 +48,8 @@ class MedicationAdmin(admin.ModelAdmin):
 
 class TakeAdmin(admin.ModelAdmin):
     """Admin para medicamentos que a pessoa está tomando"""
-    list_display = ('taken_id', 'person_id', 'medication_id', 'priority', 'quantity')
-    list_filter = ('priority', 'person_id')
+    list_display = ('taken_id', 'person_id', 'medication_id','quantity')
+    list_filter = ('person_id',)
     search_fields = ('person_id__user__email', 'medication_id__medication_id')
     readonly_fields = ('taken_id',)
     
@@ -58,7 +58,7 @@ class TakeAdmin(admin.ModelAdmin):
             'fields': ('taken_id', 'person_id', 'medication_id')
         }),
         ('Configurações', {
-            'fields': ('priority', 'quantity')
+            'fields': ('quantity',)
         }),
     )
 

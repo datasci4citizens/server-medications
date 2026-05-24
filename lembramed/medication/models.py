@@ -140,23 +140,12 @@ class Take(models.Model):
     # Int de prioridade da notificacao daquele medicamento
     # inicio e final de tratamento (opcional) OK
 
-    PRIOTITY_TYPES = [
-        (0, 'Low'),
-        (1, 'Medium'),
-        (2, 'High'),
-        (3, 'Important')
-    ]
-    
-    priority = models.SmallIntegerField()
     quantity = models.CharField(max_length= 50, null=True) # estoque
     med_format = models.CharField(max_length=50, null=True) # type
 
     def __str__(self):
        return f"{self.person_id} - {self.medication_id}"
     
-    def get_priority_display(self):
-        prio_dict = dict(self.PRIOTITY_TYPES)
-        return prio_dict[self.priority]
 
     def check_interactions(self):
         from django.conf import settings
