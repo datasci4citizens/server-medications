@@ -149,30 +149,17 @@ class Take(models.Model):
 
     def check_interactions(self):
         from django.conf import settings
-
-        json_path = os.path.join(
-            settings.BASE_DIR, 'api', 'src', 'lembramed_data', 'Interactions.json'
-        )
+        import xml.etree.ElementTree as ET
 
         try:
-            with open(json_path, 'r', encoding='utf-8') as f:
-                all_interactions = json.load(f)
-        except (FileNotFoundError, json.JSONDecodeError) as e:
-            raise ValueError(f"Erro ao carregar interactions.json: {e}")
+            tree = ET.parse('drugbank_all_full_database.xml')
+            root = tree.getroot()
+        except FileNotFoundError:
+            return
+        
+        input_drug = self.name.strip().lower()
 
-        # O arquivo real do projeto pode vir como uma tabela com
-        # {'columns': [...], 'data': [...]}. Nesse caso, ele não contém
-        # pares ingredient1/ingredient2 e não deve quebrar o salvamento.
-        if isinstance(all_interactions, dict):
-            all_interactions = all_interactions.get('data', [])
-        if not isinstance(all_interactions, list):
-            return []
-
-        new_ingredients = {
-            i.lower().strip()
-            for i in self.medication_id.ingredient.values_list('active_ingredient', flat=True)
-        }
-
+        # ingredients from medications that already are in the users database
         current_ingredients = {
             i.lower().strip()
             for i in Active_Ingredient.objects.filter(
@@ -182,40 +169,34 @@ class Take(models.Model):
             ).values_list('active_ingredient', flat=True).distinct()
         }
 
-        conflicts = []
-        for interaction in all_interactions:
-            if not isinstance(interaction, dict):
-                continue
+        if not current_ingredients:
+            return
+        
+        for drug in root.findall('.//drug'):
+            drug_name = drug.find('name') # find information of the new medication
 
-            ing1 = interaction.get('ingredient1', '').lower().strip()
-            ing2 = interaction.get('ingredient2', '').lower().strip()
-
-            match = (
-                (ing1 in new_ingredients and ing2 in current_ingredients) or
-                (ing2 in new_ingredients and ing1 in current_ingredients)
-            )
-
-            if match:
-                conflicts.append({
-                    'ingredient1': interaction['ingredient1'],
-                    'ingredient2': interaction['ingredient2'],
-                    'severity':    interaction.get('severity', 'Unknown'),
-                    'description': interaction.get('description', ''),
-                })
+            if drug_name is not None and drug_name.text.strip().lower() == input_drug:
             
+                interactions = drug.findall('.//drug-interaction')
+                
+                if interactions :
+                
+                    for interaction in interactions: # compare the medications of the user with the one that creates conflict
+                        inter_name_tag = interaction.find('name')
+                        inter_desc_tag = interaction.find('description')
 
-        major_conflicts = [c for c in conflicts if c['severity'] == 'Major']
-        if major_conflicts:
-            descriptions = '; '.join(
-                f"{c['ingredient1']} × {c['ingredient2']}: {c['description']}"
-                for c in major_conflicts
-            )
-            raise ValidationError(
-                f"Esses medicamentos não devem ser consumidos simultaneamente. "
-                f"Consulte um médico. Interações graves encontradas: {descriptions}"
-            )
+                        
+                        if inter_name_tag is not None and inter_desc_tag is not None:
+                            conflicting_drug = inter_name_tag.strip().lower()
 
-        return conflicts
+                            if conflicting_drug in current_ingredients:
+                                print(f"O medicamento que você está cadastrando ({self.name}) interage com: {inter_name_tag.text.strip()}"
+                                print(f"Descrição do conflito:")
+                                print(f"{inter_desc_tag.text.strip()}")
+                                print(f"Caso tal interação apresente algum risco à saúde do usuário, recomendamos que consulte com um médico.")
+                
+                break
+
 
     def save(self, *args, **kwargs):
         if not self.pk:
