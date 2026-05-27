@@ -179,7 +179,7 @@ class Take(models.Model):
             
                 interactions = drug.findall('.//drug-interaction')
                 
-                if interactions :
+                if interactions:
                 
                     for interaction in interactions: # compare the medications of the user with the one that creates conflict
                         inter_name_tag = interaction.find('name')
@@ -190,7 +190,7 @@ class Take(models.Model):
                             conflicting_drug = inter_name_tag.strip().lower()
 
                             if conflicting_drug in current_ingredients:
-                                print(f"O medicamento que você está cadastrando ({self.name}) interage com: {inter_name_tag.text.strip()}"
+                                print(f"O medicamento que você está cadastrando ({self.name}) interage com: {inter_name_tag.text.strip()}")
                                 print(f"Descrição do conflito:")
                                 print(f"{inter_desc_tag.text.strip()}")
                                 print(f"Caso tal interação apresente algum risco à saúde do usuário, recomendamos que consulte com um médico.")
@@ -203,6 +203,42 @@ class Take(models.Model):
             self.check_interactions()
         
         super().save(*args,**kwargs)
+    
+    def check_food_interactions(self):
+        import xml.etree.ElementTree as ET
+        
+        try:
+            tree = ET.parse('drugbank_all_full_database.xml')
+            root = tree.getroot()
+        except FileNotFoundError:
+            return
+        
+        selected_drug = self.name.strip().lower()
+
+        current_ingredients = { # get the active ingridients of the medications
+            i.lower().strip()
+            for i in selected_drug.objects.filter(
+                medication_id__takes__person_id=self.person_id
+            ).exclude(
+                medication_id=self.medication_id
+            ).values_list('active_ingredient', flat=True).distinct()
+        }
+
+        if not current_ingredients:
+            return
+
+        for drug in root.findall('.//drug'):
+            drug_name = drug.find('name')
+
+            if drug_name is not None and drug_name.text.strip().lower() == selected_drug:
+                interactions = drug.findall('.//food-interactions')
+
+                if interactions:
+                    print(f"")
+
+
+
+
 
 class TakeRecord(models.Model):
     taken_id = models.ForeignKey(    
