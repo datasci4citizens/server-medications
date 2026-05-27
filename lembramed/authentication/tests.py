@@ -6,10 +6,9 @@ from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 from unittest.mock import patch, MagicMock
 import uuid
+from django.core.files.uploadedfile import SimpleUploadedFile
 
 from .models import Person
-
-
 
 def create_user(email="user@example.com", password="StrongPass1!", first_name="João", last_name="Silva"):
     user = User.objects.create_user(
@@ -47,6 +46,10 @@ class PersonModelTest(TestCase):
     def test_person_birth_optional(self):
         user = create_user()
         self.assertIsNone(user.person.birth)
+        
+    def test_profile_picture_optional(self):
+        user = create_user()
+        self.assertFalse(user.person.profile_picture)
 
     def test_person_deleted_when_user_deleted(self):
         user = create_user()
@@ -101,6 +104,31 @@ class RegisterViewTest(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         user = User.objects.get(email=payload["email"])
         self.assertEqual(str(user.person.birth), "1990-05-20")
+    
+    def test_register_with_profile_picture(self):
+
+        small_gif = (
+        b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x00\x00\x00\x21\xf9\x04'
+        b'\x01\x0a\x00\x01\x00\x2c\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02'
+        b'\x02\x4c\x01\x00\x3b'
+        )
+        
+        avatar = SimpleUploadedFile("avatar.gif", small_gif, content_type="image/gif")
+
+        payload = {
+            "email": "birth@example.com",
+            "first_name": "Maria",
+            "last_name": "Costa",
+            "password": "StrongPass1!",
+            "birth": "1990-05-20",
+            "profile_picture": avatar
+        }
+
+        response = self.client.post(self.url, payload, format="multipart")
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        user = User.objects.get(email=payload["email"])
+        self.assertTrue(user.person.profile_picture)     
+        self.assertIn("avatar", user.person.profile_picture.name)
 
     def test_register_duplicate_email_fails(self):
         create_user(email="dup@example.com")
@@ -205,10 +233,47 @@ class MeViewTest(APITestCase):
         self.user.person.refresh_from_db()
         self.assertEqual(str(self.user.person.birth), "1995-08-15")
 
+    def test_patch_me_updates_profile_picture(self):
+
+        small_gif_1 = (
+        b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x00\x00\x00\x21\xf9\x04'
+        b'\x01\x0a\x00\x01\x00\x2c\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02'
+        b'\x02\x4c\x01\x00\x3b'
+        )
+
+        small_gif_2 = (
+        b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\xff\xff\xff'
+        b'\x00\x00\x00\x21\xf9\x04\x05\x00\x00\x00\x00\x2c\x00\x00\x00\x00'
+        b'\x01\x00\x01\x00\x00\x02\x02\x44\x01\x00\x3b'
+        )
+
+        avatar_1 = SimpleUploadedFile("avatar1.gif", small_gif_1, content_type="image/gif")
+        avatar_2 = SimpleUploadedFile("avatar2.gif", small_gif_2, content_type="image/gif")
+        self.user.person.profile_picture = avatar_1
+        self.user.person.save()
+            
+        avatar_2.seek(0)
+        response = self.client.patch(self.url, {"profile_picture": avatar_2}, format="multipart")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.user.person.refresh_from_db()
+        self.assertIn("avatar2", self.user.person.profile_picture.name)
+
     def test_patch_me_invalid_birth_format(self):
         payload = {"birth": "not-a-date"}
         response = self.client.patch(self.url, payload, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_patch_me_invallid_profile_picture_format(self):
+        invalid_file= SimpleUploadedFile(
+            "documento.txt",
+            b"conteudo_de_texto_qualquer",
+            content_type="text/plain"
+        )
+
+        payload = {"profile_picture": invalid_file}
+        response = self.client.patch(self.url, payload, format="multipart")
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn("profile_picture", response.data)
 
     def test_patch_me_unauthenticated(self):
         self.client.credentials()
