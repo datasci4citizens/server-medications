@@ -20,6 +20,17 @@ class PersonViewSet(viewsets.ModelViewSet):
     queryset = Person.objects.all().order_by("person_id")
     serializer_class = PersonSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+    def create(self, request, *args, **kwargs):
+        person, created = Person.objects.get_or_create(user=request.user)
+        serializer = self.get_serializer(person, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        
+        serializer.save(user=request.user)
+        
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+    
     
     def get_object(self):
         """Override get_object to enforce user isolation"""

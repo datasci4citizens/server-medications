@@ -31,5 +31,8 @@ class Person(models.Model):
 def create_or_update_person(sender, instance, created, **kwargs):
     if created:
         Person.objects.create(user=instance)
-    else:
-        instance.person.save()
+
+
+@receiver(post_save, sender=User)
+def save_user_person(sender, instance, **kwargs):
+    instance.person.save()

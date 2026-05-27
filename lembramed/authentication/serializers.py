@@ -61,3 +61,4 @@ class PersonSerializer(serializers.ModelSerializer):
     class Meta:
         model  = Person
         fields = ['person_id', 'email', 'first_name', 'last_name', 'birth', 'google_id']
+        read_only_fields = ['person_id']
