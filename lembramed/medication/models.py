@@ -150,15 +150,14 @@ class Take(models.Model):
     def check_interactions(self):
         from django.conf import settings
         import xml.etree.ElementTree as ET
+        from django.core.exceptions import ValidationError
 
         try:
             tree = ET.parse('drugbank_all_full_database.xml')
             root = tree.getroot()
         except FileNotFoundError:
-            return
+            raise ValueError("Arquivo drugbank_all_full_database.xml não encontrado.")
         
-        input_drug = self.name.strip().lower()
-
         # ingredients from medications that already are in the users database
         current_ingredients = {
             i.lower().strip()
@@ -235,9 +234,6 @@ class Take(models.Model):
 
                 if interactions:
                     print(f"")
-
-
-
 
 
 class TakeRecord(models.Model):

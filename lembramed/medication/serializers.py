@@ -34,7 +34,7 @@ class TakeSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Take
-        fields = ['taken_id', 'person_id', 'medication_id', 'medication_name', 'priority', 'quantity']
+        fields = ['taken_id', 'person_id', 'medication_id', 'medication_name', 'quantity']
         read_only_fields = ['taken_id', 'person_id']
     
     def get_medication_name(self, obj):

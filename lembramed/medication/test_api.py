@@ -95,7 +95,6 @@ class TakeAPITest(TestCase):
         
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         take.refresh_from_db()
-        self.assertEqual(take.priority, 3)
         self.assertEqual(take.quantity, '60')
     
     def test_edit_medication_of_another_user(self):
@@ -112,8 +111,7 @@ class TakeAPITest(TestCase):
             quantity='30'
         )
         
-        data = {'priority': 2}
-        response = self.client.patch(f'/api/take/{take.taken_id}/', data, format='json')
+        response = self.client.patch(f'/api/take/{take.taken_id}/', format='json')
         
         self.assertIn(response.status_code, [status.HTTP_403_FORBIDDEN, status.HTTP_404_NOT_FOUND])
     

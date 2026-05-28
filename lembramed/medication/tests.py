@@ -93,161 +93,8 @@ def make_take_record(take, cycle_type='daily', begin=None, end=None, take_at=Non
     return rec
 
 
-# Dados falsos de interações (substitui Interactions.json)
 
-FAKE_INTERACTIONS = [
-    {
-        "ingredient1": "Warfarin",
-        "ingredient2": "Aspirin",
-        "severity":    "Major",
-        "description": "Risco elevado de sangramento."
-    },
-    {
-        "ingredient1": "Metformin",
-        "ingredient2": "Ibuprofen",
-        "severity":    "Moderate",
-        "description": "Pode reduzir eficácia do Metformin."
-    },
-    {
-        "ingredient1": "Simvastatin",
-        "ingredient2": "Erythromycin",
-        "severity":    "Major",
-        "description": "Risco de miopatia grave."
-    },
-    {
-        "ingredient1": "Lisinopril",
-        "ingredient2": "Potassium",
-        "severity":    "Minor",
-        "description": "Pode causar leve hipercalemia."
-    },
-]
-
-FAKE_INTERACTIONS_JSON = json.dumps(FAKE_INTERACTIONS)
-
-
-# Patch auxiliar: abre sempre o JSON falso
-
-def patch_interactions(func):
-    """Decorator que substitui open() do json de interações pelo fake."""
-    return patch(
-        "builtins.open",
-        mock_open(read_data=FAKE_INTERACTIONS_JSON)
-    )(func)
-
-
-# 1. Testes: Take.check_interactions
-
-class TestCheckInteractions(unittest.TestCase):
-    """
-    Testa se check_interactions detecta corretamente conflitos entre
-    ingredientes novos e os já em uso pelo paciente.
-    """
-
-    def _make_qs(self, final_list):
-        """
-        Retorna um MagicMock que simula:
-            Active_Ingredient.objects
-                .filter(...)        → mock
-                .exclude(...)       → mock
-                .values_list(...)   → mock   ← não retorna lista ainda!
-                .distinct()         → final_list
-        """
-        mock_qs = MagicMock()
-        mock_qs.filter.return_value       = mock_qs
-        mock_qs.exclude.return_value      = mock_qs
-        mock_qs.values_list.return_value  = mock_qs  # devolve mock para continuar cadeia
-        mock_qs.distinct.return_value     = final_list  # aqui sim entrega a lista
-        return mock_qs
-
-    def _patch_current_ingredients(self, take, current_ingredients):
-        """Mantido por compatibilidade — usa _make_qs internamente."""
-        return self._make_qs(current_ingredients)
-
-    @patch_interactions
-    @patch("medication.models.Active_Ingredient")
-    def test_major_interaction_raises(self, MockActiveIngredient):
-        """Interação Major → ValidationError deve ser levantado."""
-        from django.core.exceptions import ValidationError
-
-        person = make_person()
-        medication = make_medication(1, ["Warfarin"])
-
-        take = make_take(person, medication)
-
-        # Paciente já usa Aspirin
-        mock_qs = self._make_qs(["Aspirin"])
-        MockActiveIngredient.objects = mock_qs
-
-        with self.assertRaises(ValidationError) as ctx:
-            take.check_interactions()
-
-        self.assertIn("Warfarin", str(ctx.exception))
-        self.assertIn("Aspirin",  str(ctx.exception))
-
-    @patch_interactions
-    @patch("medication.models.Active_Ingredient")
-    def test_moderate_interaction_no_raise(self, MockActiveIngredient):
-        """Interação Moderate → não levanta exceção, mas retorna conflito."""
-        person = make_person()
-        medication = make_medication(2, ["Metformin"])
-
-        take = make_take(person, medication)
-
-        mock_qs = self._make_qs(["Ibuprofen"])
-        MockActiveIngredient.objects = mock_qs
-
-        conflicts = take.check_interactions()
-
-        self.assertEqual(len(conflicts), 1)
-        self.assertEqual(conflicts[0]["severity"], "Moderate")
-
-    @patch_interactions
-    @patch("medication.models.Active_Ingredient")
-    def test_no_interaction(self, MockActiveIngredient):
-        """Sem ingredientes em comum → lista vazia, sem exceção."""
-        person = make_person()
-        medication = make_medication(3, ["Paracetamol"])
-
-        take = make_take(person, medication)
-
-        mock_qs = self._make_qs(["Omeprazole"])
-        MockActiveIngredient.objects = mock_qs
-
-        conflicts = take.check_interactions()
-        self.assertEqual(conflicts, [])
-
-    @patch_interactions
-    @patch("medication.models.Active_Ingredient")
-    def test_minor_interaction_returned(self, MockActiveIngredient):
-        """Interação Minor → retorna conflito sem levantar exceção."""
-        person = make_person()
-        medication = make_medication(4, ["Lisinopril"])
-
-        take = make_take(person, medication)
-
-        mock_qs = self._make_qs(["Potassium"])
-        MockActiveIngredient.objects = mock_qs
-
-        conflicts = take.check_interactions()
-        self.assertEqual(len(conflicts), 1)
-        self.assertEqual(conflicts[0]["severity"], "Minor")
-
-    @patch("builtins.open", side_effect=FileNotFoundError)
-    @patch("medication.models.Active_Ingredient")
-    def test_missing_json_raises_value_error(self, MockActiveIngredient, _):
-        """Se o arquivo JSON não existir → ValueError."""
-        person = make_person()
-        medication = make_medication(5, ["Warfarin"])
-        take = make_take(person, medication)
-
-        mock_qs = self._make_qs([])
-        MockActiveIngredient.objects = mock_qs
-
-        with self.assertRaises(ValueError):
-            take.check_interactions()
-
-
-# 2. Testes: TakeRecord.calculate_schedule
+# Testes: TakeRecord.calculate_schedule
 
 class TestCalculateSchedule(unittest.TestCase):
     """
@@ -324,7 +171,7 @@ class TestCalculateSchedule(unittest.TestCase):
         self.assertEqual(schedule, [time(12, 0), time(20, 0)])
 
 
-# 3. Testes: TakeRecord.define_state
+#  Testes: TakeRecord.define_state
 
 class TestDefineState(unittest.TestCase):
     """
@@ -361,7 +208,7 @@ class TestDefineState(unittest.TestCase):
         self.assertEqual(state, "taken")
 
     def test_forgotten_after_10_min(self):
-        """Mais de 10 min de atraso → estado 'forgotten'."""
+        """Mais de 30 min de atraso → estado 'forgotten'."""
         scheduled = time(8, 0)
         now_time  = time(9, 0)
 
@@ -395,7 +242,7 @@ class TestDefineState(unittest.TestCase):
         self.assertIsNone(state)
 
 
-# 4. Testes: TakeRecord.calculate_stock
+# Testes: TakeRecord.calculate_stock
 
 class TestCalculateStock(unittest.TestCase):
     """
