@@ -1,4 +1,5 @@
 import os,json,time,glob,logging,pprint
+from pathlib import Path
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from urllib3.exceptions import ReadTimeoutError
@@ -247,7 +248,7 @@ def get_dosage_formato(driver:webdriver.Firefox):
     
     return output_dict
 
-def run_scraper(process_nums: list[str],restart_every: int = RESTART_EVERY):
+def run_scraper(process_nums: list[str], file_num:int,restart_every: int = RESTART_EVERY):
     """Main logic of the medication scraping"""
 
     done = load_checkpoint()
@@ -308,9 +309,14 @@ def run_scraper(process_nums: list[str],restart_every: int = RESTART_EVERY):
                     done.add(str(pn))
                     save_checkpoint(done)
                     consecutive_errors = 0
-            
-            # pprint.pprint(local_dict)
-            with open("dosage_formato.json", "r+") as f:
+
+            file_path = Path(f"dosage_formato{file_num}.json")
+
+            if not file_path.exists():
+                with open(f"dosage_formato{file_num}.json", "w") as f:
+                    f.write("{}")
+    
+            with open(f"dosage_formato{file_num}.json", "r+") as f:
                 cur = json.load(f)
                 cur.update({str(pn): local_dict})
                 f.seek(0)
