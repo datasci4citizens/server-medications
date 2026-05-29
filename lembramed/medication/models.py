@@ -158,6 +158,16 @@ class Take(models.Model):
         except FileNotFoundError:
             raise ValueError("Arquivo drugbank_all_full_database.xml não encontrado.")
         
+        new_ingredients = {
+            i.lower().strip()
+            for i in Active_Ingredient.objects.filter(
+                medication_id=self.medication_id
+            ).values_list('active_ingredient', flat=True)
+        }
+
+        if not new_ingredients:
+            return
+        
         # ingredients from medications that already are in the users database
         current_ingredients = {
             i.lower().strip()
@@ -171,31 +181,47 @@ class Take(models.Model):
         if not current_ingredients:
             return
         
+        interactions_found = []
+
         for drug in root.findall('.//drug'):
-            drug_name = drug.find('name') # find information of the new medication
+            drug_name_tag = drug.find('name')
+            if drug_name_tag is None:
+                continue
 
-            if drug_name is not None and drug_name.text.strip().lower() == input_drug:
-            
-                interactions = drug.findall('.//drug-interaction')
-                
-                if interactions:
-                
-                    for interaction in interactions: # compare the medications of the user with the one that creates conflict
-                        inter_name_tag = interaction.find('name')
-                        inter_desc_tag = interaction.find('description')
+            drug_name = drug_name_tag.text.strip().lower()
 
-                        
-                        if inter_name_tag is not None and inter_desc_tag is not None:
-                            conflicting_drug = inter_name_tag.strip().lower()
+            if drug_name not in new_ingredients:
+                continue
 
-                            if conflicting_drug in current_ingredients:
-                                print(f"O medicamento que você está cadastrando ({self.name}) interage com: {inter_name_tag.text.strip()}")
-                                print(f"Descrição do conflito:")
-                                print(f"{inter_desc_tag.text.strip()}")
-                                print(f"Caso tal interação apresente algum risco à saúde do usuário, recomendamos que consulte com um médico.")
-                
-                break
+            interactions = drug.findall('.//drug-interaction')
+            if not interactions:
+                continue
 
+            for interaction in interactions:
+                inter_name_tag = interaction.find('name')
+                inter_desc_tag = interaction.find('description')
+
+                if inter_name_tag is None or inter_desc_tag is None:
+                    continue
+
+                conflicting_drug = inter_name_tag.text.strip().lower()
+
+                if conflicting_drug in current_ingredients:
+                    interactions_found.append({
+                        'new_ingredient': drug_name,
+                        'conflicting_drug': inter_name_tag.text.strip(),
+                        'description': inter_desc_tag.text.strip(),
+                    })
+
+        if interactions_found:
+            messages = []
+            for item in interactions_found:
+                messages.append(
+                    f"O princípio ativo '{item['new_ingredient']}' interage com '{item['conflicting_drug']}'.\n"
+                    f"Descrição: {item['description']}\n"
+                    f"Caso tal interação apresente algum risco à saúde, recomendamos consultar um médico."
+                )
+            raise ValidationError("\n\n".join(messages))
 
     def save(self, *args, **kwargs):
         if not self.pk:
@@ -312,9 +338,20 @@ class TakeRecord(models.Model):
             return scheduels
         return []
     
+    def check_medication_day(self, selected_date=None):
+        if selected_date is None:
+            selected_date = date.today()
 
-    def define_state(self): # define the medication state based on when the medication was taken
-    
+        if selected_date != date.today():
+            raise ValidationError(
+                f"Você não pode marcar uma medicação de um dia diferente do atual. "
+                f"Data selecionada: {selected_date.strftime('%d/%m/%Y')}, "
+                f"hoje é {date.today().strftime('%d/%m/%Y')}."
+            )
+        return True
+    def define_state(self, selected_date=None): # define the medication state based on when the medication was taken
+        
+        self.check_medication_day(selected_date)
         now = timezone.now() # review the when_was_taken 
         current_now = timezone.localtime(now)
         current_time = current_now.time()
@@ -331,7 +368,6 @@ class TakeRecord(models.Model):
             return "waiting"
 
         closest_scheduled_time = max(past_schedules) 
-
         scheduled_datetime = datetime.combine(current_date, closest_scheduled_time) # convert to datetime
         scheduled_datetime = timezone.make_aware(scheduled_datetime)
 

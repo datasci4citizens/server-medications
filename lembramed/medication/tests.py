@@ -354,6 +354,61 @@ class TestCalculateStock(unittest.TestCase):
         self.assertIsNotNone(result)
         self.assertIn("1 pílulas restantes", result)
 
+# Testes: TakeRecord.check_medication_day
+
+class TestCheckMedicationDay(unittest.TestCase):
+    """
+    Testa se o usuário está tentando marcar uma medicação
+    em um dia diferente do dia atual.
+    """
+
+    def _make_record(self):
+        take = MagicMock()
+        take.quantity = "30"
+        take.med_format = "pílula"
+        return make_take_record(take, take_at=time(8, 0))
+
+    def test_today_does_not_raise(self):
+        from django.core.exceptions import ValidationError
+        rec = self._make_record()
+        try:
+            rec.check_medication_day(selected_date=date.today())
+        except ValidationError:
+            self.fail("check_medication_day lançou ValidationError para a data de hoje.")
+
+    def test_past_date_raises_validation_error(self):
+        from django.core.exceptions import ValidationError
+        rec = self._make_record()
+        yesterday = date.today() - timedelta(days=1)
+        with self.assertRaises(ValidationError):
+            rec.check_medication_day(selected_date=yesterday)
+
+    def test_future_date_raises_validation_error(self):
+        from django.core.exceptions import ValidationError
+        rec = self._make_record()
+        tomorrow = date.today() + timedelta(days=1)
+        with self.assertRaises(ValidationError):
+            rec.check_medication_day(selected_date=tomorrow)
+
+    def test_error_message_contains_dates(self):
+        from django.core.exceptions import ValidationError
+        rec = self._make_record()
+        wrong_date = date.today() - timedelta(days=3)
+        with self.assertRaises(ValidationError) as ctx:
+            rec.check_medication_day(selected_date=wrong_date)
+        
+        error_message = str(ctx.exception)
+        self.assertIn(wrong_date.strftime('%d/%m/%Y'), error_message)
+        self.assertIn(date.today().strftime('%d/%m/%Y'), error_message)
+
+    def test_none_defaults_to_today(self):
+        """selected_date=None deve usar date.today() e não lançar exceção."""
+        from django.core.exceptions import ValidationError
+        rec = self._make_record()
+        try:
+            rec.check_medication_day(selected_date=None)
+        except ValidationError:
+            self.fail("check_medication_day lançou ValidationError quando selected_date=None.")
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
