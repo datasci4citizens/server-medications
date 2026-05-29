@@ -206,7 +206,34 @@ class TestDefineState(unittest.TestCase):
             state = rec.define_state()
 
         self.assertEqual(state, "taken")
+    
+    def test_advance_the_medication(self):
+        from django.core.exceptions import ValidationError
 
+        scheduled = time(9, 0)
+        now_time  = time(8, 0)  # 60 min before
+
+        rec = self._make_record(scheduled)
+        with patch("medication.models.timezone.now",
+                return_value=self._fake_now(now_time)):
+            with self.assertRaises(ValidationError):
+                rec.define_state()
+    
+    def test_within_window_does_not_raise(self):
+        from django.core.exceptions import ValidationError
+
+        scheduled = time(9, 0)
+        now_time  = time(8, 55)  # 5 min before
+
+        rec = self._make_record(scheduled)
+        with patch("medication.models.timezone.now",
+                return_value=self._fake_now(now_time)):
+            try:
+                rec.define_state()
+            except ValidationError:
+                self.fail("define_state lançou ValidationError dentro da janela permitida.")
+
+                
     def test_forgotten_after_10_min(self):
         """Mais de 30 min de atraso → estado 'forgotten'."""
         scheduled = time(8, 0)
@@ -218,18 +245,6 @@ class TestDefineState(unittest.TestCase):
             state = rec.define_state()
 
         self.assertEqual(state, "forgotten")
-
-    def test_waiting_before_first_schedule(self):
-        """Horário atual antes do primeiro agendamento → 'waiting'."""
-        scheduled = time(20, 0)
-        now_time  = time(7, 0)
-
-        rec = self._make_record(scheduled)
-        with patch("medication.models.timezone.now",
-                   return_value=self._fake_now(now_time)):
-            state = rec.define_state()
-
-        self.assertEqual(state, "waiting")
 
     def test_no_schedule_returns_none(self):
         """Sem take_at → define_state retorna None."""

@@ -349,6 +349,7 @@ class TakeRecord(models.Model):
                 f"hoje é {date.today().strftime('%d/%m/%Y')}."
             )
         return True
+    
     def define_state(self, selected_date=None): # define the medication state based on when the medication was taken
         
         self.check_medication_day(selected_date)
@@ -361,6 +362,21 @@ class TakeRecord(models.Model):
         if not schedules:
             return None
 
+
+        future_schedules = [t for t in schedules if t > current_time]
+        if future_schedules:
+            next_scheduled_time = min(future_schedules)
+            next_scheduled_dt = datetime.combine(current_date, next_scheduled_time)
+            next_scheduled_dt = timezone.make_aware(next_scheduled_dt)
+            time_until_next = next_scheduled_dt - now
+
+            if time_until_next > timedelta(minutes=10):
+                raise ValidationError(
+                    f"Você não pode antecipar o uso do medicamento. "
+                    f"Próximo horário: {next_scheduled_time.strftime('%H:%M')}."
+                )
+
+     
         # Find the closest time of the scheduel to now
         past_schedules = [t for t in schedules if t <= current_time]
         
@@ -373,13 +389,13 @@ class TakeRecord(models.Model):
 
         # time diference
         time_gap = now - scheduled_datetime
-        
+
         # change: removed the latte state
         if time_gap > timedelta(minutes=10):
             self.state = "forgotten"
         else:
             self.state = "taken"
-
+            
         self.save() 
         return self.state
 
