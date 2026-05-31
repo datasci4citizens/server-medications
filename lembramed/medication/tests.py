@@ -15,6 +15,8 @@ import os
 import unittest
 from datetime import date, time, datetime, timedelta
 from unittest.mock import MagicMock, patch, mock_open
+from datetime import date, time, datetime, timedelta
+from django.utils import timezone
 
 # Helpers para criar objetos fake sem banco de dados
 
@@ -424,6 +426,174 @@ class TestCheckMedicationDay(unittest.TestCase):
             rec.check_medication_day(selected_date=None)
         except ValidationError:
             self.fail("check_medication_day lançou ValidationError quando selected_date=None.")
+
+# alarm
+
+class TestAlarm(unittest.TestCase):
+    """
+    Testa se alarm() agenda corretamente os horários no Schedule do Django-Q.
+    """
+
+    def _make_record(self, **kwargs):
+        take = MagicMock()
+        take.quantity = "30"
+        take.med_format = "pílula"
+        rec = make_take_record(take, **kwargs)
+        rec.pk = 99  # pk fixo para checar o nome do Schedule
+        return rec
+
+    @patch('medication.models.Schedule.objects.get_or_create')
+    @patch('medication.models.timezone.now')
+    def test_alarm_schedules_daily(self, mock_now, mock_get_or_create):
+        """Ciclo diário → cria 1 agendamento no Schedule."""
+        today = date.today()
+        fake_now = timezone.make_aware(datetime.combine(today, time(7, 0)))
+        mock_now.return_value = fake_now
+
+        rec = self._make_record(cycle_type='daily', take_at=time(8, 0))
+        rec.alarm()
+
+        self.assertEqual(mock_get_or_create.call_count, 1)
+
+        call_kwargs = mock_get_or_create.call_args
+        self.assertIn('alarme_takerecord_99_0800', call_kwargs[1]['name'] 
+                      if 'name' in call_kwargs[1] 
+                      else call_kwargs[0][0])
+
+    @patch('medication.models.Schedule.objects.get_or_create')
+    @patch('medication.models.timezone.now')
+    def test_alarm_schedules_interval_8h(self, mock_now, mock_get_or_create):
+        """Ciclo 8h a partir das 00:00 → cria 3 agendamentos."""
+        today = date.today()
+        fake_now = timezone.make_aware(datetime.combine(today, time(0, 0)))
+        mock_now.return_value = fake_now
+
+        rec = self._make_record(
+            cycle_type='interval',
+            take_at=time(0, 0),
+            take_cycle=8
+        )
+        rec.alarm()
+
+        self.assertEqual(mock_get_or_create.call_count, 3)
+
+    @patch('medication.models.Schedule.objects.get_or_create')
+    @patch('medication.models.timezone.now')
+    def test_alarm_skips_past_schedules(self, mock_now, mock_get_or_create):
+        """Horários que já passaram não devem ser agendados."""
+        today = date.today()
+        fake_now = timezone.make_aware(datetime.combine(today, time(17, 0)))
+        mock_now.return_value = fake_now
+
+        rec = self._make_record(
+            cycle_type='interval',
+            take_at=time(6, 0),
+            take_cycle=8
+        )
+        rec.alarm()
+
+        self.assertEqual(mock_get_or_create.call_count, 1)
+
+    @patch('medication.models.Schedule.objects.get_or_create')
+    @patch('medication.models.timezone.now')
+    def test_alarm_no_schedules_does_nothing(self, mock_now, mock_get_or_create):
+        """Sem take_at → alarm() não cria nenhum agendamento."""
+        rec = self._make_record(cycle_type='daily', take_at=None)
+        rec.alarm()
+
+        mock_get_or_create.assert_not_called()
+
+    @patch('medication.models.Schedule.objects.get_or_create')
+    @patch('medication.models.timezone.now')
+    def test_alarm_unique_name_per_time(self, mock_now, mock_get_or_create):
+        """Cada horário gera um nome único no Schedule para evitar duplicatas."""
+        today = date.today()
+        fake_now = timezone.make_aware(datetime.combine(today, time(0, 0)))
+        mock_now.return_value = fake_now
+
+        rec = self._make_record(
+            cycle_type='interval',
+            take_at=time(0, 0),
+            take_cycle=12  # 00:00 e 12:00
+        )
+        rec.alarm()
+
+        names = [
+            call[1].get('name', call[0][0] if call[0] else '')
+            for call in mock_get_or_create.call_args_list
+        ]
+
+        self.assertEqual(len(set(names)), 2)
+
+
+class TestNotifyUser(unittest.TestCase):
+    """
+    Testa se notify_user() busca corretamente o nome do medicamento.
+    """
+
+    def _make_full_record(self, med_name=None):
+        """Cria um TakeRecord com toda a cadeia de FKs mockada."""
+        # Monta Medication_Name
+        med_name_obj = MagicMock()
+        med_name_obj.name = med_name or "Dipirona"
+
+        # Monta Medication
+        medication = MagicMock()
+        medication.medication_id = 1
+        medication.name.first.return_value = med_name_obj
+
+        # Monta Take
+        take = MagicMock()
+        take.medication_id = medication
+        take.quantity = "30"
+        take.med_format = "pílula"
+
+        # Monta TakeRecord
+        rec = MagicMock()
+        rec.pk = 99
+        rec.taken_id = take
+
+        return rec
+
+    @patch('medication.tasks.TakeRecord')
+    def test_notify_user_prints_medication_name(self, mock_takerecord_class):
+        """notify_user deve encontrar e usar o nome do medicamento."""
+        from medication.tasks import notify_user
+
+        rec = self._make_full_record(med_name="Dipirona")
+        mock_takerecord_class.objects.get.return_value = rec
+
+        with patch('builtins.print') as mock_print:
+            notify_user(99)
+            mock_print.assert_called_once_with("Hora de tomar: Dipirona")
+
+    @patch('medication.tasks.TakeRecord')
+    def test_notify_user_fallback_when_no_name(self, mock_takerecord_class):
+        """Se não houver Medication_Name, usa o medication_id como fallback."""
+        from medication.tasks import notify_user
+
+        rec = self._make_full_record()
+        rec.taken_id.medication_id.name.first.return_value = None  # sem nome cadastrado
+        mock_takerecord_class.objects.get.return_value = rec
+
+        with patch('builtins.print') as mock_print:
+            notify_user(99)
+            # deve usar o fallback com medication_id
+            printed = mock_print.call_args[0][0]
+            self.assertIn("medicamento", printed)
+
+    @patch('medication.tasks.TakeRecord')
+    def test_notify_user_calls_correct_record(self, mock_takerecord_class):
+        """notify_user deve buscar o TakeRecord pelo id correto."""
+        from medication.tasks import notify_user
+
+        rec = self._make_full_record()
+        mock_takerecord_class.objects.get.return_value = rec
+
+        notify_user(99)
+
+        mock_takerecord_class.objects.get.assert_called_once_with(pk=99)
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

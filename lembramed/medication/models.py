@@ -8,6 +8,8 @@ from django.core.exceptions import ValidationError
 import json
 import os
 from django.conf import settings
+from django_q.tasks import schedule
+from django_q.models import Schedule
 
 class Medication(models.Model):
     # RegisterNum for ANVISA, RxCUI for RxNorm:
@@ -376,7 +378,6 @@ class TakeRecord(models.Model):
                     f"Próximo horário: {next_scheduled_time.strftime('%H:%M')}."
                 )
 
-     
         # Find the closest time of the scheduel to now
         past_schedules = [t for t in schedules if t <= current_time]
         
@@ -432,6 +433,33 @@ class TakeRecord(models.Model):
                 # the amount of time left to take the medication is more than a week
                 return f"Você tem {medication_left} pílulas restantes, reponha seu estoque."
             
+
+    def alarm(self):
+
+        schedules = self.calculate_schedule()
+        if not schedules:
+            return 
+
+        today = date.today()
+
+        for scheduled_time in schedules:
+            scheduled_dt = datetime.combine(today, scheduled_time)
+            scheduled_dt_aware = timezone.make_aware(scheduled_dt)
+
+            if scheduled_dt_aware >= timezone.now():
+                Schedule.objects.get_or_create(
+                    name=f"alarme_takerecord_{self.pk}_{scheduled_time.strftime('%H%M')}",
+                    defaults={
+                        'func': 'medication.tasks.notify_user',  
+                        'args': f'{self.pk}',
+                        'schedule_type': Schedule.ONCE,
+                        'next_run': scheduled_dt_aware,
+                    }
+                )
+            
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        self.alarm()
 
     def __str__(self):
             med_schedules = ", ".join([t.strftime('%H:%M') for t in self.calculate_schedule()])
