@@ -17,7 +17,7 @@ from datetime import date, time, datetime, timedelta
 from unittest.mock import MagicMock, patch, mock_open
 from datetime import date, time, datetime, timedelta
 from django.utils import timezone
-
+from django.test import TestCase
 # Helpers para criar objetos fake sem banco de dados
 
 def make_medication(med_id, ingredients):
@@ -593,6 +593,267 @@ class TestNotifyUser(unittest.TestCase):
         notify_user(99)
 
         mock_takerecord_class.objects.get.assert_called_once_with(pk=99)
+
+# get medication by date
+
+
+def _make_medication(pk=1):
+    med = MagicMock()
+    med.pk = pk
+    return med
+
+
+def _make_person(pk=1):
+    person = MagicMock()
+    person.pk = pk
+    return person
+
+
+def _make_take(pk=1, person=None, medication=None, med_format="pílula", quantity="30"):
+    take = MagicMock()
+    take.pk = pk
+    take.person_id = person or _make_person()
+    take.medication_id = medication or _make_medication()
+    take.med_format = med_format
+    take.quantity = quantity
+    return take
+
+
+def _make_record(pk=1, take=None, cycle_type="daily", take_at=time(8, 0),
+                 take_cycle=None, days="mon,tue,wed,thu,fri,sat,sun",
+                 begin=None, end=None):
+    """Cria um TakeRecord fake com calculate_schedule() real."""
+    from medication.models import TakeRecord  # importação real para usar o método
+
+    record = MagicMock(spec=TakeRecord)
+    record.pk = pk
+    record.taken_id = take or _make_take()
+    record.cycle_type = cycle_type
+    record.take_at = take_at
+    record.take_cycle = take_cycle
+    record.days = days
+    record.begin = begin or date.today() - timedelta(days=5)
+    record.end = end or date.today() + timedelta(days=25)
+
+    # Usa a implementação real de calculate_schedule
+    record.calculate_schedule.side_effect = lambda: TakeRecord.calculate_schedule(record)
+
+    return record
+
+
+
+class GetMedicationsByDateTest(TestCase):
+    """Testes para TakeRecord.get_medications_by_date()"""
+
+    def _call(self, record, person_id, selected_date=None):
+        """Chama o método real passando o record como self."""
+        from medication.models import TakeRecord
+        return TakeRecord.get_medications_by_date(record, person_id, selected_date)
+
+
+    # 1. Retorna medicamento quando o dia da semana bate
+    
+    @patch("medication.models.TakeRecord.objects")
+    def test_retorna_medicamento_no_dia_correto(self, mock_qs):
+        """Deve retornar o medicamento quando o dia selecionado está em record.days."""
+        today = date.today()
+        day_map = {0:"mon",1:"tue",2:"wed",3:"thu",4:"fri",5:"sat",6:"sun"}
+        day_key = day_map[today.weekday()]
+
+        record = _make_record(days=day_key)
+        mock_qs.filter.return_value = [record]
+
+        result = self._call(record, person_id=1, selected_date=today)
+
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]["medication"], record.taken_id.medication_id)
+        self.assertIsInstance(result[0]["schedules"], list)
+        self.assertGreater(len(result[0]["schedules"]), 0)
+
+
+    # 2. Não retorna medicamento quando o dia não está em record.days
+    
+    @patch("medication.models.TakeRecord.objects")
+    def test_nao_retorna_medicamento_dia_errado(self, mock_qs):
+
+        today = date.today()
+        all_days = {"mon","tue","wed","thu","fri","sat","sun"}
+        day_map = {0:"mon",1:"tue",2:"wed",3:"thu",4:"fri",5:"sat",6:"sun"}
+        today_key = day_map[today.weekday()]
+
+        other_days = ",".join(all_days - {today_key})
+        record = _make_record(days=other_days)
+        mock_qs.filter.return_value = [record]
+
+        result = self._call(record, person_id=1, selected_date=today)
+
+        self.assertEqual(result, [])
+
+
+    # 3. Usa date.today() quando selected_date não é informado
+    
+    @patch("medication.models.TakeRecord.objects")
+    def test_usa_today_quando_sem_data(self, mock_qs):
+        """Quando selected_date=None, deve usar a data de hoje."""
+        today = date.today()
+        day_map = {0:"mon",1:"tue",2:"wed",3:"thu",4:"fri",5:"sat",6:"sun"}
+        day_key = day_map[today.weekday()]
+
+        record = _make_record(days=day_key)
+        mock_qs.filter.return_value = [record]
+
+        result = self._call(record, person_id=1, selected_date=None)
+
+        # Verifica que o filtro foi chamado com a data de hoje
+        call_kwargs = mock_qs.filter.call_args[1]
+        self.assertEqual(call_kwargs["begin__lte"], today)
+        self.assertEqual(call_kwargs["end__gte"], today)
+
+
+    # 4. Retorna lista vazia quando não há registros no QuerySet
+    
+    @patch("medication.models.TakeRecord.objects")
+    def test_retorna_vazio_sem_registros(self, mock_qs):
+        """Deve retornar lista vazia quando o QuerySet não tem resultados."""
+        mock_qs.filter.return_value = []
+        record = _make_record()
+
+        result = self._call(record, person_id=1, selected_date=date.today())
+
+        self.assertEqual(result, [])
+
+
+    # 5. Filtra pelo person_id correto
+    
+    @patch("medication.models.TakeRecord.objects")
+    def test_filtra_por_person_id(self, mock_qs):
+        """O QuerySet deve ser filtrado pelo person_id informado."""
+        mock_qs.filter.return_value = []
+        record = _make_record()
+
+        self._call(record, person_id=42, selected_date=date.today())
+
+        call_kwargs = mock_qs.filter.call_args[1]
+        self.assertEqual(call_kwargs["taken_id__person_id"], 42)
+
+
+    # 6. Retorna múltiplos medicamentos no mesmo dia
+    
+    @patch("medication.models.TakeRecord.objects")
+    def test_retorna_multiplos_medicamentos(self, mock_qs):
+        """Deve retornar todos os medicamentos programados para o dia."""
+        today = date.today()
+        day_map = {0:"mon",1:"tue",2:"wed",3:"thu",4:"fri",5:"sat",6:"sun"}
+        day_key = day_map[today.weekday()]
+
+        record1 = _make_record(pk=1, days=day_key, take_at=time(8, 0))
+        record2 = _make_record(pk=2, days=day_key, take_at=time(14, 0))
+        mock_qs.filter.return_value = [record1, record2]
+
+        result = self._call(record1, person_id=1, selected_date=today)
+
+        self.assertEqual(len(result), 2)
+
+
+    # 7. Horários calculados para ciclo de intervalo (8/8 horas)
+    
+    @patch("medication.models.TakeRecord.objects")
+    def test_horarios_ciclo_intervalo(self, mock_qs):
+        """Para cycle_type='interval' de 8h, deve retornar 3 horários no dia."""
+        today = date.today()
+        day_map = {0:"mon",1:"tue",2:"wed",3:"thu",4:"fri",5:"sat",6:"sun"}
+        day_key = day_map[today.weekday()]
+
+        record = _make_record(
+            days=day_key,
+            cycle_type="interval",
+            take_at=time(6, 0),
+            take_cycle=8,
+        )
+        mock_qs.filter.return_value = [record]
+
+        result = self._call(record, person_id=1, selected_date=today)
+
+        self.assertEqual(len(result), 1)
+        schedules = result[0]["schedules"]
+        # 06:00, 14:00, 22:00  →  3 horários
+        self.assertEqual(len(schedules), 3)
+        self.assertEqual(schedules[0], time(6, 0))
+        self.assertEqual(schedules[1], time(14, 0))
+        self.assertEqual(schedules[2], time(22, 0))
+
+
+    # 8. Data fora do intervalo begin/end não é retornada
+    
+    @patch("medication.models.TakeRecord.objects")
+    def test_fora_do_periodo_nao_retornado(self, mock_qs):
+        """Registros fora do período begin-end não devem aparecer (filtro do ORM)."""
+        # O próprio ORM não retornará o registro; simulamos QuerySet vazio
+        mock_qs.filter.return_value = []
+        record = _make_record(
+            begin=date.today() + timedelta(days=5),
+            end=date.today() + timedelta(days=10),
+        )
+
+        result = self._call(record, person_id=1, selected_date=date.today())
+
+        self.assertEqual(result, [])
+
+
+    # 9. Data passada válida (histórico)
+    
+    @patch("medication.models.TakeRecord.objects")
+    def test_data_passada_valida(self, mock_qs):
+        """Deve funcionar corretamente para datas passadas dentro do período."""
+        past_date = date.today() - timedelta(days=3)
+        day_map = {0:"mon",1:"tue",2:"wed",3:"thu",4:"fri",5:"sat",6:"sun"}
+        day_key = day_map[past_date.weekday()]
+
+        record = _make_record(days=day_key)
+        mock_qs.filter.return_value = [record]
+
+        result = self._call(record, person_id=1, selected_date=past_date)
+
+        self.assertEqual(len(result), 1)
+
+
+    # 10. Estrutura de retorno contém as chaves esperadas
+    
+    @patch("medication.models.TakeRecord.objects")
+    def test_estrutura_retorno(self, mock_qs):
+        """Cada item da lista deve ter as chaves 'medication' e 'schedules'."""
+        today = date.today()
+        day_map = {0:"mon",1:"tue",2:"wed",3:"thu",4:"fri",5:"sat",6:"sun"}
+        day_key = day_map[today.weekday()]
+
+        record = _make_record(days=day_key)
+        mock_qs.filter.return_value = [record]
+
+        result = self._call(record, person_id=1, selected_date=today)
+
+        self.assertIn("medication", result[0])
+        self.assertIn("schedules", result[0])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 if __name__ == "__main__":

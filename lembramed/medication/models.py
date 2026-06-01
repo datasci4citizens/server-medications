@@ -456,10 +456,36 @@ class TakeRecord(models.Model):
                         'next_run': scheduled_dt_aware,
                     }
                 )
-            
+
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         self.alarm()
+
+    def get_medications_by_date(self, person_id, selected_date=None):
+        if selected_date is None:
+            selected_date = date.today()
+            
+        day_map = {0: 'mon', 1: 'tue', 2: 'wed', 3: 'thu', 4: 'fri', 5: 'sat', 6: 'sun'}
+        selected_day = day_map[selected_date.weekday()]
+         
+        records = TakeRecord.objects.filter(
+            taken_id__person_id=person_id,  # ← person_id como parâmetro
+            begin__lte=selected_date,
+            end__gte=selected_date,
+        )
+
+
+        medications_today=[]
+        for record in records:
+            if selected_day in record.days.split(','): #return a list with the medications name and schedule
+                medications_today.append({
+                'medication': record.taken_id.medication_id,
+                'schedules': record.calculate_schedule(),
+            })
+        
+        return medications_today
+           
+  
 
     def __str__(self):
             med_schedules = ", ".join([t.strftime('%H:%M') for t in self.calculate_schedule()])
