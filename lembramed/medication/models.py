@@ -8,6 +8,8 @@ from django.core.exceptions import ValidationError
 import json
 import os
 from django.conf import settings
+from django_q.tasks import schedule
+from django_q.models import Schedule
 
 class Medication(models.Model):
     # RegisterNum for ANVISA, RxCUI for RxNorm:
@@ -140,50 +142,35 @@ class Take(models.Model):
     # Int de prioridade da notificacao daquele medicamento
     # inicio e final de tratamento (opcional) OK
 
-    PRIOTITY_TYPES = [
-        (0, 'Low'),
-        (1, 'Medium'),
-        (2, 'High'),
-        (3, 'Important')
-    ]
-    
-    priority = models.SmallIntegerField()
     quantity = models.CharField(max_length= 50, null=True) # estoque
     med_format = models.CharField(max_length=50, null=True) # type
 
     def __str__(self):
        return f"{self.person_id} - {self.medication_id}"
     
-    def get_priority_display(self):
-        prio_dict = dict(self.PRIOTITY_TYPES)
-        return prio_dict[self.priority]
 
     def check_interactions(self):
         from django.conf import settings
-
-        json_path = os.path.join(
-            settings.BASE_DIR, 'api', 'src', 'lembramed_data', 'Interactions.json'
-        )
+        import xml.etree.ElementTree as ET
+        from django.core.exceptions import ValidationError
 
         try:
-            with open(json_path, 'r', encoding='utf-8') as f:
-                all_interactions = json.load(f)
-        except (FileNotFoundError, json.JSONDecodeError) as e:
-            raise ValueError(f"Erro ao carregar interactions.json: {e}")
-
-        # O arquivo real do projeto pode vir como uma tabela com
-        # {'columns': [...], 'data': [...]}. Nesse caso, ele não contém
-        # pares ingredient1/ingredient2 e não deve quebrar o salvamento.
-        if isinstance(all_interactions, dict):
-            all_interactions = all_interactions.get('data', [])
-        if not isinstance(all_interactions, list):
-            return []
-
+            tree = ET.parse('drugbank_all_full_database.xml')
+            root = tree.getroot()
+        except FileNotFoundError:
+            raise ValueError("Arquivo drugbank_all_full_database.xml não encontrado.")
+        
         new_ingredients = {
             i.lower().strip()
-            for i in self.medication_id.ingredient.values_list('active_ingredient', flat=True)
+            for i in Active_Ingredient.objects.filter(
+                medication_id=self.medication_id
+            ).values_list('active_ingredient', flat=True)
         }
 
+        if not new_ingredients:
+            return
+        
+        # ingredients from medications that already are in the users database
         current_ingredients = {
             i.lower().strip()
             for i in Active_Ingredient.objects.filter(
@@ -193,46 +180,89 @@ class Take(models.Model):
             ).values_list('active_ingredient', flat=True).distinct()
         }
 
-        conflicts = []
-        for interaction in all_interactions:
-            if not isinstance(interaction, dict):
+        if not current_ingredients:
+            return
+        
+        interactions_found = []
+
+        for drug in root.findall('.//drug'):
+            drug_name_tag = drug.find('name')
+            if drug_name_tag is None:
                 continue
 
-            ing1 = interaction.get('ingredient1', '').lower().strip()
-            ing2 = interaction.get('ingredient2', '').lower().strip()
+            drug_name = drug_name_tag.text.strip().lower()
 
-            match = (
-                (ing1 in new_ingredients and ing2 in current_ingredients) or
-                (ing2 in new_ingredients and ing1 in current_ingredients)
-            )
+            if drug_name not in new_ingredients:
+                continue
 
-            if match:
-                conflicts.append({
-                    'ingredient1': interaction['ingredient1'],
-                    'ingredient2': interaction['ingredient2'],
-                    'severity':    interaction.get('severity', 'Unknown'),
-                    'description': interaction.get('description', ''),
-                })
-            
+            interactions = drug.findall('.//drug-interaction')
+            if not interactions:
+                continue
 
-        major_conflicts = [c for c in conflicts if c['severity'] == 'Major']
-        if major_conflicts:
-            descriptions = '; '.join(
-                f"{c['ingredient1']} × {c['ingredient2']}: {c['description']}"
-                for c in major_conflicts
-            )
-            raise ValidationError(
-                f"Esses medicamentos não devem ser consumidos simultaneamente. "
-                f"Consulte um médico. Interações graves encontradas: {descriptions}"
-            )
+            for interaction in interactions:
+                inter_name_tag = interaction.find('name')
+                inter_desc_tag = interaction.find('description')
 
-        return conflicts
+                if inter_name_tag is None or inter_desc_tag is None:
+                    continue
+
+                conflicting_drug = inter_name_tag.text.strip().lower()
+
+                if conflicting_drug in current_ingredients:
+                    interactions_found.append({
+                        'new_ingredient': drug_name,
+                        'conflicting_drug': inter_name_tag.text.strip(),
+                        'description': inter_desc_tag.text.strip(),
+                    })
+
+        if interactions_found:
+            messages = []
+            for item in interactions_found:
+                messages.append(
+                    f"O princípio ativo '{item['new_ingredient']}' interage com '{item['conflicting_drug']}'.\n"
+                    f"Descrição: {item['description']}\n"
+                    f"Caso tal interação apresente algum risco à saúde, recomendamos consultar um médico."
+                )
+            raise ValidationError("\n\n".join(messages))
 
     def save(self, *args, **kwargs):
         if not self.pk:
             self.check_interactions()
         
         super().save(*args,**kwargs)
+    
+    def check_food_interactions(self):
+        import xml.etree.ElementTree as ET
+        
+        try:
+            tree = ET.parse('drugbank_all_full_database.xml')
+            root = tree.getroot()
+        except FileNotFoundError:
+            return
+        
+        selected_drug = self.name.strip().lower()
+
+        current_ingredients = { # get the active ingridients of the medications
+            i.lower().strip()
+            for i in selected_drug.objects.filter(
+                medication_id__takes__person_id=self.person_id
+            ).exclude(
+                medication_id=self.medication_id
+            ).values_list('active_ingredient', flat=True).distinct()
+        }
+
+        if not current_ingredients:
+            return
+
+        for drug in root.findall('.//drug'):
+            drug_name = drug.find('name')
+
+            if drug_name is not None and drug_name.text.strip().lower() == selected_drug:
+                interactions = drug.findall('.//food-interactions')
+
+                if interactions:
+                    print(f"")
+
 
 class TakeRecord(models.Model):
     taken_id = models.ForeignKey(    
@@ -263,7 +293,7 @@ class TakeRecord(models.Model):
     days= models.CharField(max_length=50, null=True)
     take_at = models.TimeField(null=True, blank=True)  #first time you will take the medicine
     take_cycle = models.IntegerField(null=True, blank=True) # ex: take in 8-8 hours...
-    state = models.CharField(max_length=50, null=True) # taken, forgortten, late...
+    state = models.CharField(max_length=50, null=True) # taken, forgortten
 
     def get_days_display(self):
         day_dict = dict(self.DAYS_OF_WEEK)
@@ -310,9 +340,21 @@ class TakeRecord(models.Model):
             return scheduels
         return []
     
+    def check_medication_day(self, selected_date=None):
+        if selected_date is None:
+            selected_date = date.today()
 
-    def define_state(self): # define the medication state based on when the medication was taken
+        if selected_date != date.today():
+            raise ValidationError(
+                f"Você não pode marcar uma medicação de um dia diferente do atual. "
+                f"Data selecionada: {selected_date.strftime('%d/%m/%Y')}, "
+                f"hoje é {date.today().strftime('%d/%m/%Y')}."
+            )
+        return True
     
+    def define_state(self, selected_date=None): # define the medication state based on when the medication was taken
+        
+        self.check_medication_day(selected_date)
         now = timezone.now() # review the when_was_taken 
         current_now = timezone.localtime(now)
         current_time = current_now.time()
@@ -322,6 +364,20 @@ class TakeRecord(models.Model):
         if not schedules:
             return None
 
+
+        future_schedules = [t for t in schedules if t > current_time]
+        if future_schedules:
+            next_scheduled_time = min(future_schedules)
+            next_scheduled_dt = datetime.combine(current_date, next_scheduled_time)
+            next_scheduled_dt = timezone.make_aware(next_scheduled_dt)
+            time_until_next = next_scheduled_dt - now
+
+            if time_until_next > timedelta(minutes=10):
+                raise ValidationError(
+                    f"Você não pode antecipar o uso do medicamento. "
+                    f"Próximo horário: {next_scheduled_time.strftime('%H:%M')}."
+                )
+
         # Find the closest time of the scheduel to now
         past_schedules = [t for t in schedules if t <= current_time]
         
@@ -329,21 +385,18 @@ class TakeRecord(models.Model):
             return "waiting"
 
         closest_scheduled_time = max(past_schedules) 
-
         scheduled_datetime = datetime.combine(current_date, closest_scheduled_time) # convert to datetime
         scheduled_datetime = timezone.make_aware(scheduled_datetime)
 
         # time diference
         time_gap = now - scheduled_datetime
-        
-        # future --> change the time limmit and atribute diferent time limits based on the medications priority 
-        if time_gap > timedelta(minutes=30):
+
+        # change: removed the latte state
+        if time_gap > timedelta(minutes=10):
             self.state = "forgotten"
-        elif time_gap > timedelta(minutes=10):
-            self.state = "late"
         else:
             self.state = "taken"
-
+            
         self.save() 
         return self.state
 
@@ -380,6 +433,59 @@ class TakeRecord(models.Model):
                 # the amount of time left to take the medication is more than a week
                 return f"Você tem {medication_left} pílulas restantes, reponha seu estoque."
             
+
+    def alarm(self):
+
+        schedules = self.calculate_schedule()
+        if not schedules:
+            return 
+
+        today = date.today()
+
+        for scheduled_time in schedules:
+            scheduled_dt = datetime.combine(today, scheduled_time)
+            scheduled_dt_aware = timezone.make_aware(scheduled_dt)
+
+            if scheduled_dt_aware >= timezone.now():
+                Schedule.objects.get_or_create(
+                    name=f"alarme_takerecord_{self.pk}_{scheduled_time.strftime('%H%M')}",
+                    defaults={
+                        'func': 'medication.tasks.notify_user',  
+                        'args': f'{self.pk}',
+                        'schedule_type': Schedule.ONCE,
+                        'next_run': scheduled_dt_aware,
+                    }
+                )
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        self.alarm()
+
+    def get_medications_by_date(self, person_id, selected_date=None):
+        if selected_date is None:
+            selected_date = date.today()
+            
+        day_map = {0: 'mon', 1: 'tue', 2: 'wed', 3: 'thu', 4: 'fri', 5: 'sat', 6: 'sun'}
+        selected_day = day_map[selected_date.weekday()]
+         
+        records = TakeRecord.objects.filter(
+            taken_id__person_id=person_id,  # ← person_id como parâmetro
+            begin__lte=selected_date,
+            end__gte=selected_date,
+        )
+
+
+        medications_today=[]
+        for record in records:
+            if selected_day in record.days.split(','): #return a list with the medications name and schedule
+                medications_today.append({
+                'medication': record.taken_id.medication_id,
+                'schedules': record.calculate_schedule(),
+            })
+        
+        return medications_today
+           
+  
 
     def __str__(self):
             med_schedules = ", ".join([t.strftime('%H:%M') for t in self.calculate_schedule()])
