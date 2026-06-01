@@ -75,11 +75,6 @@ class PersonSerializer(serializers.ModelSerializer):
         validators=[FileExtensionValidator(allowed_extensions=ALLOWED_IMAGE_EXTENSIONS)],
     )
 
-    class Meta:
-        model  = Person
-<<<<<<< HEAD
-        fields = ['person_id', 'email', 'first_name', 'last_name', 'birth', 'google_id']
-        read_only_fields = ['person_id']
-=======
-        fields = ['person_id', 'email', 'first_name', 'last_name', 'birth', 'google_id', 'profile_picture']
->>>>>>> 65-project-changes
+class Meta:
+    model  = Person
+    fields = ['person_id', 'email', 'first_name', 'last_name', 'birth', 'google_id', 'profile_picture']
