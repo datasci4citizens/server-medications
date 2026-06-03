@@ -54,9 +54,17 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'corsheaders',
     'drf_spectacular',
+    'django_q',
     
 ]
 
+Q_CLUSTER = {
+    'name': 'MeuAlarmeCluster',
+    'workers': 4,
+    'recycle': 500,
+    'timeout': 60,
+    'orm': 'default',
+}
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",

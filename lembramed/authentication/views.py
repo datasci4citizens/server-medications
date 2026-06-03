@@ -16,7 +16,8 @@ from django.contrib.auth.models import User
 from google.oauth2 import id_token
 from google.auth.transport import requests
 from .models import Person
-
+from django.contrib.auth import logout
+from django.shortcuts import redirect
 
 def _tokens_for_user(user):
     refresh = RefreshToken.for_user(user)
@@ -55,6 +56,12 @@ class LoginView(APIView):
         if 'non_field_errors' in serializer.errors:
             return Response(serializer.errors, status=status.HTTP_401_UNAUTHORIZED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def logout(self, request):
+        self.logout(request)
+        return redirect ('home')
+
+
 
 class MeView(APIView):
     """Return the loged users."""

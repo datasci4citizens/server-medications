@@ -1,5 +1,5 @@
 
-from medication.models import TakeRecord  # ← topo do arquivo
+from medication.models import TakeRecord
 
 def notify_user(take_record_id):
     rec = TakeRecord.objects.get(pk=take_record_id)

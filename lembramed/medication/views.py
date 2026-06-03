@@ -1,7 +1,18 @@
 from django.shortcuts import render, redirect,get_object_or_404
-from .models import Medication
-from .forms import MedicationForm
-from accounts.models import New_Person
+from .models import TakeRecord
+from datetime import date 
+from django.core.exceptions import ValidationError
+from django.http import JsonResponse
+
+def mark_medication(request, record_id):
+    record = TakeRecord.objects.get(pk=record_id)
+    selected_date = date.fromisoformat(request.POST.get('selected_date'))  
+
+    try:
+        state = record.define_state(selected_date=selected_date)
+        return JsonResponse({'status': 'ok', 'state': state})
+    except ValidationError as e:
+        return JsonResponse({'status': 'error', 'message': e.message}, status=400)
 
 # def medication_list(request):
 #     person_id = request.session.get('person_id')
