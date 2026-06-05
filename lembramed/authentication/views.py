@@ -18,11 +18,13 @@ from google.auth.transport import requests
 from .models import Person
 from django.contrib.auth import logout
 from django.shortcuts import redirect
+
 import jwt
-import datetime
-from datetime import datetime, timedelta, date , timezone
-from social_core.backends.oauth import BaseOAuth2
-from social_core.utils import handle_http_errors
+from jwt.algorithms import RSAAlgorithm
+import requests as http_requests
+from django.utils import timezone
+from datetime import timedelta
+
 
 def _tokens_for_user(user):
     refresh = RefreshToken.for_user(user)
@@ -102,7 +104,7 @@ class GoogleAuthView(APIView):
             email = idinfo['email']
             first_name = idinfo.get('given_name', '')
             last_name = idinfo.get('family_name', '')
-            # profile_picture = idinfo.get('picture', '')
+            profile_picture = idinfo.get('picture', '')
 
             # Check if user exists, create if not
             try:
@@ -124,7 +126,6 @@ class GoogleAuthView(APIView):
             # Update or create person
             person, created = Person.objects.get_or_create(user=user)
             person.google_id = google_id
-            # person.profile_picture = profile_picture
             person.save()
 
             # Create or get authentication token
@@ -137,7 +138,7 @@ class GoogleAuthView(APIView):
                     'id': user.id,
                     'email': user.email,
                     'name': f"{user.first_name} {user.last_name}".strip(),
-                    'picture': person.profile_picture
+                    'picture': person.profile_picture.url if person.profile_picture else None
                 }
             })
 
@@ -163,80 +164,89 @@ class UserView(APIView):
             'id': user.id,
             'email': user.email,
             'name': f"{user.first_name} {user.last_name}".strip(),
-            # 'picture': user.person.profile_picture if hasattr(user, 'person') else None
+            'picture': user.person.profile_picture if hasattr(user, 'person') else None
         })
-    
 
 
 # apple login
-class AppleOAuth2(BaseOAuth2):
-    """apple authentication backend"""
+class AppleAuthView(APIView):
+    permission_classes = [AllowAny]
+    def _get_apple_public_key(self, kid):
+            """Busca dinamicamente a chave pública da Apple para validar a assinatura do token."""
+            try:
+                apple_keys_url = "https://appleid.apple.com/auth/keys"
+                response = http_requests.get(apple_keys_url).json()
+                for key in response.get("keys", []):
+                    if key["kid"] == kid:
+                        # Convert Apple's JWK in a publick Key
+                        return RSAAlgorithm.from_jwk(key)
+            except Exception:
+                return None
+            return None
 
-    name = 'apple'
-    ACCESS_TOKEN_URL = 'https://appleid.apple.com/auth/token'
-    SCOPE_SEPARATOR = ','
-    ID_KEY = 'uid'
+    def post(self, request):
+        apple_token = request.data.get('token')
+        first_name = request.data.get('first_name', '')
+        last_name = request.data.get('last_name', '')
 
-    @handle_http_errors
-    def do_auth(self, access_token, *args, **kwargs):
-        """
-        Finish the auth process once the access_token was retrieved
-        Get the email from ID token received from apple
-        """
-        response_data = {}
-        client_id, client_secret = self.get_key_and_secret()
+        if not apple_token:
+            return Response({'error': 'Token is required'}, status=status.HTTP_400_BAD_REQUEST)
 
-        headers = {'content-type': "application/x-www-form-urlencoded"}
-        data = {
-            'client_id': client_id,
-            'client_secret': client_secret,
-            'code': access_token,
-            'grant_type': 'authorization_code',
-            'redirect_uri': 'https://example-app.com/redirect'
-        }
+        try:
+            unverified_header = jwt.get_unverified_header(apple_token)
+            kid = unverified_header.get('kid')
 
-        res = requests.post(AppleOAuth2.ACCESS_TOKEN_URL, data=data, headers=headers)
-        response_dict = res.json()
-        id_token = response_dict.get('id_token', None)
+            public_key = self._get_apple_public_key(kid)
+            if not public_key:
+                return Response({'error': 'Unable to verify Apple public key'}, status=status.HTTP_400_BAD_REQUEST)
 
-        if id_token:
-            decoded = jwt.decode(id_token, '', verify=False)
-            response_data.update({'email': decoded['email']}) if 'email' in decoded else None
-            response_data.update({'uid': decoded['sub']}) if 'sub' in decoded else None
+            idinfo = jwt.decode(
+                apple_token,
+                public_key,
+                audience=settings.APPLE_CLIENT_ID,
+                algorithms=['RS256']
+            )
 
-        response = kwargs.get('response') or {}
-        response.update(response_data)
-        response.update({'access_token': access_token}) if 'access_token' not in response else None
+            apple_id = idinfo['sub']
+            email = idinfo.get('email')
 
-        kwargs.update({'response': response, 'backend': self})
-        return self.strategy.authenticate(*args, **kwargs)
+            if not email:
+                email = f"{apple_id}@apple.relay"
 
-    def get_user_details(self, response):
-        email = response.get('email', None)
-        details = {
-            'email': email,
-        }
-        return details
+            try:
+                user = User.objects.get(email=email)
+            except User.DoesNotExist:
+                username = f"apple_{apple_id[:10]}"
+                if User.objects.filter(username=username).exists():
+                    username = f"{username}_{timezone.now().strftime('%M%S')}"
 
-    def get_key_and_secret(self):
-        headers = {
-            'kid': settings.SOCIAL_AUTH_APPLE_KEY_ID
-        }
+                user = User.objects.create_user(
+                    username=username,
+                    email=email,
+                    first_name=first_name,
+                    last_name=last_name
+                )
 
-        payload = {
-            'iss': settings.SOCIAL_AUTH_APPLE_TEAM_ID,
-            'iat': timezone.now(),
-            'exp': timezone.now() + timedelta(days=180),
-            'aud': 'https://appleid.apple.com',
-            'sub': settings.CLIENT_ID,
-        }
+            person, created = Person.objects.get_or_create(user=user)
 
-        client_secret = jwt.encode(
-            payload, 
-            settings.SOCIAL_AUTH_APPLE_PRIVATE_KEY, 
-            algorithm='ES256', 
-            headers=headers
-        ).decode("utf-8")
-        
-        return settings.CLIENT_ID, client_secret
+            if hasattr(person, 'apple_id'):
+                person.apple_id = apple_id
+            person.save()
+            tokens = _tokens_for_user(user)
 
+            return Response({
+                'tokens': tokens,
+                'user': {
+                    'id': user.id,
+                    'email': user.email,
+                    'name': f"{user.first_name} {user.last_name}".strip() or "Usuário Apple",
+                    'picture': person.profile_picture if hasattr(person, 'profile_picture') else None
+                }
+            }, status=status.HTTP_200_OK)
+
+        except jwt.ExpiredSignatureError:
+            return Response({'error': 'Apple token has expired'}, status=status.HTTP_401_UNAUTHORIZED)
+        except jwt.InvalidTokenError:
+            return Response({'error': 'Invalid Apple token'}, status=status.HTTP_401_UNAUTHORIZED)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

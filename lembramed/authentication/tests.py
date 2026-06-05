@@ -307,13 +307,15 @@ class GoogleAuthViewTest(APITestCase):
 
     @patch("authentication.views.id_token.verify_oauth2_token")
     def test_google_auth_new_user(self, mock_verify):
+        
+        
         mock_verify.return_value = {
             "sub": "google123",
             "email": "googleuser@gmail.com",
             "given_name": "Google",
             "family_name": "User",
         }
-        response = self.client.post(self.url, {"token": "fake-google-token"}, format="json")
+        response = self.client.post(self.url, {"token": "fake-google-token"}, format="multipart")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         data = response.json()
         self.assertIn("token", data)
@@ -322,14 +324,15 @@ class GoogleAuthViewTest(APITestCase):
 
     @patch("authentication.views.id_token.verify_oauth2_token")
     def test_google_auth_existing_user(self, mock_verify):
-        existing = create_user(email="googleuser@gmail.com")
+        existing = create_user(email="googleuser@gmail.com")    
+               
         mock_verify.return_value = {
             "sub": "google456",
             "email": "googleuser@gmail.com",
             "given_name": "Google",
             "family_name": "User",
         }
-        response = self.client.post(self.url, {"token": "fake-google-token"}, format="json")
+        response = self.client.post(self.url, {"token": "fake-google-token"}, format="multipart")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
     
         self.assertEqual(User.objects.filter(email="googleuser@gmail.com").count(), 1)
@@ -344,14 +347,15 @@ class GoogleAuthViewTest(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     @patch("authentication.views.id_token.verify_oauth2_token")
-    def test_google_auth_saves_google_id(self, mock_verify):
+    def test_google_auth_saves_google_id(self, mock_verify):           
+        
         mock_verify.return_value = {
             "sub": "uniqueGoogleId",
             "email": "gid@gmail.com",
             "given_name": "G",
             "family_name": "ID",
         }
-        self.client.post(self.url, {"token": "fake"}, format="json")
+        self.client.post(self.url, {"token": "fake"}, format="multipart")
         user = User.objects.get(email="gid@gmail.com")
         self.assertEqual(user.person.google_id, "uniqueGoogleId")
 

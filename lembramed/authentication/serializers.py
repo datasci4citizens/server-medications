@@ -75,6 +75,6 @@ class PersonSerializer(serializers.ModelSerializer):
         validators=[FileExtensionValidator(allowed_extensions=ALLOWED_IMAGE_EXTENSIONS)],
     )
 
-class Meta:
-    model  = Person
-    fields = ['person_id', 'email', 'first_name', 'last_name', 'birth', 'google_id', 'profile_picture']
+    class Meta:
+        model  = Person
+        fields = ['person_id', 'email', 'first_name', 'last_name', 'birth', 'google_id', 'profile_picture']
