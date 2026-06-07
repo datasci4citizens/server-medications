@@ -179,8 +179,16 @@ CORS_ALLOWED_ORIGINS = [
 # If you want to allow credentials (cookies, etc.)
 CORS_ALLOW_CREDENTIALS = True
 
-# from datetime import timedelta
-# SIMPLE_JWT = {
-#     'ACCESS_TOKEN_LIFETIME':  timedelta(hours=1),
-#     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
-# }
+from datetime import timedelta
+SIMPLE_JWT = {
+     'ACCESS_TOKEN_LIFETIME':  timedelta(hours=1),
+     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+}
+
+# Maintain the login
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+SESSION_COOKIE_AGE = 1209600 # 3 maintain the session for 2 weeks
+SESSION_SAVE_EVERY_REQUEST = True
+SESSION_COOKIE_SECURE = True #  the browsers ensure that the cookie is only sent under an HTTPS connection
+
+APPLE_CLIENT_ID = "com.seuapp.identificador"  #  Bundle ID registered in Apple Developer
