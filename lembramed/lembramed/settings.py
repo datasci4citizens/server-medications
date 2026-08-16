@@ -176,11 +176,12 @@ REST_FRAMEWORK = {
 }
 
 # Allow requests from your React app
-CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', '').split(',') + [
+CORS_ALLOWED_ORIGINS = [
+    origin.strip() for origin in os.getenv('CORS_ALLOWED_ORIGINS', '').split(',') if origin.strip()
+] + [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
 ]
-
 # If you want to allow credentials (cookies, etc.)
 CORS_ALLOW_CREDENTIALS = True
 
