@@ -6,7 +6,7 @@ from .time_stamped_model import TimeStampedModel
 
 __all__ = [
     "Leaflet", "Medication_Name", "Active_Ingredient",
-    "Brand", "Dosage", "Company", "Formato",
+    "Brand", "Dosage", "Company", "Formato", "Presentation",
     "Therapeutic_Class", "Category", "ingredient_Interaction",
     "Take", "TakeRecord", "Medication", "TimeStampedModel"
 ]

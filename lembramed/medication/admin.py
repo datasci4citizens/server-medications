@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import (Leaflet, Take, TakeRecord, Medication_Name,
 Formato, Active_Ingredient,ingredient_Interaction, Therapeutic_Class,
-Brand, Dosage, Company, Category, Medication, TimeStampedModel)
+Brand, Presentation, Company, Category, Medication, TimeStampedModel)
 
 @admin.register(Medication)
 class MedicationAdmin(admin.ModelAdmin):
@@ -9,7 +9,7 @@ class MedicationAdmin(admin.ModelAdmin):
     search_fields = [ 'medication_id', 'process_num']
     list_filter = [ 'medication_id', 'process_num']
     list_display = ['medication_id', 'process_num', 'created_at']
-    autocomplete_fields = ['category', 'company', 'brand', 'name', 'therapeutic_class', 'dosage', 'formato', 'active_ingredients']
+    autocomplete_fields = ['category', 'company', 'brand', 'name', 'therapeutic_class', 'presentation', 'active_ingredients']
 
 @admin.register(Leaflet)
 class LeafletAdmin(admin.ModelAdmin):
@@ -67,12 +67,12 @@ class BrandAdmin(admin.ModelAdmin):
     list_filter =  ['brand']
     list_display = ['brand', 'created_at']
 
-@admin.register(Dosage)
-class DosageAdmin(admin.ModelAdmin):
+@admin.register(Presentation)
+class PresentationAdmin(admin.ModelAdmin):
     readonly_fields = ['created_at', 'updated_at']
-    search_fields = ['dosage']
-    list_filter = ['dosage']
-    list_display = ['dosage', 'created_at']
+    search_fields = ['register_num']
+    list_filter = ['register_num']
+    list_display = ['register_num', 'created_at']
 
 @admin.register(Company)
 class CompanyAdmin(admin.ModelAdmin):

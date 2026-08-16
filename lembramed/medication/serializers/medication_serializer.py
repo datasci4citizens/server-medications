@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from ..models import (
     Medication, Medication_Name, Active_Ingredient,
-    Brand, Dosage, Formato, Therapeutic_Class, Category,
+    Brand, Presentation, Formato, Therapeutic_Class, Category,
     Company
 )
 from .leaflet_serializer import LeafletSerializer
@@ -48,10 +48,10 @@ class BrandSerializer(serializers.ModelSerializer):
         model = Brand
         fields = ['brand']
 
-class DosageSerializer(serializers.ModelSerializer):
+class PresentationSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Dosage
-        fields = ['dosage']
+        model = Presentation
+        fields = ['register_num', 'formato', 'dosage', 'embalagem', 'administration', 'conservation', 'prescription_restriction', 'usage_restriction', 'label']
 
 class CompanySerializer(serializers.ModelSerializer):
     class Meta:
