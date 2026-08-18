@@ -2,6 +2,7 @@ from rest_framework import serializers
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from .models import Person
+import uuid
 
 
 class RegisterSerializer(serializers.Serializer):
@@ -25,8 +26,11 @@ class RegisterSerializer(serializers.Serializer):
             first_name = validated_data['first_name'],
             last_name  = validated_data['last_name'],
         )
-        if birth:
+        if(birth and user.first_name and user.last_name):
             user.person.birth = birth
+            user.person.first_name = user.first_name
+            user.person.last_name = user.last_name
+            user.person.id = uuid.uuid4
             user.person.save()
         return user
 
@@ -36,7 +40,7 @@ class LoginSerializer(serializers.Serializer):
     password = serializers.CharField(write_only=True)
 
     def validate(self, data):
-        user = authenticate(username=data['email'], password=data['password'])
+        user = authenticate(username=data.get('email'), password=data.get('password'))
         if not user:
             raise serializers.ValidationError("Email ou senha incorretos.")
         if not user.is_active:

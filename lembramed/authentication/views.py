@@ -3,6 +3,9 @@ from rest_framework.response import Response
 from rest_framework import status, permissions
 from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import RegisterSerializer, LoginSerializer, PersonSerializer
+from rest_framework.authtoken.models import Token
+from rest_framework.authentication import TokenAuthentication
+
 
 from django.conf import settings
 from rest_framework import status
@@ -134,21 +137,21 @@ class GoogleAuthView(APIView):
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-# class UserView(APIView):
-#     authentication_classes = [TokenAuthentication]
-#     permission_classes = [IsAuthenticated]
+class UserView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
-#     queryset = Person.objects.all()
+    queryset = Person.objects.all()
 
-#     def get(self, request):
-#         user = request.user
+    def get(self, request):
+        user = request.user
 
-#         if not user.is_authenticated:
-#             return Response({'error': 'Not authenticated'}, status=status.HTTP_401_UNAUTHORIZED)
+        if not user.is_authenticated:
+            return Response({'error': 'Not authenticated'}, status=status.HTTP_401_UNAUTHORIZED)
 
-#         return Response({
-#             'id': user.id,
-#             'email': user.email,
-#             'name': f"{user.first_name} {user.last_name}".strip(),
-#             # 'picture': user.person.profile_picture if hasattr(user, 'person') else None
-#         })
+        return Response({
+            'id': user.id,
+            'email': user.email,
+            'name': f"{user.first_name} {user.last_name}".strip(),
+            # 'picture': user.person.profile_picture if hasattr(user, 'person') else None
+        })

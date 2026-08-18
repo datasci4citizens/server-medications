@@ -4,7 +4,7 @@ from rest_framework.routers import DefaultRouter
 from .views import *
 
 router = DefaultRouter()
-router.register(r'users', PersonViewSet)
+router.register(r'persons', PersonViewSet)
 # router.register(r'leaflets', LeafletViewSet)
 router.register(r'medication', MedicationViewSet)
 # router.register(r'take', TakeViewSet)

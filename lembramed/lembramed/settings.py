@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 import os
 from pathlib import Path
+from datetime import timedelta
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -54,6 +55,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'corsheaders',
     'drf_spectacular',
+    'rest_framework_simplejwt.token_blacklist',
 ]
 
 MIDDLEWARE = [
@@ -145,6 +147,7 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 REST_FRAMEWORK = {
+    # Use just JWTAtuehtntication???
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
@@ -176,8 +179,9 @@ CORS_ALLOWED_ORIGINS = [
 # If you want to allow credentials (cookies, etc.)
 CORS_ALLOW_CREDENTIALS = True
 
-# from datetime import timedelta
-# SIMPLE_JWT = {
-#     'ACCESS_TOKEN_LIFETIME':  timedelta(hours=1),
-#     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
-# }
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME':  timedelta(hours=10), #1h, using 10h for development
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7), # no idea what would be an ok time, myb 1 day
+    "BLACKLIST_AFTER_ROTATION": True, # dont use the same again
+    "ROTATE_REFRESH_TOKENS": True,  # does not repest refresh tokens
+}
