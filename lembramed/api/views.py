@@ -12,11 +12,17 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import serializers
 
+from authentication.permissions import IsAdmin, IsPatient, IsPharmacist
+
 class PersonViewSet(viewsets.ModelViewSet):
     queryset = Person.objects.all().order_by("person_id")
     serializer_class = PersonSerializer
-    permission_classes = [permissions.IsAuthenticated]
     http_method_names = ["get", "delete"]
+
+    def get_permissions(self):
+        if self.action in ("destroy", "create", "list"):
+            return [IsAdmin()]
+        return [IsPatient or IsPharmacist] # partial_update or retrieve
 
 class DrugView(APIView):
     permission_classes = [permissions.IsAuthenticated]

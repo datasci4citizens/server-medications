@@ -21,6 +21,8 @@ class Person(models.Model):
     birth = models.DateField(blank=True, null=True) # YYYY-MM-DD
     google_id = models.CharField(max_length=100, blank=True, null=True)
     # profile_picture = models.URLField(max_length=255, blank=True, null=True)
+    is_staff = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.email

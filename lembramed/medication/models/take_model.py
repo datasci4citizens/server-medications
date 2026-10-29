@@ -5,7 +5,7 @@ from datetime import datetime, timedelta, date
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 from django.conf import settings
-from .leaflet_model import Medication
+from ..models import Medication, Active_Ingredient
 from .time_stamped_model import TimeStampedModel
  
 class Take(TimeStampedModel):
@@ -42,11 +42,11 @@ class Take(TimeStampedModel):
     def __str__(self):
        return f"{self.person_id} - {self.medication_id}"
     
-    def get_priority_display(self):
+    def get_priority_display(self, priority):
         prio_dict = dict(self.PRIOTITY_TYPES)
         return prio_dict[priority]
 
-    def check_interactions(person, new_medication):
+    def check_interactions(self, person, new_medication):
         json_path = os.path.join(
             settings.BASE_DIR, 'api', 'src', 'lembramed_data', 'interactions.json'
         )
