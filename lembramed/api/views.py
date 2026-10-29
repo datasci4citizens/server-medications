@@ -22,7 +22,7 @@ class PersonViewSet(viewsets.ModelViewSet):
     def get_permissions(self):
         if self.action in ("destroy", "create", "list"):
             return [IsAdmin()]
-        return [IsPatient or IsPharmacist] # partial_update or retrieve
+        return [permissions.IsAuthenticated] # partial_update or retrieve
 
 class DrugView(APIView):
     permission_classes = [permissions.IsAuthenticated]

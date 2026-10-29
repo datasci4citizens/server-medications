@@ -22,14 +22,14 @@ from authentication.permissions import (
 class LeafletViewSet(viewsets.ModelViewSet):
     queryset = Leaflet.objects.all().order_by("medication_id")
     serializer_class = LeafletSerializer
-    permission_classes = [IsAuthenticatedReadOnlyOrAdminOrStaff]
+    permission_classes = [IsAuthenticatedReadOnlyOrAdminOrStaff()]
     http_method_names = ["get", "post", "patch", "delete"]
 
 
 class MedicationViewSet(viewsets.ModelViewSet):
     queryset = Medication.objects.all().order_by("medication_id")
     serializer_class = MedicationSerializer
-    permission_classes = [IsAuthenticatedReadOnlyOrAdminOrStaff]
+    permission_classes = [IsAuthenticatedReadOnlyOrAdminOrStaff()]
     http_method_names = ["get", "post", "patch", "delete"]
 
     filter_backends = [filters.SearchFilter]
@@ -86,7 +86,7 @@ class AnvisaRegisterViewSet(viewsets.ModelViewSet):
 class PresentationViewSet(viewsets.ModelViewSet):
     queryset = Presentation.objects.all().order_by("regulation_num")
     serializer_class = PresentationSerializer
-    permission_classes = [IsAuthenticatedReadOnlyOrAdminOrStaff]
+    permission_classes = [IsAuthenticatedReadOnlyOrAdminOrStaff()]
     http_method_names = ["get", "post", "patch", "delete"]
 
 
@@ -94,7 +94,7 @@ class PresentationViewSet(viewsets.ModelViewSet):
 class TakeViewSet(viewsets.ModelViewSet):
     queryset = Take.objects.all().order_by("taken_id")
     serializer_class = TakeSerializer
-    permission_classes = [IsPatient]
+    permission_classes = [IsPatient()]
     http_method_names = ["get", "post", "delete"]
 
     def get_queryset(self):
@@ -107,7 +107,7 @@ class TakeViewSet(viewsets.ModelViewSet):
 class TakeRecordViewSet(viewsets.ModelViewSet):
     queryset = TakeRecord.objects.all().order_by("taken_id")
     serializer_class = TakeRecordSerializer
-    permission_classes = [IsAdmin] # Automatic or User based (Manual)??
+    permission_classes = [IsAdmin()] # Automatic or User based (Manual)??
     http_method_names = ["get", "post", "delete"]
 
     # def get_queryset(self):
@@ -124,5 +124,5 @@ class ingredientInteractionViewSet(viewsets.ModelViewSet):
 
     def get_permissions(self):
         if self.action in ("destroy", "create", "list", "partial_update"):
-            return [IsStaffOrAdmin]
-        return [IsPatient] # retrieve + list ???
+            return [IsStaffOrAdmin()]
+        return [IsPatient()] # retrieve + list ???

@@ -117,12 +117,9 @@ class GoogleAuthView(APIView):
             # person.profile_picture = profile_picture
             person.save()
 
-            # Create or get authentication token
-            token, created = Token.objects.get_or_create(user=user)
-
             # Return user data and token
             return Response({
-                'token': token.key,
+                'token': _tokens_for_user(user),
                 'user': {
                     'id': user.id,
                     'email': user.email,
