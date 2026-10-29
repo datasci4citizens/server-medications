@@ -1,8 +1,15 @@
-from medication.models import Leaflet, Medication_Name, Company, Active_Ingredient, Therapeutic_Class, Category, Brand, Medication, Dosage, Formato
+from medication.models import (
+    Leaflet, Medication_Name, Company, Active_Ingredient,
+    Therapeutic_Class, Category, Brand, Medication, Formato, 
+    AnvisaRegister, Presentation, DosageIngredients,
+)
+
+import calendar
+from datetime import date
 from django.core.management.base import BaseCommand
 from pathlib import Path
 # from groq import Groq
-import json,os
+import json,os,re
 
 ### YOU MIGHT HAVE TO "pip install groq" ON TERMINAL TO RUN THIS ###
 ### MIGHT AS WELL CREATE AND USE A GROQ_API_KEY FOR FREE ONLINE  ###
@@ -31,6 +38,19 @@ import json,os
 #     except json.JSONDecodeError:
 #         return {"dosages": [], "formatos": []}
 
+FORMATO_RULES = (
+    ("adesivo transdermico", re.compile(r"\bADES\s+TRANSD\b")),
+    ("injetavel", re.compile(r"\b(?:SOL|SUS)\s+INJ\b")),
+    ("inalatorio", re.compile(r"\b(?:P[ÓO]\s+)?INAL\b")),
+    ("colirio", re.compile(r"\b(?:COL[ÍI]RIO|SOL\s+OFT)\b")),
+    ("supositorio", re.compile(r"\bSUP(?:\s+RET)?\b")),
+    ("capsula", re.compile(r"\bCAP\b")),
+    ("comprimido", re.compile(r"\bCOM\b")),
+    ("pomada", re.compile(r"\b(?:POM|UNG|CREM|GEL)\b")),
+    ("liquido", re.compile(r"\b(?:XPE|SOL|SUS)\b")),
+    ("granulado", re.compile(r"\bGRAN\b")),
+)
+
 class Command(BaseCommand):
     help = "Load beta medications and related data into the initial databse"
     ids = {
@@ -47,10 +67,25 @@ class Command(BaseCommand):
         "105710158", "183260136", "183260294", "141070059", "183260126",
         "135690015", "103900182", "167730440", "183260035", "138410004",
     }
+
+    def extract_formato(self, dosage: str) -> str | None:
+        normalized = re.sub(r"\s+", " ", (dosage or "").upper()).strip()
+
+        for formato, pattern in FORMATO_RULES:
+            if pattern.search(normalized):
+                return formato
+
+        return None
+
+    def parse_expiration_month(self, value: str) -> date:
+        month, year = map(int, value.strip().split("/"))
+        return date(year, month, calendar.monthrange(year, month)[1])
+
     def handle(self,*args,**options):
         cur = Path(__file__).resolve()
         root = cur.parent.parent.parent.parent.parent
         BASE = f"{root}/lembramed/api/src/anvisa_data/"
+        mid_pn = {} # medication_id : process_num to make so its possible to search in presentations
         medicamentos = {}
         with open(os.path.join(BASE,"anvisa_data.json"),"r",encoding="utf-8")as f:
             json_data=json.load(f)
@@ -67,13 +102,16 @@ class Command(BaseCommand):
                 "empresa":elemento[8],
                 "principio_ativo":elemento[10],
             }
+            mid_pn[int(elemento[4])] = elemento[6]
         self.stdout.write(f"Medicamentos validos registrados: {len(medicamentos)} ")
         bula = {}
+
         # for i in range(5):
         #     path = os.path.join(BASE, f"Bulario_medicamentos_iniciais{i}.json")
         #     with open(path, "r",encoding="utf-8") as f:
         #         data = json.load(f)
         #     bula.update(data)
+
         with open(os.path.join(BASE, "leaflets.json"),"r",encoding="utf-8") as f:
             data = json.load(f)
         bula.update(data)
@@ -195,24 +233,81 @@ class Command(BaseCommand):
                     active_ingredient = clean_text(principio_ativo)
                 )
                 medication.active_ingredients.add(ai)
-            
-            # dosage_formato = clean_text(bul.get("como_usar_medicamento", ""))
-            # if dosage_formato:
-            #     extracted = extract_dosage_formato(dosage_formato, info.get("name", ""))
-                
-            #     for dosage in extracted.get("dosages", []):
-            #         Dosage.objects.update_or_create(
-            #             medication_id= mid,
-            #             defaults={"dosage": dosage}
-            #         )
-            #     for formato in extracted.get("formatos", []):
-            #         Formato.objects.update_or_create(
-            #             medication_id= mid,
-            #             defaults={"formato": formato}
-            #         )
 
             medication.save()
 
         self.stdout.write(self.style.SUCCESS(
             f"Leaflets: {criados} criados, {atualizados} atualizados, {sem_bula} sem bula."
+        ))
+
+        pata = {}
+        with open(os.path.join(BASE, "presentations.json"),"r",encoding="utf-8") as f:
+            data = json.load(f)
+        pata.update(data)
+
+        # for id,pn in mid_pn.items():
+        #     cur = pata.get(str(pn), "")
+        #     for id,object in cur["presentations"].items():
+        #         print (object["dosage"])
+
+        criados = 0
+        atualizados = 0
+        presentations = {}
+        anregisters = {}
+        di = {}
+
+        for id,pn in mid_pn.items():
+            cur = pata.get(str(pn), "")
+            cdi = {}
+
+            ar,_ = AnvisaRegister.objects.update_or_create(
+                register_num = id,
+                defaults={
+                    "process_num":pn,
+                    "expiration_date": self.parse_expiration_month(cur["expiration_date"])
+                }
+            )
+
+            for key,value in cur["presentations"].items():
+                formato,_ = Formato.objects.get_or_create(
+                        formato = self.extract_formato(value["dosage"])
+                )
+                presentation,created = Presentation.objects.update_or_create(
+                    regulation_num = key,
+                    defaults={
+                        "register": ar,
+                        "formato": formato,
+                        "dosage": value["dosage"],
+                        "embalagem": value["embalagem"],
+                        "administration" : value["administration"],
+                        "conservation" : value["conservation"],
+                        "prescription_restriction" : value["prescription_restriction"],
+                        "usage_restriction" : value["usage_restriction"],
+                        "label" : value["label"],
+                        "can_be_fractioned" : value["can_be_fractioned"]
+                    }
+                )
+
+                if not created:
+                    atualizados += 1
+                else:
+                    criados += 1
+
+                for order,ai in enumerate(value["concentration_order"],1):
+                    # checar se ai esta no banco => get or create
+                    
+                    aii,_ = Active_Ingredient.objects.get_or_create(
+                        active_ingredient = ai
+                    )
+
+                    DosageIngredients.objects.update_or_create(
+                        presentation = presentation,
+                        active_ingredient = aii,
+                        defaults={
+                            "order":order
+                        },
+                    )
+
+        self.stdout.write(self.style.SUCCESS(
+                    f"Presentations: {criados} criados, {atualizados} atualizados"
         ))

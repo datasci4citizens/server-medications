@@ -5,16 +5,16 @@ from datetime import datetime, timedelta, date
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 from django.conf import settings
-from .anvisa_model import Medication
+from .leaflet_model import Medication
 from .time_stamped_model import TimeStampedModel
-
+ 
 class Take(TimeStampedModel):
     person_id = models.ForeignKey(
         'authentication.Person',
         on_delete = models.CASCADE,
         related_name = 'takes'
     )
-    medication = models.ForeignKey(
+    medication_id = models.ForeignKey(
         Medication,
         on_delete = models.CASCADE,
         related_name = 'takes',

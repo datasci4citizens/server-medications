@@ -1,2 +1,0 @@
-leaflets.json filter=lfs diff=lfs merge=lfs -text
-presentations.json filter=lfs diff=lfs merge=lfs -text

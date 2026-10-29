@@ -1,49 +1,78 @@
-# from django.shortcuts import render
-# # from django.http import HttpRequest, JsonResponse
-# # from django.views.decorators.http import require_POST, require_GET
-# from django.contrib.auth.models import Group, User
-# from django.core.exceptions import ObjectDoesNotExist
-# from rest_framework.decorators import api_view
-# from rest_framework.response import Response
-
 from authentication.models import Person
-from medication.models import Leaflet,Medication
+from medication.models import Medication, Leaflet, Presentation, AnvisaRegister, DosageIngredients
 from authentication.serializers import PersonSerializer
-from medication.serializers import LeafletSerializer,MedicationSerializer
+from medication.serializers import (
+    MedicationSerializer, LeafletSerializer,
+    PresentationSerializer, DosageIngredientsSerializer
+)
 from rest_framework import permissions,viewsets
 
-# add user, remove user, edit user, get user
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework import serializers
+
 class PersonViewSet(viewsets.ModelViewSet):
     queryset = Person.objects.all().order_by("person_id")
     serializer_class = PersonSerializer
     permission_classes = [permissions.IsAuthenticated]
+    http_method_names = ["get", "delete"]
 
-# add drug, remove drug, edit drug, get drug
-class LeafletViewSet(viewsets.ModelViewSet):
-    queryset = Leaflet.objects.all().order_by("medication_id")
-    serializer_class = LeafletSerializer
+class DrugView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
-class MedicationViewSet(viewsets.ModelViewSet):
-    queryset = Medication.objects.all().order_by("medication_id")
-    serializer_class = MedicationSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    def post(self,request):
+        medication_id = request.data.get("medication_id")
+        process_num = request.data.get("process_num")
 
-# class TakeViewSet(viewsets.ModelViewSet):
-#     queryset = Take.objects.all().order_by("medication_id")
-#     serializer_class = TakeSerializer
-#     permission_classes = [permissions.IsAuthenticated]
+        if not medication_id:
+            return Response(
+                {"error": 'Field "medication_id" is necessary'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
-# @api_view(['GET'])
-# def index(request):
-#     return Response("OK")
+        if not process_num:
+            return Response(
+                {"error": 'Field "process_num" is necessary'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
-# @api_view(["POST"])
-# def create_user(request):
-#     serializer = PersonSerializer(data = request.data)
-#     if serializer.is_valid():
-#         serializer.save()
-#         return Response(serializer.data, 
-#                         status=status.HTTP_201_CREATED)
-#     return Response(serializer.errors, 
-#                     status = status.HTTP_400_BAD_REQUEST)
+        medication = Medication.objects.get(
+            medication_id=medication_id
+        )
+        leaflet = Leaflet.objects.get(
+            medication_id=medication_id
+        )
+        anvisa_register = AnvisaRegister.objects.get(
+            process_num=process_num
+        )
+
+        # presentation = multiple presentation objects from the anvisa_register
+        presentations = [
+                p for p in Presentation.objects.filter(
+                register=anvisa_register
+        )]
+
+        dosage_ingredients = []
+        num_of_prescriptions = len(dosage_ingredients)
+        while(num_of_prescriptions > 0):
+            dosage_ingredients.append(
+                DosageIngredients.objects.filter(
+                    presentations=presentations[num_of_prescriptions]
+                )
+            )
+            num_of_prescriptions -= 1
+
+        # isnt presentations going to be a list of presentatinos objects?
+        if not medication or not leaflet or not presentations:
+            return Response(
+                {"error": "Drug non existent."},
+                status=status.HTTP_404_NOT_FOUND
+        )
+
+        # how to make so the dosage_ingredients field on output gets placed right beneath
+        return Response({
+            "medication": MedicationSerializer(medication).data,
+            "leaflet": LeafletSerializer(leaflet).data,
+            "presentations": PresentationSerializer(presentations, many=True).data,
+        })

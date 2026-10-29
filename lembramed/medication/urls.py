@@ -1,17 +1,22 @@
-from . import views
-from django.urls import path
-
-urlpatterns = [
-    # path('', views.medication_list, name='medication_list'),
-    # path('add/', views.add_medication, name='add_medication'),
-    # path('delete/<str:id>/', views.delete_medication, name='delete_medication'),
-    # path('edit/<str:id>/', views.edit_medication, name='edit_medication'),
-    
-]
-
+from .views import (
+    MedicationViewSet, LeafletViewSet, 
+    PresentationViewSet, AnvisaRegisterViewSet,
+    TakeViewSet, TakeRecordViewSet,
+    ingredientInteractionViewSet
+)
+from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import LeafletViewSet
 
 router = DefaultRouter()
-router.register(r'medications', LeafletViewSet, basename='medication')
-urlpatterns = router.urls
+router.register(r'leaflets',        LeafletViewSet,         basename="leaflet")
+router.register(r'presentation',    PresentationViewSet,    basename="presentation")
+router.register(r'anvisa_register', AnvisaRegisterViewSet,  basename="anvisa_register")
+
+router.register(r'take',            TakeViewSet,            basename="take")
+router.register(r'take_record',     TakeRecordViewSet,      basename="take_record")
+router.register(r'ingredient_interaction', ingredientInteractionViewSet, basename="ingredient_interaction")
+router.register(r'',                MedicationViewSet,      basename="medication") # /medication/...
+
+urlpatterns = [
+    path('', include(router.urls))
+]

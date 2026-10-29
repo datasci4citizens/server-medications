@@ -4,6 +4,8 @@ venv
 .idea/
 .env
 .log
+*.sql
+*.dump
 dbms/data/
 **/**/migrations/*
 !**/migrations/__init__.py
@@ -15,3 +17,7 @@ lembramed/api/src/anvisa_data/teste.py
 lembramed/api/src/anvisa_data/web_navigator_og.py
 lembramed/api/src/anvisa_data/scraper.log
 lembramed/api/src/anvisa_data/checkpoint.json
+lembramed/api/src/anvisa_data/*.json
+lembramed/api/src/anvisa_data/*.csv
+lembramed/api/src/anvisa_data/*.log
+lembramed/api/src/anvisa_data/*.xlsx

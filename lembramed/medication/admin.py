@@ -1,7 +1,10 @@
 from django.contrib import admin
-from .models import (Leaflet, Take, TakeRecord, Medication_Name,
-Formato, Active_Ingredient,ingredient_Interaction, Therapeutic_Class,
-Brand, Presentation, Company, Category, Medication, TimeStampedModel)
+from .models import (
+    Leaflet, Take, TakeRecord, Medication_Name,
+    Active_Ingredient,ingredient_Interaction, Therapeutic_Class,
+    Brand, Presentation, Company, Category, Medication, TimeStampedModel,
+    AnvisaRegister, Formato, DosageIngredients
+)
 
 @admin.register(Medication)
 class MedicationAdmin(admin.ModelAdmin):
@@ -9,7 +12,7 @@ class MedicationAdmin(admin.ModelAdmin):
     search_fields = [ 'medication_id', 'process_num']
     list_filter = [ 'medication_id', 'process_num']
     list_display = ['medication_id', 'process_num', 'created_at']
-    autocomplete_fields = ['category', 'company', 'brand', 'name', 'therapeutic_class', 'presentation', 'active_ingredients']
+    autocomplete_fields = ['category', 'company', 'brand', 'name', 'therapeutic_class', 'active_ingredients']
 
 @admin.register(Leaflet)
 class LeafletAdmin(admin.ModelAdmin):
@@ -67,12 +70,19 @@ class BrandAdmin(admin.ModelAdmin):
     list_filter =  ['brand']
     list_display = ['brand', 'created_at']
 
+@admin.register(AnvisaRegister)
+class AnvisaRegisterAdmin(admin.ModelAdmin):
+    readonly_fields = ['created_at', 'updated_at']
+    search_fields = ['process_num']
+    list_filter = ['process_num']
+    list_display = ['process_num', 'created_at']
+
 @admin.register(Presentation)
 class PresentationAdmin(admin.ModelAdmin):
     readonly_fields = ['created_at', 'updated_at']
-    search_fields = ['register_num']
-    list_filter = ['register_num']
-    list_display = ['register_num', 'created_at']
+    search_fields = ['regulation_num']
+    list_filter = ['regulation_num']
+    list_display = ['regulation_num', 'created_at']
 
 @admin.register(Company)
 class CompanyAdmin(admin.ModelAdmin):
@@ -94,3 +104,10 @@ class FormatoAdmin(admin.ModelAdmin):
     search_fields = ['formato']
     list_filter = ['formato']
     list_display = ['formato', 'created_at']
+
+@admin.register(DosageIngredients)
+class DosageIngredientsAdmin(admin.ModelAdmin):
+    readonly_fields = ['created_at', 'updated_at']
+    search_fields = ['active_ingredient']
+    list_filter = ['active_ingredient']
+    list_display = ['active_ingredient', 'created_at']
