@@ -1,5 +1,6 @@
 __pycache__/
 docker-compose.yml
+dbms/docker-compose.yml
 venv
 .idea/
 .env
