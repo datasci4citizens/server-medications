@@ -2,7 +2,7 @@ from rest_framework import serializers
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from .models import Person
-import uuid
+
 
 
 class RegisterSerializer(serializers.Serializer):
@@ -26,11 +26,8 @@ class RegisterSerializer(serializers.Serializer):
             first_name = validated_data['first_name'],
             last_name  = validated_data['last_name'],
         )
-        if(birth and user.first_name and user.last_name):
+        if birth is not None:
             user.person.birth = birth
-            user.person.first_name = user.first_name
-            user.person.last_name = user.last_name
-            user.person.id = uuid.uuid4
             user.person.save()
         return user
 

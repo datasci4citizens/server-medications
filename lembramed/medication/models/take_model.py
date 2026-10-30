@@ -7,7 +7,8 @@ from django.core.exceptions import ValidationError
 from django.conf import settings
 from ..models import Medication, Active_Ingredient
 from .time_stamped_model import TimeStampedModel
- 
+from datetime import datetime, timedelta, date, time
+
 class Take(TimeStampedModel):
     person_id = models.ForeignKey(
         'authentication.Person',
@@ -147,68 +148,116 @@ class TakeRecord(TimeStampedModel):
              raise ValidationError("Informe o horário em que o medicamento será tomado pela primeira vez")
 
     
-    
-    def calculate_schedule(self): # calculate when the patient is going to take the medication
-        
+  
+    def calculate_schedule(self, target_date=None):
+        """
+        Retorna os horários das doses previstas para uma data.
+        O intervalo é contínuo, inclusive entre dias diferentes.
+        """
+        if target_date is None:
+            target_date = date.today()
+
+        if target_date < self.begin or target_date > self.end:
+            return []
+
         if not self.take_at:
             return []
-        
-        if self.cycle_type == 'daily' :
-            return [self.take_at]
-        
-        if self.cycle_type == 'interval' and self.take_cycle:
-            scheduels = []
 
-            base_date = date.today()
-            current_dt = datetime.combine(base_date, self.take_at)
+        weekdays = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]
 
-            total_hours = 0
-            while total_hours < 24:
-                scheduels.append(current_dt.time())
-                current_dt += timedelta(hours=self.take_cycle)
-                total_hours += self.take_cycle
+        selected_days = (
+            [day.strip() for day in self.days.split(",") if day.strip()]
+            if self.days else None
+        )
 
-                if current_dt.date() > base_date:
-                    break
+        def is_valid_day(dose_date):
+            if selected_days is None:
+                return True
+            return weekdays[dose_date.weekday()] in selected_days
 
-            return scheduels
+        # Uma dose por dia
+        if self.cycle_type == "daily":
+            return [self.take_at] if is_valid_day(target_date) else []
+
+        # Doses em intervalos contínuos de horas
+        if self.cycle_type == "interval":
+            if not self.take_cycle or self.take_cycle <= 0:
+                return []
+
+            first_dose = datetime.combine(self.begin, self.take_at)
+            day_start = datetime.combine(target_date, datetime.min.time())
+            day_end = day_start + timedelta(days=1)
+
+            schedules = []
+            current_dose = first_dose
+
+            while current_dose < day_end:
+                dose_date = current_dose.date()
+
+                if (
+                    current_dose >= day_start
+                    and dose_date <= self.end
+                    and is_valid_day(dose_date)
+                ):
+                    schedules.append(current_dose.time())
+
+                current_dose += timedelta(hours=self.take_cycle)
+
+            return schedules
+
         return []
-    
 
-    def define_state(self): # define the medication state based on when the medication was taken
-    
-        now = timezone.now() # review the when_was_taken 
+
+    def define_state(self):
+        """Define o estado da dose com base no horário previsto."""
+
+        now = timezone.now()
         current_now = timezone.localtime(now)
         current_time = current_now.time()
-        current_date = current_now.date()
 
         schedules = self.calculate_schedule()
+
         if not schedules:
             return None
 
-        # Find the closest time of the scheduel to now
-        past_schedules = [t for t in schedules if t <= current_time]
-        
-        if not past_schedules: 
-            return "waiting"
+        # Identifica os horários que já deveriam ter acontecido.
+        past_schedules = [
+            scheduled_time
+            for scheduled_time in schedules
+            if scheduled_time <= current_time
+        ]
 
-        closest_scheduled_time = max(past_schedules) 
-
-        scheduled_datetime = datetime.combine(current_date, closest_scheduled_time) # convert to datetime
-        scheduled_datetime = timezone.make_aware(scheduled_datetime)
-
-        # time diference
-        time_gap = now - scheduled_datetime
-        
-        # future --> change the time limmit and atribute diferent time limits based on the medications priority 
-        if time_gap > timedelta(minutes=30):
-            self.state = "forgotten"
-        elif time_gap > timedelta(minutes=10):
-            self.state = "late"
+        # Ainda não chegou o horário da dose.
+        if not past_schedules:
+            new_state = "waiting"
         else:
-            self.state = "taken"
+            # Pega o horário previsto mais próximo do horário atual.
+            closest_scheduled_time = max(past_schedules)
 
-        self.save() 
+            scheduled_datetime = datetime.combine(
+                current_now.date(),
+                closest_scheduled_time
+            )
+
+            scheduled_datetime = timezone.make_aware(
+                scheduled_datetime,
+                timezone.get_current_timezone()
+            )
+
+            time_gap = now - scheduled_datetime
+
+            if time_gap > timedelta(minutes=30):
+                new_state = "forgotten"
+            elif time_gap > timedelta(minutes=10):
+                new_state = "late"
+            else:
+                new_state = "taken"
+
+        # Salva somente se o estado realmente mudou.
+        if self.state != new_state:
+            self.state = new_state
+            self.save(update_fields=["state"])
+
         return self.state
 
         
@@ -245,6 +294,74 @@ class TakeRecord(TimeStampedModel):
                 return f"Você tem {medication_left} pílulas restantes, reponha seu estoque."
             
 
+    def get_scheduled_times(self, target_date):
+        """
+        Retorna os horários previstos para uma data específica.
+        Os intervalos são contínuos, inclusive atravessando a meia-noite.
+        """
+
+        if target_date < self.begin or target_date > self.end:
+            return []
+
+        if not self.take_at:
+            return []
+
+        weekdays = [
+            "mon", "tue", "wed",
+            "thu", "fri", "sat", "sun"
+        ]
+
+        selected_days = (
+            [day.strip().lower() for day in self.days.split(",") if day.strip()]
+            if self.days
+            else None
+        )
+
+        def is_valid_day(dose_date):
+            if selected_days is None:
+                return True
+
+            return weekdays[dose_date.weekday()] in selected_days
+
+        # Uma dose por dia.
+        if self.cycle_type == "daily":
+            return [self.take_at] if is_valid_day(target_date) else []
+
+        # Doses em intervalos contínuos.
+        if self.cycle_type == "interval":
+            if not self.take_cycle or self.take_cycle <= 0:
+                return []
+
+            first_dose = datetime.combine(
+                self.begin,
+                self.take_at
+            )
+
+            day_start = datetime.combine(
+                target_date,
+                time.min
+            )
+
+            day_end = day_start + timedelta(days=1)
+
+            schedules = []
+            current_dose = first_dose
+
+            while current_dose < day_end:
+                dose_date = current_dose.date()
+
+                if (
+                    current_dose >= day_start
+                    and self.begin <= dose_date <= self.end
+                    and is_valid_day(dose_date)
+                ):
+                    schedules.append(current_dose.time())
+
+                current_dose += timedelta(hours=self.take_cycle)
+
+            return schedules
+
+        return []
     def __str__(self):
             horarios = ", ".join([t.strftime('%H:%M') for t in self.calculate_schedule()])
             return f"{self.taken_id} - Horários: {horarios}"
