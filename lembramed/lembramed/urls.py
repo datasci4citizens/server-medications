@@ -21,7 +21,10 @@ from django.urls import include
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from rest_framework_simplejwt.views import TokenRefreshView
 
+from .health import health
+
 urlpatterns = [
+    path('health/', health, name='health'),
     path('admin/', admin.site.urls),
 
     path('medication/', include('medication.urls')),

@@ -1,0 +1,11 @@
+.git
+.env
+.env.*
+!.env.example
+myenv
+venv
+__pycache__
+*.pyc
+*.sqlite3
+dbms
+lembramed/staticfiles

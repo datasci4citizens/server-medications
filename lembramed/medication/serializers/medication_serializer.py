@@ -21,6 +21,12 @@ class ActiveIngredientSerializer(serializers.ModelSerializer):
         return super().to_internal_value(data)
 
 class MedicationSerializer(serializers.ModelSerializer):
+    leaflet = serializers.SerializerMethodField()
+
+    def get_leaflet(self, obj):
+        from .leaflet_serializer import LeafletSerializer
+        return LeafletSerializer(obj.leaflet).data if hasattr(obj, "leaflet") else None
+
     name = serializers.CharField(required=False, allow_null=True)
     category = serializers.CharField(required=False, allow_null=True)
     company = serializers.CharField(required=False, allow_null=True)
@@ -33,7 +39,7 @@ class MedicationSerializer(serializers.ModelSerializer):
         fields = [
             "medication_id", "process_num", "name",
             "active_ingredients", "therapeutic_class",
-            "category", "brand", "company",
+            "category", "brand", "company", "leaflet",
         ]
     
     def _resolve_relation(self, model_class, field_name, value):

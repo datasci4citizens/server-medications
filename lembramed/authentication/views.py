@@ -119,13 +119,8 @@ class GoogleAuthView(APIView):
 
             # Return user data and token
             return Response({
-                'token': _tokens_for_user(user),
-                'user': {
-                    'id': user.id,
-                    'email': user.email,
-                    'name': f"{user.first_name} {user.last_name}".strip(),
-                    # 'picture': person.profile_picture
-                }
+                'tokens': _tokens_for_user(user),
+                'user': PersonSerializer(person).data
             })
 
         except ValueError:

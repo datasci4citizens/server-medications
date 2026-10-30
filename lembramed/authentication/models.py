@@ -18,6 +18,7 @@ class Person(models.Model):
         primary_key=True,
         unique=True,
     )
+    profile = models.JSONField(default=dict, blank=True)
     birth = models.DateField(blank=True, null=True) # YYYY-MM-DD
     google_id = models.CharField(max_length=100, blank=True, null=True)
     # profile_picture = models.URLField(max_length=255, blank=True, null=True)

@@ -21,3 +21,13 @@ lembramed/api/src/anvisa_data/*.json
 lembramed/api/src/anvisa_data/*.csv
 lembramed/api/src/anvisa_data/*.log
 lembramed/api/src/anvisa_data/*.xlsx
+# Version the schema required by the API.
+!lembramed/medication/migrations/*.py
+!lembramed/authentication/migrations/*.py
+!lembramed/notifications/migrations/*.py
+
+myenv/
+staticfiles/
+*.sqlite3
+.env.*
+!.env.example

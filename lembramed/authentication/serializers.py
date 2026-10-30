@@ -8,7 +8,8 @@ from .models import Person
 class RegisterSerializer(serializers.Serializer):
     email      = serializers.EmailField()
     first_name = serializers.CharField()
-    last_name  = serializers.CharField()
+    last_name  = serializers.CharField(required=False, allow_blank=True, default='')
+    profile = serializers.JSONField(required=False, default=dict)
     password   = serializers.CharField(write_only=True, min_length=8)
     birth      = serializers.DateField(required=False, allow_null=True)
 
@@ -18,6 +19,7 @@ class RegisterSerializer(serializers.Serializer):
         return value
 
     def create(self, validated_data):
+        profile = validated_data.pop('profile', {})
         birth = validated_data.pop('birth', None)
         user  = User.objects.create_user(
             username   = validated_data['email'],
@@ -26,6 +28,8 @@ class RegisterSerializer(serializers.Serializer):
             first_name = validated_data['first_name'],
             last_name  = validated_data['last_name'],
         )
+        user.person.profile = profile
+        user.person.save(update_fields=['profile'])
         if birth is not None:
             user.person.birth = birth
             user.person.save()
@@ -55,4 +59,4 @@ class PersonSerializer(serializers.ModelSerializer):
 
     class Meta:
         model  = Person
-        fields = ['person_id', 'email', 'first_name', 'last_name', 'birth', 'is_staff', 'is_superuser']
+        fields = ['profile', 'person_id', 'email', 'first_name', 'last_name', 'birth', 'is_staff', 'is_superuser']

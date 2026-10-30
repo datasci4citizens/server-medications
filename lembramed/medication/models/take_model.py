@@ -21,6 +21,19 @@ class Take(TimeStampedModel):
         related_name = 'takes',
     )
     taken_id = models.AutoField(primary_key=True)
+    client_id = models.CharField(max_length=100, blank=True, default='')
+    dosage = models.CharField(max_length=100, blank=True, default='')
+    brand = models.CharField(max_length=255, blank=True, default='')
+    type = models.CharField(max_length=20, default='tablet')
+    stock_reminder_enabled = models.BooleanField(default=False)
+    stock_reminder_threshold = models.PositiveIntegerField(default=5)
+    dose_status = models.JSONField(default=dict, blank=True)
+
+    class Meta:
+        constraints = [models.UniqueConstraint(
+            fields=['person_id', 'client_id'],
+            condition=~models.Q(client_id=''), name='unique_patient_client_take',
+        )]
 
     # comprimido/dosagem, OK
     # forma de medicacao (pilula...), ok
@@ -124,7 +137,7 @@ class TakeRecord(TimeStampedModel):
 
     cycle_type = models.CharField(max_length=10, choices=CYCLE_TYPE )
     begin = models.DateField(default=datetime.today) 
-    end = models.DateField(default=datetime.today)
+    end = models.DateField(null=True, blank=True)
     days= models.CharField(max_length=50, null=True)
     take_at = models.TimeField(null=True, blank=True)  #first time you will take the medicine
     take_cycle = models.IntegerField(null=True, blank=True) # ex: take in 8-8 hours...
@@ -135,7 +148,7 @@ class TakeRecord(TimeStampedModel):
         return ', '.join(day_dict[d] for d in self.days.split(',')) 
 
     def clean(self):
-        if self.end < self.begin:
+        if self.end and self.end < self.begin:
             raise ValidationError("Data final não pode ser menor que a inicial")
 
         if self.cycle_type == 'daily' and not self.take_at:
@@ -157,7 +170,7 @@ class TakeRecord(TimeStampedModel):
         if target_date is None:
             target_date = date.today()
 
-        if target_date < self.begin or target_date > self.end:
+        if target_date < self.begin or (self.end and target_date > self.end):
             return []
 
         if not self.take_at:
@@ -196,7 +209,7 @@ class TakeRecord(TimeStampedModel):
 
                 if (
                     current_dose >= day_start
-                    and dose_date <= self.end
+                    and (self.end is None or dose_date <= self.end)
                     and is_valid_day(dose_date)
                 ):
                     schedules.append(current_dose.time())
@@ -300,7 +313,7 @@ class TakeRecord(TimeStampedModel):
         Os intervalos são contínuos, inclusive atravessando a meia-noite.
         """
 
-        if target_date < self.begin or target_date > self.end:
+        if target_date < self.begin or (self.end and target_date > self.end):
             return []
 
         if not self.take_at:
@@ -352,7 +365,7 @@ class TakeRecord(TimeStampedModel):
 
                 if (
                     current_dose >= day_start
-                    and self.begin <= dose_date <= self.end
+                    and self.begin <= dose_date and (self.end is None or dose_date <= self.end)
                     and is_valid_day(dose_date)
                 ):
                     schedules.append(current_dose.time())
