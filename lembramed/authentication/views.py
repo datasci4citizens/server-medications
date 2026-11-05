@@ -5,7 +5,8 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import RegisterSerializer, LoginSerializer, PersonSerializer
 from rest_framework.authtoken.models import Token
 from rest_framework.authentication import TokenAuthentication
-
+from drf_spectacular.utils import extend_schema
+import logging
 
 from django.conf import settings
 from rest_framework import status
@@ -29,12 +30,13 @@ def _tokens_for_user(user):
 class RegisterView(APIView):
     permission_classes = [permissions.AllowAny]
 
+    @extend_schema(request=RegisterSerializer)
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.save()
             return Response({
-                'user':   PersonSerializer(user.person).data,
+                'user': PersonSerializer(user.person).data,
                 'tokens': _tokens_for_user(user),
             }, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -43,12 +45,13 @@ class RegisterView(APIView):
 class LoginView(APIView):
     permission_classes = [permissions.AllowAny]
 
+    @extend_schema(request=LoginSerializer)
     def post(self, request):
         serializer = LoginSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.validated_data['user']
             return Response({
-                'user':   PersonSerializer(user.person).data,
+                'user': PersonSerializer(user.person).data,
                 'tokens': _tokens_for_user(user),
             })
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -69,6 +72,9 @@ class MeView(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+logger = logging.getLogger(__name__)
 
 class GoogleAuthView(APIView):
     permission_classes = [AllowAny]
@@ -131,8 +137,13 @@ class GoogleAuthView(APIView):
         except ValueError:
             # Invalid token
             return Response({'error': 'Invalid token'}, status=status.HTTP_401_UNAUTHORIZED)
-        except Exception as e:
-            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        except Exception:
+            logger.exception("Erro interno durante a autenticação com Google")
+
+            return Response(
+                {'error': 'Ocorreu um erro interno. Tente novamente mais tarde.'},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
 class UserView(APIView):
     authentication_classes = [TokenAuthentication]

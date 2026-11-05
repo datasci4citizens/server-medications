@@ -22,14 +22,14 @@ from authentication.permissions import (
 class LeafletViewSet(viewsets.ModelViewSet):
     queryset = Leaflet.objects.all().order_by("medication_id")
     serializer_class = LeafletSerializer
-    permission_classes = [IsAuthenticatedReadOnlyOrAdminOrStaff()]
+    permission_classes = [IsAuthenticatedReadOnlyOrAdminOrStaff]
     http_method_names = ["get", "post", "patch", "delete"]
 
 
 class MedicationViewSet(viewsets.ModelViewSet):
     queryset = Medication.objects.all().order_by("medication_id")
     serializer_class = MedicationSerializer
-    permission_classes = [IsAuthenticatedReadOnlyOrAdminOrStaff()]
+    permission_classes = [IsAuthenticatedReadOnlyOrAdminOrStaff]
     http_method_names = ["get", "post", "patch", "delete"]
 
     filter_backends = [filters.SearchFilter]
@@ -47,7 +47,7 @@ class MedicationViewSet(viewsets.ModelViewSet):
 class AnvisaRegisterViewSet(viewsets.ModelViewSet):
     queryset = AnvisaRegister.objects.all().order_by("process_num")
     serializer_class = AnvisaRegisterSerializer
-    permission_classes = [IsStaffOrAdmin()]
+    permission_classes = [IsStaffOrAdmin]
     http_method_names = ["get", "post", "patch", "delete"]
 
     def get_queryset(self):
@@ -86,28 +86,28 @@ class AnvisaRegisterViewSet(viewsets.ModelViewSet):
 class PresentationViewSet(viewsets.ModelViewSet):
     queryset = Presentation.objects.all().order_by("regulation_num")
     serializer_class = PresentationSerializer
-    permission_classes = [IsAuthenticatedReadOnlyOrAdminOrStaff()]
+    permission_classes = [IsAuthenticatedReadOnlyOrAdminOrStaff]
     http_method_names = ["get", "post", "patch", "delete"]
-
 
 @extend_schema(tags=["take"])
 class TakeViewSet(viewsets.ModelViewSet):
     queryset = Take.objects.all().order_by("taken_id")
     serializer_class = TakeSerializer
-    permission_classes = [IsPatient()]
+    permission_classes = [IsPatient]
     http_method_names = ["get", "post", "delete"]
 
     def get_queryset(self):
         user = self.request.user
-        if user.is_staff or user.is_superuser:
-            return Take.objects.all()
         return Take.objects.filter(person_id=user.person)
 
+    def perform_create(self, serializer):
+        serializer.save(person_id=self.request.user.person)
+        
 @extend_schema(tags=["take_record"])
 class TakeRecordViewSet(viewsets.ModelViewSet):
     queryset = TakeRecord.objects.all().order_by("taken_id")
     serializer_class = TakeRecordSerializer
-    permission_classes = [IsAdmin()] # Automatic or User based (Manual)??
+    permission_classes = [IsAdmin] # Automatic or User based (Manual)??
     http_method_names = ["get", "post", "delete"]
 
     # def get_queryset(self):
